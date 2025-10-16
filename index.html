@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BitC Network | Crypto, Trading & Innovation</title>
+    <meta name="description" content="BitC Network is a revolutionary mobile crypto mining platform. Mine BITC effortlessly on your phone with eco-friendly, secure blockchain technology.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --bg: #f8fafc;
+            --accent: #8B5FBF;
+            --accent-hover: #7A4DAA;
+            --accent-light: #9D7BC6;
+            --muted: #5a6c7d;
+            --card: #ffffff;
+            --text: #1a2a3a;
+            --radius: 16px;
+            --radius-sm: 10px;
+            --shadow-sm: 0 4px 16px rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --transition: all 0.35s ease;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        html, body {
+            height: 100%;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            -webkit-font-smoothing: antialiased;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header */
+        header {
+            background: var(--card);
+            box-shadow: var(--shadow-sm);
+            padding: 20px 0;
+            margin-bottom: 40px;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-weight: 600;
+            font-size: 24px;
+            color: var(--accent);
+        }
+        
+        .logo-img {
+            width: 44px;
+            height: 44px;
+            border-radius: var(--radius-sm);
+            background: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: 700;
+            font-size: 18px;
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+        }
+        
+        .logo-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .whitepaper-link {
+            margin-left: 20px;
+            font-size: 16px;
+            color: var(--muted);
+            text-decoration: none;
+            transition: var(--transition);
+            border-bottom: 1px dashed var(--muted);
+            padding-bottom: 2px;
+        }
+        
+        .whitepaper-link:hover {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+        }
+        
+        .nav-icons i {
+            color: var(--muted);
+            font-size: 22px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .nav-icons i:hover {
+            color: var(--accent);
+        }
+        
+        /* Mobile Menu */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 80%;
+            max-width: 320px;
+            height: 100%;
+            background: var(--card);
+            z-index: 1000;
+            padding: 90px 32px 32px;
+            transition: right 0.4s ease;
+            box-shadow: -6px 0 20px rgba(0,0,0,0.08);
+            border-left: 1px solid rgba(139, 95, 191, 0.1);
+        }
+        
+        .mobile-menu.active {
+            right: 0;
+        }
+        
+        .mobile-menu ul {
+            list-style: none;
+        }
+        
+        .mobile-menu li {
+            margin-bottom: 18px;
+        }
+        
+        .mobile-menu a {
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 17px;
+            display: block;
+            padding: 10px 0;
+            transition: var(--transition);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .mobile-menu a:hover {
+            color: var(--accent);
+            padding-left: 4px;
+        }
+        
+        .close-menu {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            font-size: 26px;
+            color: var(--muted);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .close-menu:hover {
+            color: var(--accent);
+        }
+        
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            margin-bottom: 60px;
+            padding: 40px 0;
+        }
+        
+        .hero h1 {
+            font-weight: 700;
+            font-size: 48px;
+            line-height: 1.15;
+            margin-bottom: 20px;
+            color: var(--text);
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: justify;
+        }
+        
+        .hero p.lead {
+            color: var(--muted);
+            font-size: 18px;
+            margin-bottom: 40px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: justify;
+        }
+        
+        /* Box Layout */
+        .box-section {
+            margin-bottom: 60px;
+        }
+        
+        .box-section h2 {
+            font-weight: 600;
+            font-size: 32px;
+            margin-bottom: 30px;
+            text-align: justify;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .box-section h2::after {
+            content: '';
+            display: block;
+            width: 100%;
+            height: 4px;
+            background: var(--accent);
+            margin-top: 12px;
+            border-radius: 2px;
+        }
+        
+        .box-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .box-card {
+            background: var(--card);
+            border-radius: var(--radius);
+            padding: 30px;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            border: 1px solid rgba(139, 95, 191, 0.1);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .box-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .box-card h3 {
+            font-weight: 600;
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: var(--text);
+            text-align: justify;
+        }
+        
+        .box-card p {
+            color: var(--muted);
+            font-size: 16px;
+            text-align: justify;
+            flex-grow: 1;
+        }
+        
+        .box-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: var(--radius-sm);
+            background: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        
+        /* How It Works */
+        .steps-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .step-box {
+            background: var(--card);
+            border-radius: var(--radius);
+            padding: 30px;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            border: 1px solid rgba(139, 95, 191, 0.1);
+            position: relative;
+            counter-increment: step;
+        }
+        
+        .step-box::before {
+            content: counter(step);
+            position: absolute;
+            top: -15px;
+            left: 20px;
+            background: var(--accent);
+            color: #fff;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 18px;
+        }
+        
+        .step-box:hover {
+            transform: translateY(-5px);
+        }
+        
+        .step-box h4 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            margin-top: 10px;
+            color: var(--text);
+            text-align: justify;
+        }
+        
+        .step-box p {
+            font-size: 16px;
+            color: var(--muted);
+            text-align: justify;
+        }
+        
+        /* Stats Section */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .stat-box {
+            background: var(--card);
+            border-radius: var(--radius);
+            padding: 30px;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid rgba(139, 95, 191, 0.1);
+            transition: var(--transition);
+        }
+        
+        .stat-box:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stat-number {
+            font-size: 42px;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 10px;
+        }
+        
+        .stat-label {
+            font-size: 16px;
+            color: var(--muted);
+        }
+        
+        /* Technology Section */
+        .tech-box {
+            background: var(--card);
+            border-radius: var(--radius);
+            padding: 40px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid rgba(139, 95, 191, 0.1);
+            margin-top: 40px;
+        }
+        
+        .tech-box p {
+            color: var(--muted);
+            margin-bottom: 20px;
+            font-size: 16px;
+            text-align: justify;
+        }
+        
+        .tech-list {
+            list-style: none;
+            margin-top: 20px;
+        }
+        
+        .tech-list li {
+            color: var(--muted);
+            margin-bottom: 15px;
+            padding-left: 30px;
+            position: relative;
+            font-size: 16px;
+            text-align: justify;
+        }
+        
+        .tech-list li:before {
+            content: "✓";
+            color: var(--accent);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        
+        /* FAQ Section */
+        .faq-container {
+            margin-top: 40px;
+        }
+        
+        .faq-box {
+            background: var(--card);
+            border-radius: var(--radius);
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid rgba(139, 95, 191, 0.1);
+            transition: var(--transition);
+        }
+        
+        .faq-box:hover {
+            box-shadow: var(--shadow-md);
+        }
+        
+        .faq-question {
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 10px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 18px;
+            text-align: justify;
+        }
+        
+        .faq-answer {
+            color: var(--muted);
+            font-size: 16px;
+            display: none;
+            padding-top: 15px;
+            border-top: 1px solid rgba(0,0,0,0.05);
+            text-align: justify;
+        }
+        
+        .faq-box.active .faq-answer {
+            display: block;
+        }
+        
+        .faq-toggle {
+            color: var(--accent);
+            font-size: 22px;
+            transition: transform 0.3s ease;
+        }
+        
+        .faq-box.active .faq-toggle {
+            transform: rotate(45deg);
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--card);
+            padding: 50px 0 30px;
+            margin-top: 60px;
+            box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.03);
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .social-media {
+            display: flex;
+            justify-content: center;
+            gap: 28px;
+            margin-bottom: 30px;
+        }
+        
+        .social-media a {
+            color: var(--muted);
+            font-size: 26px;
+            transition: var(--transition);
+        }
+        
+        .social-media a:hover {
+            color: var(--accent);
+            transform: translateY(-5px) scale(1.1);
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+        
+        .footer-links a {
+            color: var(--muted);
+            font-size: 16px;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+        
+        .footer p {
+            font-size: 14px;
+            color: var(--muted);
+            text-align: center;
+        }
+        
+        /* bottom pill */
+        .bottom-pill {
+            position: fixed;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: 20px;
+            width: calc(100% - 40px);
+            max-width: 400px;
+            background: var(--card);
+            color: var(--text);
+            border-radius: 50px;
+            padding: 14px 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            box-shadow: var(--shadow-md);
+            z-index: 40;
+            border: 1px solid rgba(139, 95, 191, 0.2);
+        }
+        
+        .pill-left {
+            display: flex;
+            gap: 14px;
+            align-items: center;
+        }
+        
+        .pill-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: var(--radius-sm);
+            background: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: 700;
+            font-size: 18px;
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+        }
+        
+        .pill-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .pill-text {
+            display: flex;
+            flex-direction: column;
+            font-size: 15px;
+        }
+        
+        .pill-text .title {
+            font-weight: 600;
+        }
+        
+        .pill-text .subtitle {
+            font-weight: 400;
+            color: var(--muted);
+            font-size: 14px;
+            margin-top: 3px;
+        }
+        
+        .pill-download {
+            background: var(--accent);
+            color: #fff;
+            border-radius: 12px;
+            padding: 12px 18px;
+            font-weight: 600;
+            font-size: 15px;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .pill-download:hover {
+            transform: translateY(-3px);
+            background: var(--accent-hover);
+            box-shadow: var(--shadow-md);
+        }
+        
+        /* Dotted underline styles for specific elements */
+        .dotted-underline {
+            border-bottom: 1px dashed var(--accent);
+            padding-bottom: 2px;
+        }
+        
+        .hero h1 .dotted-underline {
+            border-bottom: 2px dotted var(--accent);
+            padding-bottom: 4px;
+        }
+        
+        /* Media queries */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 36px;
+            }
+            
+            .box-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .steps-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .footer-links {
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 28px;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .box-card, .step-box, .stat-box, .tech-box {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo" title="BitC Network">
+                    <div class="logo-img">
+                        <img src="https://bitcnetwork.com/assets/file_000000007860622faccb49a3c1c30f92.jpg" alt="BitC Network Logo">
+                    </div>
+                    <div class="brand">BitC Network</div>
+                    <a href="https://bitcnetwork.com/whitepaper/" class="whitepaper-link" target="_blank" aria-label="Read our whitepaper">Whitepaper</a>
+                </div>
+
+                <div class="nav-icons" aria-hidden="true">
+                    <i class="fas fa-bars" id="menuToggle" aria-hidden="true"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="close-menu" id="closeMenu">
+            <i class="fas fa-times"></i>
+        </div>
+        <ul>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#how-it-works">How It Works</a></li>
+            <li><a href="#mining-stats">Mining Stats</a></li>
+            <li><a href="#technology">Technology</a></li>
+            <li><a href="#faq">FAQ</a></li>
+            <li><a href="https://bitcnetwork.com/whitepaper/" target="_blank">Whitepaper</a></li>
+        </ul>
+    </div>
+
+    <main class="container">
+        <section class="hero" aria-labelledby="main-title">
+            <h1 id="main-title">Mine cryptocurrency Effortlessly Using Your Phone</h1>
+            <p class="lead">BITC (Blockchain & Internet Technology Coin) is a revolutionary cryptocurrency designed for mobile mining. Our platform empowers users to participate in decentralized finance through an intuitive, eco-friendly approach that doesn't compromise device performance or battery life. Join thousands of users worldwide who are already benefiting from our innovative mining technology.</p>
+        </section>
+
+        <!-- Features Section -->
+        <section class="box-section" id="features">
+            <h2>Key Features</h2>
+            <div class="box-grid">
+                <div class="box-card">
+                    <div class="box-icon"><i class="fas fa-mobile-alt"></i></div>
+                    <h3>Mobile Mining</h3>
+                    <p>Our innovative mobile mining technology allows you to earn BITC tokens directly from your smartphone. The process is optimized to minimize battery drain while maximizing efficiency, making cryptocurrency mining accessible to everyone regardless of technical expertise.</p>
+                </div>
+                <div class="box-card">
+                    <div class="box-icon"><i class="fas fa-shield-alt"></i></div>
+                    <h3>Secure & Decentralized</h3>
+                    <p>BitC Network operates on a robust blockchain infrastructure that ensures complete transparency and security for all transactions. Our decentralized architecture eliminates single points of failure and protects user data through advanced cryptographic protocols.</p>
+                </div>
+                <div class="box-card">
+                    <div class="box-icon"><i class="fas fa-leaf"></i></div>
+                    <h3>Eco-Friendly</h3>
+                    <p>Unlike traditional cryptocurrency mining that consumes massive amounts of energy, our Proof-of-Stake consensus mechanism is designed to be environmentally sustainable. This approach reduces energy consumption by over 99% compared to conventional mining methods.</p>
+                </div>
+                <div class="box-card">
+                    <div class="box-icon"><i class="fas fa-bolt"></i></div>
+                    <h3>Lightning Fast</h3>
+                    <p>Experience instant transactions and real-time rewards with our lightning network integration. This technology enables near-instant transfers of BITC tokens between users while maintaining the highest security standards and minimizing transaction fees.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works -->
+        <section class="box-section" id="how-it-works">
+            <h2>How It Works</h2>
+            <div class="steps-container">
+                <div class="step-box">
+                    <h4>Download the App</h4>
+                    <p>Get started by downloading the BitC Network application from your preferred app store. The app is available for both iOS and Android devices and supports all major mobile operating system versions.</p>
+                </div>
+                <div class="step-box">
+                    <h4>Create Your Account</h4>
+                    <p>Register your account using your email address or social media profiles. The registration process takes less than a minute and doesn't require extensive personal information or complicated verification steps.</p>
+                </div>
+                <div class="step-box">
+                    <h4>Start Mining</h4>
+                    <p>Begin mining BITC tokens with a simple tap. Our user-friendly interface makes the process intuitive, and you can monitor your mining progress in real-time through comprehensive dashboards and analytics.</p>
+                </div>
+                <div class="step-box">
+                    <h4>Earn Rewards</h4>
+                    <p>Accumulate BITC tokens through regular mining activities and referral programs. Exchange your earnings for other cryptocurrencies or fiat currency through our integrated exchange partners.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Mining Stats -->
+        <section class="box-section" id="mining-stats">
+            <h2>Mining Statistics</h2>
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="stat-number">500K+</div>
+                    <div class="stat-label">Active Miners</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">10M+</div>
+                    <div class="stat-label">BITC Mined</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">150+</div>
+                    <div class="stat-label">Countries</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">99.9%</div>
+                    <div class="stat-label">Uptime</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Technology Section -->
+        <section class="box-section" id="technology">
+            <h2>Advanced Technology</h2>
+            <div class="tech-box">
+                <p>BitC Network leverages cutting-edge blockchain technology to deliver a superior mining experience that balances performance, security, and accessibility. Our platform incorporates multiple innovative solutions designed specifically for mobile environments.</p>
+                
+                <ul class="tech-list">
+                    <li>Proof-of-Stake consensus algorithm that eliminates energy-intensive mining processes while maintaining network security</li>
+                    <li>Advanced encryption protocols including elliptic curve cryptography and zero-knowledge proofs for maximum privacy</li>
+                    <li>Lightning network integration enabling instant microtransactions with minimal fees</li>
+                    <li>Cross-chain compatibility allowing seamless interaction with major cryptocurrencies like Bitcoin and Ethereum</li>
+                    <li>Smart contract functionality for automated reward distribution and decentralized application support</li>
+                </ul>
+                
+                <p>Our proprietary mobile mining algorithm intelligently manages device resources, optimizing for efficiency without compromising user experience. This approach ensures that mining activities have minimal impact on battery life and device performance while maintaining high security standards.</p>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="box-section" id="faq">
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-container">
+                <div class="faq-box">
+                    <div class="faq-question">
+                        How much can I earn with BitC mining?
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        Earnings vary based on network participation, market conditions, and your level of activity. On average, active users earn between 5-15 BITC tokens daily through regular mining. Additional rewards are available through our referral program, which allows you to earn a percentage of the tokens mined by users you refer to the platform.
+                    </div>
+                </div>
+                <div class="faq-box">
+                    <div class="faq-question">
+                        Does mining affect my phone's battery life?
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        Our optimized algorithm is specifically designed to minimize battery impact. Most users report less than 5% additional battery drain during active mining sessions. The application automatically adjusts its resource usage based on your device's current battery level and can be configured to pause mining activities when battery levels drop below a specified threshold.
+                    </div>
+                </div>
+                <div class="faq-box">
+                    <div class="faq-question">
+                        Is there a fee to withdraw my mined BitC?
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        A small network fee applies to withdrawals, typically around 1% of the transaction amount. This fee helps maintain the blockchain infrastructure and ensures fast, secure transactions. There are no fees for mining activities or storing your BITC tokens within the application wallet. We periodically offer fee-free withdrawal promotions to our most active users.
+                    </div>
+                </div>
+                <div class="faq-box">
+                    <div class="faq-question">
+                        Can I mine on multiple devices?
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        Yes, you can use up to 3 devices with the same account. However, mining rewards are optimized per account rather than per device to ensure fair distribution across the network. This approach prevents abuse of the system while allowing users the flexibility to mine from different devices according to their convenience and daily routine.
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="social-media">
+                    <a href="https://www.youtube.com/@bitcnetwork" aria-label="YouTube" target="_blank"><i class="fab fa-youtube"></i></a>
+                    <a href="https://www.instagram.com/bitcnetwork" aria-label="Instagram" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://t.me/minebitc_eng" aria-label="Telegram" target="_blank"><i class="fab fa-telegram-plane"></i></a>
+                    <a href="https://x.com/bitcnetwork" aria-label="X (Twitter)" target="_blank"><i class="fab fa-twitter"></i></a>
+                </div>
+                <div class="footer-links">
+                    <a href="#">Terms of Service</a>
+                    <a href="https://www.bitcnetwork.com/privacy" target="_blank">Privacy Policy</a>
+                    <a href="https://bitcnetwork.com/whitepaper/" target="_blank">Whitepaper</a>
+                    <a href="#">Contact Us</a>
+                    <a href="#">Blog</a>
+                    <a href="#">Careers</a>
+                </div>
+                <p>&copy; 2025 BitC Network. All rights reserved. Empowering the future of mobile crypto mining.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- bottom pill -->
+    <div class="bottom-pill" role="region" aria-label="floating download pill">
+        <div class="pill-left">
+            <div class="pill-icon">
+                        <img src="https://bitcnetwork.com/assets/file_000000007860622faccb49a3c1c30f92.jpg" alt="BitC Network Logo">
+            </div>
+            <div class="pill-text">
+                <div class="title">BitC Network</div>
+                <div class="subtitle">Start mining. Easy as Bitc!</div>
+            </div>
+        </div>
+        <button class="pill-download" id="pillDownload">Download</button>
+    </div>
+
+    <script>
+        // Mobile Menu Functionality
+        const menuToggle = document.getElementById('menuToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const closeMenu = document.getElementById('closeMenu');
+
+        menuToggle.addEventListener('click', function(e) {
+            e.stopPropagation();
+            mobileMenu.classList.add('active');
+        });
+
+        closeMenu.addEventListener('click', function() {
+            mobileMenu.classList.remove('active');
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', function(event) {
+            if (!mobileMenu.contains(event.target) && event.target !== menuToggle && !event.target.closest('.mobile-menu')) {
+                mobileMenu.classList.remove('active');
+            }
+        });
+
+        // FAQ Toggle Functionality
+        const faqItems = document.querySelectorAll('.faq-box');
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question');
+            question.addEventListener('click', () => {
+                item.classList.toggle('active');
+                const toggle = item.querySelector('.faq-toggle');
+                toggle.textContent = item.classList.contains('active') ? '−' : '+';
+            });
+        });
+
+        // Pill button: simple download action
+        document.getElementById('pillDownload').addEventListener('click', function(){
+            alert('Download action triggered (mock). In production, redirect to app stores.');
+        });
+
+        // Accessibility: allow Esc to close menu and smooth scrolling
+        document.addEventListener('keydown', function(e){
+            if(e.key === 'Escape'){
+                mobileMenu.classList.remove('active');
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+                mobileMenu.classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>
