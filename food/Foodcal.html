@@ -1,0 +1,1048 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FoodCal - Your Food Nutrition Companion</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary: #4CAF50;
+            --primary-dark: #388E3C;
+            --secondary: #FF9800;
+            --light: #f9f9f9;
+            --dark: #333;
+            --gray: #777;
+            --light-gray: #eee;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: var(--dark);
+            line-height: 1.6;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo i {
+            color: var(--primary);
+            font-size: 28px;
+        }
+        
+        .logo h1 {
+            font-size: 24px;
+            color: var(--primary);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+        
+        nav a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover {
+            color: var(--primary);
+        }
+        
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: var(--primary);
+            cursor: pointer;
+        }
+        
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: white;
+            z-index: 1000;
+            padding: 20px;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .mobile-menu ul {
+            list-style: none;
+            text-align: center;
+        }
+        
+        .mobile-menu ul li {
+            margin: 20px 0;
+        }
+        
+        .mobile-menu ul li a {
+            font-size: 20px;
+            color: var(--dark);
+            text-decoration: none;
+        }
+        
+        .close-mobile-menu {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: var(--primary);
+            cursor: pointer;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1490818387583-1baba5e638af?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+        }
+        
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+        
+        /* Search Section */
+        .search-section {
+            background-color: white;
+            padding: 40px 0;
+            margin-top: -50px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            position: relative;
+            z-index: 10;
+        }
+        
+        .search-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .search-box {
+            display: flex;
+            width: 100%;
+            max-width: 600px;
+        }
+        
+        .search-box input {
+            flex: 1;
+            padding: 15px;
+            border: 2px solid var(--light-gray);
+            border-radius: 5px 0 0 5px;
+            font-size: 16px;
+            outline: none;
+        }
+        
+        .search-box input:focus {
+            border-color: var(--primary);
+        }
+        
+        .search-box button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0 25px;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .search-box button:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        .food-categories {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        
+        .category-btn {
+            background-color: var(--light-gray);
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .category-btn:hover, .category-btn.active {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        /* Results Section */
+        .results-section {
+            padding: 60px 0;
+        }
+        
+        .results-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        
+        .food-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .food-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .food-image {
+            height: 180px;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .food-info {
+            padding: 20px;
+        }
+        
+        .food-info h3 {
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+        
+        .food-info p {
+            color: var(--gray);
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+        
+        .nutrition-facts {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+        
+        .nutrition-item {
+            text-align: center;
+        }
+        
+        .nutrition-value {
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        .nutrition-label {
+            font-size: 12px;
+            color: var(--gray);
+        }
+        
+        .analyze-btn {
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            width: 100%;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-weight: 500;
+        }
+        
+        .analyze-btn:hover {
+            background-color: #F57C00;
+        }
+        
+        /* Analysis Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+        
+        .modal-content {
+            background-color: white;
+            margin: 50px auto;
+            width: 90%;
+            max-width: 800px;
+            border-radius: 10px;
+            overflow: hidden;
+            animation: modalOpen 0.5s;
+        }
+        
+        @keyframes modalOpen {
+            from {opacity: 0; transform: translateY(-50px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+        
+        .modal-header {
+            background-color: var(--primary);
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-header h2 {
+            font-size: 1.5rem;
+        }
+        
+        .close-modal {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        
+        .modal-body {
+            padding: 20px;
+        }
+        
+        .food-details {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .food-image-large {
+            width: 200px;
+            height: 150px;
+            border-radius: 10px;
+            background-size: cover;
+            background-position: center;
+            flex-shrink: 0;
+        }
+        
+        .food-text-details {
+            flex: 1;
+        }
+        
+        .nutrition-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .nutrition-card {
+            background-color: var(--light);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .nutrition-card .value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+        
+        .nutrition-card .label {
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+        
+        .benefits-section h3 {
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+        
+        .benefits-list {
+            list-style-type: none;
+        }
+        
+        .benefits-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid var(--light-gray);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .benefits-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .benefits-list i {
+            color: var(--primary);
+        }
+        
+        /* Privacy Policy Link */
+        .privacy-link {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .privacy-link a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 40px 0 20px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-column h3 {
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-column a:hover {
+            color: white;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #444;
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .desktop-nav {
+                display: none;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+                position: absolute;
+                right: 20px;
+                top: 20px;
+            }
+            
+            .food-details {
+                flex-direction: column;
+            }
+            
+            .food-image-large {
+                width: 100%;
+                height: 200px;
+            }
+            
+            .hero h2 {
+                font-size: 2rem;
+            }
+            
+            .results-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .search-box {
+                flex-direction: column;
+            }
+            
+            .search-box input {
+                border-radius: 5px;
+                margin-bottom: 10px;
+            }
+            
+            .search-box button {
+                border-radius: 5px;
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-apple-alt"></i>
+                    <h1>FoodCal</h1>
+                </div>
+                <nav class="desktop-nav">
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">Food Database</a></li>
+                        <li><a href="#">Nutrition Guide</a></li>
+                        <li><a href="#">About</a></li>
+                    </ul>
+                </nav>
+                <button class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobile-menu">
+        <button class="close-mobile-menu">
+            <i class="fas fa-times"></i>
+        </button>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Food Database</a></li>
+            <li><a href="#">Nutrition Guide</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="https://bitcnetwork.com/food/" target="_blank">Privacy Policy</a></li>
+            <li><a href="https://bitcnetwork.com/food/" target="_blank">Legal</a></li>
+        </ul>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h2>Discover the Power of Your Food</h2>
+            <p>Select any food to analyze its nutritional value, calorie content, and health benefits. Make informed choices for a healthier lifestyle.</p>
+        </div>
+    </section>
+
+    <!-- Search Section -->
+    <section class="search-section">
+        <div class="container">
+            <div class="search-container">
+                <div class="search-box">
+                    <input type="text" id="search-input" placeholder="Search for foods (e.g., apple, chicken, broccoli)">
+                    <button id="search-btn"><i class="fas fa-search"></i> Search</button>
+                </div>
+                <div class="food-categories">
+                    <button class="category-btn active" data-category="all">All Foods</button>
+                    <button class="category-btn" data-category="fruits">Fruits</button>
+                    <button class="category-btn" data-category="vegetables">Vegetables</button>
+                    <button class="category-btn" data-category="proteins">Proteins</button>
+                    <button class="category-btn" data-category="grains">Grains</button>
+                    <button class="category-btn" data-category="dairy">Dairy</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Results Section -->
+    <section class="results-section">
+        <div class="container">
+            <h2 style="margin-bottom: 30px; text-align: center;">Popular Foods</h2>
+            <div class="results-container" id="food-results">
+                <!-- Food cards will be dynamically generated here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Privacy Policy Link -->
+    <div class="privacy-link">
+        <a href="https://bitcnetwork.com/food/" target="_blank">Privacy Policy</a> | 
+        <a href="https://bitcnetwork.com/food/" target="_blank">Legal</a>
+    </div>
+
+    <!-- Analysis Modal -->
+    <div class="modal" id="analysis-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal-title">Food Analysis</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="food-details">
+                    <div class="food-image-large" id="modal-food-image"></div>
+                    <div class="food-text-details">
+                        <h3 id="modal-food-name"></h3>
+                        <p id="modal-food-description"></p>
+                    </div>
+                </div>
+                
+                <h3 style="margin-bottom: 15px;">Nutrition Facts (per 100g)</h3>
+                <div class="nutrition-grid" id="modal-nutrition">
+                    <!-- Nutrition facts will be dynamically generated here -->
+                </div>
+                
+                <div class="benefits-section">
+                    <h3>Health Benefits</h3>
+                    <ul class="benefits-list" id="modal-benefits">
+                        <!-- Benefits will be dynamically generated here -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>FoodCal</h3>
+                    <p>Your comprehensive guide to food nutrition and healthy eating habits.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul>
+                        <li><i class="fas fa-envelope"></i> dallen02a@gmail.com</li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Legal</h3>
+                    <ul>
+                        <li><a href="https://bitcnetwork.com/food/" target="_blank">Privacy Policy</a></li>
+                        <li><a href="https://bitcnetwork.com/food/" target="_blank">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 FoodCal. All rights reserved. | <a href="https://bitcnetwork.com/food/" target="_blank" style="color: #aaa;">Privacy Policy</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Sample food database
+        const foodDatabase = [
+            {
+                id: 1,
+                name: "Apple",
+                category: "fruits",
+                image: "https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                description: "A crisp, sweet fruit that comes in many varieties. Apples are rich in fiber and antioxidants.",
+                calories: 52,
+                protein: 0.3,
+                carbs: 14,
+                fat: 0.2,
+                fiber: 2.4,
+                sugar: 10,
+                benefits: [
+                    "Rich in dietary fiber which aids digestion",
+                    "Contains antioxidants that may reduce risk of chronic diseases",
+                    "May help lower cholesterol levels",
+                    "Promotes gut health with pectin content",
+                    "Low calorie snack for weight management"
+                ]
+            },
+            {
+                id: 2,
+                name: "Banana",
+                category: "fruits",
+                image: "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                description: "A curved, yellow fruit that is one of the most popular fruits worldwide.",
+                calories: 89,
+                protein: 1.1,
+                carbs: 23,
+                fat: 0.3,
+                fiber: 2.6,
+                sugar: 12,
+                benefits: [
+                    "Excellent source of potassium which supports heart health",
+                    "Provides quick energy with natural sugars",
+                    "Rich in vitamin B6 for brain health",
+                    "Contains prebiotics that support gut bacteria",
+                    "May help regulate blood pressure"
+                ]
+            },
+            {
+                id: 3,
+                name: "Broccoli",
+                category: "vegetables",
+                image: "https://images.unsplash.com/photo-1459411552884-841db9b3cc2a?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                description: "A green vegetable with a tree-like appearance, packed with nutrients.",
+                calories: 34,
+                protein: 2.8,
+                carbs: 7,
+                fat: 0.4,
+                fiber: 2.6,
+                sugar: 1.7,
+                benefits: [
+                    "High in vitamins C and K for immune and bone health",
+                    "Contains sulforaphane with potential anti-cancer properties",
+                    "Rich in antioxidants that fight inflammation",
+                    "Supports detoxification processes in the body",
+                    "Promotes digestive health with high fiber content"
+                ]
+            },
+            {
+                id: 4,
+                name: "Chicken Breast",
+                category: "proteins",
+                image: "https://images.unsplash.com/photo-1604503468506-a8da13d82791?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                description: "Lean protein source that is versatile and widely consumed.",
+                calories: 165,
+                protein: 31,
+                carbs: 0,
+                fat: 3.6,
+                fiber: 0,
+                sugar: 0,
+                benefits: [
+                    "Excellent source of lean protein for muscle building",
+                    "Rich in B vitamins for energy production",
+                    "Contains selenium which supports thyroid function",
+                    "Provides phosphorus for bone health",
+                    "Low in fat compared to other meat sources"
+                ]
+            },
+            {
+                id: 5,
+                name: "Salmon",
+                category: "proteins",
+                image: "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                description: "Oily fish known for its pink flesh and high omega-3 content.",
+                calories: 208,
+                protein: 20,
+                carbs: 0,
+                fat: 13,
+                fiber: 0,
+                sugar: 0,
+                benefits: [
+                    "Rich in omega-3 fatty acids for heart and brain health",
+                    "Excellent source of high-quality protein",
+                    "Contains astaxanthin, a powerful antioxidant",
+                    "May reduce inflammation throughout the body",
+                    "Supports eye health with vitamin A content"
+                ]
+            },
+            {
+                id: 6,
+                name: "Brown Rice",
+                category: "grains",
+                image: "https://images.unsplash.com/photo-1536304993881-ff6e9eefa2a6?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                description: "Whole grain rice with the bran layer intact, providing more nutrients than white rice.",
+                calories: 111,
+                protein: 2.6,
+                carbs: 23,
+                fat: 0.9,
+                fiber: 1.8,
+                sugar: 0.4,
+                benefits: [
+                    "Rich in fiber which aids digestion and promotes fullness",
+                    "Contains magnesium for bone health and energy production",
+                    "Provides sustained energy with complex carbohydrates",
+                    "May help regulate blood sugar levels",
+                    "Contains antioxidants that protect against cellular damage"
+                ]
+            },
+            {
+                id: 7,
+                name: "Greek Yogurt",
+                category: "dairy",
+                image: "https://images.unsplash.com/photo-1551782450-17144efb9c50?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                description: "Thick, creamy yogurt that has been strained to remove whey, resulting in higher protein content.",
+                calories: 59,
+                protein: 10,
+                carbs: 3.6,
+                fat: 0.4,
+                fiber: 0,
+                sugar: 3.2,
+                benefits: [
+                    "High in protein which promotes satiety and muscle repair",
+                    "Contains probiotics for gut health",
+                    "Rich in calcium for strong bones and teeth",
+                    "May help regulate blood pressure",
+                    "Provides B vitamins for energy metabolism"
+                ]
+            },
+            {
+                id: 8,
+                name: "Spinach",
+                category: "vegetables",
+                image: "https://images.unsplash.com/photo-1576045057995-568f588f82fb?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                description: "Leafy green vegetable packed with vitamins and minerals.",
+                calories: 23,
+                protein: 2.9,
+                carbs: 3.6,
+                fat: 0.4,
+                fiber: 2.2,
+                sugar: 0.4,
+                benefits: [
+                    "Extremely high in iron which supports blood health",
+                    "Rich in vitamin K for bone health and blood clotting",
+                    "Contains antioxidants that may reduce oxidative stress",
+                    "High in folate which is crucial for cell growth",
+                    "May help reduce blood pressure due to nitrate content"
+                ]
+            }
+        ];
+
+        // DOM Elements
+        const foodResults = document.getElementById('food-results');
+        const searchInput = document.getElementById('search-input');
+        const searchBtn = document.getElementById('search-btn');
+        const categoryBtns = document.querySelectorAll('.category-btn');
+        const modal = document.getElementById('analysis-modal');
+        const closeModal = document.querySelector('.close-modal');
+        const modalTitle = document.getElementById('modal-title');
+        const modalFoodImage = document.getElementById('modal-food-image');
+        const modalFoodName = document.getElementById('modal-food-name');
+        const modalFoodDescription = document.getElementById('modal-food-description');
+        const modalNutrition = document.getElementById('modal-nutrition');
+        const modalBenefits = document.getElementById('modal-benefits');
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const closeMobileMenu = document.querySelector('.close-mobile-menu');
+
+        // Initialize the page with all foods
+        document.addEventListener('DOMContentLoaded', function() {
+            displayFoods(foodDatabase);
+            
+            // Event listeners
+            searchBtn.addEventListener('click', handleSearch);
+            searchInput.addEventListener('keyup', function(event) {
+                if (event.key === 'Enter') {
+                    handleSearch();
+                }
+            });
+            
+            categoryBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    categoryBtns.forEach(b => b.classList.remove('active'));
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    const category = this.getAttribute('data-category');
+                    filterFoodsByCategory(category);
+                });
+            });
+            
+            closeModal.addEventListener('click', function() {
+                modal.style.display = 'none';
+            });
+            
+            // Close modal when clicking outside
+            window.addEventListener('click', function(event) {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+            
+            // Mobile menu functionality
+            mobileMenuBtn.addEventListener('click', function() {
+                mobileMenu.style.display = 'flex';
+            });
+            
+            closeMobileMenu.addEventListener('click', function() {
+                mobileMenu.style.display = 'none';
+            });
+            
+            // Close mobile menu when clicking on a link
+            mobileMenu.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', function() {
+                    mobileMenu.style.display = 'none';
+                });
+            });
+        });
+
+        // Display foods in the results section
+        function displayFoods(foods) {
+            foodResults.innerHTML = '';
+            
+            if (foods.length === 0) {
+                foodResults.innerHTML = '<p style="grid-column: 1 / -1; text-align: center; padding: 40px;">No foods found matching your criteria.</p>';
+                return;
+            }
+            
+            foods.forEach(food => {
+                const foodCard = document.createElement('div');
+                foodCard.className = 'food-card';
+                foodCard.innerHTML = `
+                    <div class="food-image" style="background-image: url('${food.image}')"></div>
+                    <div class="food-info">
+                        <h3>${food.name}</h3>
+                        <p>${food.description}</p>
+                        <div class="nutrition-facts">
+                            <div class="nutrition-item">
+                                <div class="nutrition-value">${food.calories}</div>
+                                <div class="nutrition-label">Calories</div>
+                            </div>
+                            <div class="nutrition-item">
+                                <div class="nutrition-value">${food.protein}g</div>
+                                <div class="nutrition-label">Protein</div>
+                            </div>
+                            <div class="nutrition-item">
+                                <div class="nutrition-value">${food.carbs}g</div>
+                                <div class="nutrition-label">Carbs</div>
+                            </div>
+                        </div>
+                        <button class="analyze-btn" data-id="${food.id}">Analyze Food</button>
+                    </div>
+                `;
+                foodResults.appendChild(foodCard);
+            });
+            
+            // Add event listeners to analyze buttons
+            document.querySelectorAll('.analyze-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const foodId = parseInt(this.getAttribute('data-id'));
+                    showFoodAnalysis(foodId);
+                });
+            });
+        }
+
+        // Handle search functionality
+        function handleSearch() {
+            const searchTerm = searchInput.value.toLowerCase().trim();
+            
+            if (searchTerm === '') {
+                displayFoods(foodDatabase);
+                return;
+            }
+            
+            const filteredFoods = foodDatabase.filter(food => 
+                food.name.toLowerCase().includes(searchTerm) || 
+                food.description.toLowerCase().includes(searchTerm)
+            );
+            
+            displayFoods(filteredFoods);
+        }
+
+        // Filter foods by category
+        function filterFoodsByCategory(category) {
+            if (category === 'all') {
+                displayFoods(foodDatabase);
+                return;
+            }
+            
+            const filteredFoods = foodDatabase.filter(food => food.category === category);
+            displayFoods(filteredFoods);
+        }
+
+        // Show food analysis in modal
+        function showFoodAnalysis(foodId) {
+            const food = foodDatabase.find(f => f.id === foodId);
+            
+            if (!food) return;
+            
+            // Update modal content
+            modalTitle.textContent = `Analysis: ${food.name}`;
+            modalFoodImage.style.backgroundImage = `url('${food.image}')`;
+            modalFoodName.textContent = food.name;
+            modalFoodDescription.textContent = food.description;
+            
+            // Update nutrition facts
+            modalNutrition.innerHTML = `
+                <div class="nutrition-card">
+                    <div class="value">${food.calories}</div>
+                    <div class="label">Calories</div>
+                </div>
+                <div class="nutrition-card">
+                    <div class="value">${food.protein}g</div>
+                    <div class="label">Protein</div>
+                </div>
+                <div class="nutrition-card">
+                    <div class="value">${food.carbs}g</div>
+                    <div class="label">Carbohydrates</div>
+                </div>
+                <div class="nutrition-card">
+                    <div class="value">${food.fat}g</div>
+                    <div class="label">Fat</div>
+                </div>
+                <div class="nutrition-card">
+                    <div class="value">${food.fiber}g</div>
+                    <div class="label">Fiber</div>
+                </div>
+                <div class="nutrition-card">
+                    <div class="value">${food.sugar}g</div>
+                    <div class="label">Sugar</div>
+                </div>
+            `;
+            
+            // Update benefits
+            modalBenefits.innerHTML = '';
+            food.benefits.forEach(benefit => {
+                const li = document.createElement('li');
+                li.innerHTML = `<i class="fas fa-check-circle"></i> ${benefit}`;
+                modalBenefits.appendChild(li);
+            });
+            
+            // Show modal
+            modal.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
