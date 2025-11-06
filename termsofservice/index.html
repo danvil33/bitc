@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms of Service - BitC Crypto Mining</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        * {
+            font-family: 'Nunito', sans-serif;
+        }
+        
+        .content-container {
+            max-width: 800px;
+        }
+        
+        .back-button:hover {
+            transform: translateX(-3px);
+        }
+        
+        .section-title {
+            position: relative;
+            padding-left: 1rem;
+        }
+        
+        .section-title::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.5rem;
+            height: 1.5rem;
+            width: 4px;
+            background-color: #7c3aed;
+            border-radius: 2px;
+        }
+        
+        .warning-box {
+            background-color: #fef3cd;
+            border: 1px solid #fde68a;
+            border-radius: 8px;
+            padding: 16px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen py-8 px-4">
+    <div class="content-container mx-auto bg-white rounded-2xl shadow-md overflow-hidden">
+        <!-- Header -->
+        <div class="bg-gradient-to-r from-purple-700 to-purple-800 p-6 text-white">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <button onclick="goBack()" class="back-button mr-4 p-2 rounded-full hover:bg-purple-600 transition-all duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                        </svg>
+                    </button>
+                    <div class="flex items-center">
+                        <div class="w-10 h-10 rounded-full overflow-hidden mr-3 bg-white flex items-center justify-center">
+                            <img src="https://bitcnetwork.com/assets/1.png" alt="BitC Logo" class="w-8 h-8 object-cover">
+                        </div>
+                        <h1 class="text-2xl font-bold">Terms of Service</h1>
+                    </div>
+                </div>
+                <div class="text-sm opacity-80">Last Updated: <span id="current-date"></span></div>
+            </div>
+        </div>
+        
+        <!-- Content -->
+        <div class="p-8">
+            <div class="prose max-w-none">
+                <div class="warning-box">
+                    <div class="flex items-start">
+                        <svg class="w-5 h-5 text-yellow-600 mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
+                        </svg>
+                        <div>
+                            <strong class="text-yellow-800">Important Notice:</strong>
+                            <p class="text-yellow-700 text-sm mt-1">
+                                The mining feature in this app collects virtual tokens for demonstration and entertainment purposes only. 
+                                Real tokens will be distributed once the platform matures and meets all regulatory requirements. 
+                                There is no guarantee of future token distribution.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <p class="text-gray-600 mb-6">
+                    Welcome to BitC Crypto Mining. By accessing or using our mobile application, you agree to be bound by these Terms of Service. Please read them carefully.
+                </p>
+                
+                <div class="mb-8">
+                    <h2 class="section-title text-xl font-bold text-gray-800 mb-4">1. Acceptance of Terms</h2>
+                    <p class="text-gray-600 mb-4">
+                        By downloading, installing, or using the BitC Crypto Mining app, you agree to be bound by these Terms of Service and our Privacy Policy. If you do not agree to these terms, please do not use our app.
+                    </p>
+                </div>
+
+                <div class="mb-8">
+                    <h2 class="section-title text-xl font-bold text-gray-800 mb-4">2. Description of Service</h2>
+                    <p class="text-gray-600 mb-4">
+                        BitC Crypto Mining is a mobile application that allows users to:
+                    </p>
+                    <ul class="list-disc pl-6 text-gray-600 space-y-2">
+                        <li>Create an account and profile</li>
+                        <li>Participate in virtual cryptocurrency mining simulations</li>
+                        <li>Track virtual token accumulation</li>
+                        <li>Engage with community features</li>
+                    </ul>
+                    <p class="text-gray-600 mt-4">
+                        <strong>Note:</strong> The mining feature is for entertainment and educational purposes only. Virtual tokens collected have no monetary value and are not redeemable for real cryptocurrency at this time.
+                    </p>
+                </div>
+
+                <div class="mb-8">
+                    <h2 class="section-title text-xl font-bold text-gray-800 mb-4">3. User Accounts</h2>
+                    <p class="text-gray-600 mb-4">
+                        To use certain features of our app, you must register for an account. You agree to:
+                    </p>
+                    <ul class="list-disc pl-6 text-gray-600 space-y-2">
+                        <li>Provide accurate and complete information</li>
+                        <li>Maintain the security of your password</li>
+                        <li>Accept responsibility for all activities that occur under your account</li>
+                        <li>Be at least 13 years old to use the app</li>
+                    </ul>
+                </div>
+
+                <div class="mb-8">
+                    <h2 class="section-title text-xl font-bold text-gray-800 mb-4">4. Virtual Tokens Disclaimer</h2>
+                    <p class="text-gray-600 mb-4">
+                        <strong>Important:</strong> The tokens mined through this application are virtual tokens for demonstration purposes. They:
+                    </p>
+                    <ul class="list-disc pl-6 text-gray-600 space-y-2">
+                        <li>Have no real-world monetary value</li>
+                        <li>Are not considered cryptocurrency or securities</li>
+                        <li>Cannot be exchanged for real currency or other items of value</li>
+                        <li>Are provided for entertainment and educational purposes only</li>
+                    </ul>
+                    <p class="text-gray-600 mt-4">
+                        Any future distribution of real tokens is subject to platform maturity, regulatory compliance, and is not guaranteed.
+                    </p>
+                </div>
+
+                <div class="mb-8">
+                    <h2 class="section-title text-xl font-bold text-gray-800 mb-4">5. Prohibited Activities</h2>
+                    <p class="text-gray-600 mb-4">
+                        You agree not to:
+                    </p>
+                    <ul class="list-disc pl-6 text-gray-600 space-y-2">
+                        <li>Use the app for any illegal purpose</li>
+                        <li>Attempt to hack, modify, or reverse engineer the app</li>
+                        <li>Create multiple accounts for fraudulent purposes</li>
+                        <li>Use automated scripts or bots to interact with the app</li>
+                        <li>Impersonate any person or entity</li>
+                        <li>Upload viruses or malicious code</li>
+                    </ul>
+                </div>
+
+                <div class="mb-8">
+                    <h2 class="section-title text-xl font-bold text-gray-800 mb-4">6. Intellectual Property</h2>
+                    <p class="text-gray-600 mb-4">
+                        The BitC Crypto Mining app, including all content, features, and functionality, is owned by us and protected by international copyright, trademark, and other intellectual property laws.
+                    </p>
+                </div>
+
+                <div class="mb-8">
+                    <h2 class="section-title text-xl font-bold text-gray-800 mb-4">7. Termination</h2>
+                    <p class="text-gray-600 mb-4">
+                        We may terminate or suspend your account and access to the app at our sole discretion, without notice, for conduct that we believe violates these Terms or is harmful to other users, us, or third parties, or for any other reason.
+                    </p>
+                </div>
+
+                <div class="mb-8">
+                    <h2 class="section-title text-xl font-bold text-gray-800 mb-4">8. Disclaimer of Warranties</h2>
+                    <p class="text-gray-600 mb-4">
+                        THE APP IS PROVIDED "AS IS" AND "AS AVAILABLE" WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED. WE DO NOT GUARANTEE THAT THE APP WILL BE UNINTERRUPTED, SECURE, OR ERROR-FREE.
+                    </p>
+                </div>
+
+                <div class="mb-8">
+                    <h2 class="section-title text-xl font-bold text-gray-800 mb-4">9. Limitation of Liability</h2>
+                    <p class="text-gray-600 mb-4">
+                        TO THE FULLEST EXTENT PERMITTED BY LAW, WE SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES RESULTING FROM YOUR USE OF THE APP.
+                    </p>
+                </div>
+
+                <div class="mb-8">
+                    <h2 class="section-title text-xl font-bold text-gray-800 mb-4">10. Changes to Terms</h2>
+                    <p class="text-gray-600 mb-4">
+                        We reserve the right to modify these Terms at any time. We will notify users of significant changes through the app or via email. Continued use of the app after changes constitutes acceptance of the new Terms.
+                    </p>
+                </div>
+
+                <div class="mb-8">
+                    <h2 class="section-title text-xl font-bold text-gray-800 mb-4">11. Governing Law</h2>
+                    <p class="text-gray-600 mb-4">
+                        These Terms shall be governed by and construed in accordance with the laws of [Your Country/State], without regard to its conflict of law provisions.
+                    </p>
+                </div>
+
+                <div class="mb-8">
+                    <h2 class="section-title text-xl font-bold text-gray-800 mb-4">12. Contact Information</h2>
+                    <p class="text-gray-600">
+                        If you have any questions about these Terms of Service, please contact us at:
+                    </p>
+                    <p class="text-purple-700 font-semibold mt-2">
+                        Email: legal@bitcnetwork.com
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Set current date
+        document.getElementById('current-date').textContent = new Date().toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+
+        // Go back function
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</body>
+</html>
