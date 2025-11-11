@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>BitC Network</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+    
+    body {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      color: white;
+      min-height: 100vh;
+      padding-bottom: 80px;
+    }
+    
+    .header {
+      background: rgba(33, 33, 62, 0.9);
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(10px);
+    }
+    
+    .balance {
+      font-size: 22px;
+      font-weight: 700;
+      color: #f0b90b;
+    }
+    
+    .menu-icon {
+      font-size: 24px;
+      color: #f0b90b;
+      cursor: pointer;
+    }
+    
+    .user-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #f0b90b;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #1a1a2e;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    
+    .mining-section {
+      text-align: center;
+      padding: 30px 20px;
+      margin-top: 20px;
+    }
+    
+    .mining-circle {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      background: rgba(240, 185, 11, 0.1);
+      border: 3px solid #f0b90b;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    
+    .mining-circle.active {
+      box-shadow: 0 0 20px rgba(240, 185, 11, 0.5);
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(240, 185, 11, 0.4); }
+      70% { box-shadow: 0 0 0 15px rgba(240, 185, 11, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(240, 185, 11, 0); }
+    }
+    
+    .mining-icon {
+      font-size: 50px;
+      color: #f0b90b;
+      margin-bottom: 10px;
+    }
+    
+    .mining-text {
+      font-size: 18px;
+      font-weight: 600;
+    }
+    
+    .mining-rate {
+      font-size: 14px;
+      color: #aaa;
+      margin-top: 5px;
+    }
+    
+    .mining-timer {
+      font-size: 16px;
+      color: #f0b90b;
+      margin-top: 5px;
+      font-weight: 600;
+    }
+    
+    .stats {
+      display: flex;
+      justify-content: space-around;
+      margin: 30px 20px;
+      background: rgba(33, 33, 62, 0.7);
+      border-radius: 15px;
+      padding: 20px;
+    }
+    
+    .stat-item {
+      text-align: center;
+    }
+    
+    .stat-value {
+      font-size: 24px;
+      font-weight: 700;
+      color: #f0b90b;
+    }
+    
+    .stat-label {
+      font-size: 14px;
+      color: #aaa;
+      margin-top: 5px;
+    }
+    
+    .action-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin: 20px;
+    }
+    
+    .action-btn {
+      background: #f0b90b;
+      color: #1a1a2e;
+      border: none;
+      border-radius: 50px;
+      padding: 12px 25px;
+      font-weight: 600;
+      font-size: 16px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s;
+    }
+    
+    .action-btn:hover {
+      background: #d4a017;
+      transform: translateY(-2px);
+    }
+    
+    .footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(33, 33, 62, 0.9);
+      display: flex;
+      justify-content: space-around;
+      padding: 15px 0;
+      backdrop-filter: blur(10px);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .footer-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+      color: #aaa;
+      transition: all 0.3s;
+    }
+    
+    .footer-item.active {
+      color: #f0b90b;
+    }
+    
+    .footer-icon {
+      font-size: 20px;
+      margin-bottom: 5px;
+    }
+    
+    .footer-label {
+      font-size: 12px;
+    }
+    
+    .content-section {
+      display: none;
+      padding: 20px;
+    }
+    
+    .content-section.active {
+      display: block;
+    }
+    
+    .section-title {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 20px;
+      color: #f0b90b;
+      text-align: center;
+    }
+    
+    .wallet-card {
+      background: rgba(33, 33, 62, 0.7);
+      border-radius: 15px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    
+    .wallet-address {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 15px;
+    }
+    
+    .address {
+      font-family: monospace;
+      font-size: 14px;
+      color: #aaa;
+    }
+    
+    .copy-btn {
+      background: none;
+      border: none;
+      color: #f0b90b;
+      cursor: pointer;
+    }
+    
+    .profile-info {
+      background: rgba(33, 33, 62, 0.7);
+      border-radius: 15px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    
+    .profile-header {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+    
+    .profile-avatar {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: #f0b90b;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #1a1a2e;
+      font-size: 24px;
+    }
+    
+    .profile-details {
+      flex: 1;
+    }
+    
+    .profile-name {
+      font-size: 20px;
+      font-weight: 600;
+    }
+    
+    .profile-since {
+      font-size: 14px;
+      color: #aaa;
+    }
+    
+    .referral-code {
+      background: rgba(33, 33, 62, 0.7);
+      border-radius: 15px;
+      padding: 20px;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    
+    .code {
+      font-size: 24px;
+      font-weight: 700;
+      color: #f0b90b;
+      margin: 15px 0;
+      letter-spacing: 2px;
+    }
+    
+    .notification {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: rgba(33, 33, 62, 0.9);
+      border-left: 4px solid #f0b90b;
+      padding: 15px 20px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transform: translateX(120%);
+      transition: transform 0.3s;
+      z-index: 1000;
+    }
+    
+    .notification.show {
+      transform: translateX(0);
+    }
+    
+    .notification-icon {
+      color: #f0b90b;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <div class="header">
+    <div class="menu-icon">
+      <i class="fas fa-bars"></i>
+    </div>
+    <div class="balance">0.000 BITC</div>
+    <div class="user-icon">
+      <i class="fas fa-user"></i>
+    </div>
+  </div>
+
+  <!-- Mining Section -->
+  <div class="mining-section">
+    <div class="mining-circle" id="mining-circle">
+      <div class="mining-icon">
+        <i class="fas fa-bolt"></i>
+      </div>
+      <div class="mining-text">MINE</div>
+      <div class="mining-rate" id="mining-rate">0.12 BITC/h</div>
+      <div class="mining-timer" id="mining-timer">00:00:00</div>
+    </div>
+    
+    <div class="stats">
+      <div class="stat-item">
+        <div class="stat-value" id="mined-total">0.000</div>
+        <div class="stat-label">Mined</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value" id="referrals-count">0</div>
+        <div class="stat-label">Referrals</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value" id="mining-session">0.000</div>
+        <div class="stat-label">Session</div>
+      </div>
+    </div>
+    
+    <div class="action-buttons">
+      <button class="action-btn" onclick="showNotification('Referral code copied!')">
+        <i class="fas fa-user-plus"></i> Invite
+      </button>
+      <button class="action-btn" onclick="navigate('wallet')">
+        <i class="fas fa-wallet"></i> Wallet
+      </button>
+    </div>
+  </div>
+
+  <!-- Wallet Section -->
+  <div class="content-section" id="wallet-content">
+    <div class="section-title">Wallet</div>
+    
+    <div class="wallet-card">
+      <div class="balance">0.000 BITC</div>
+      <div class="wallet-address">
+        <div class="address" id="wallet-address">0x1a2b3c4d5e6f7g8h9i0j</div>
+        <button class="copy-btn" onclick="copyAddress()">
+          <i class="fas fa-copy"></i>
+        </button>
+      </div>
+    </div>
+    
+    <div class="action-buttons">
+      <button class="action-btn" onclick="showNotification('Receive feature coming soon')">
+        <i class="fas fa-arrow-down"></i> Receive
+      </button>
+      <button class="action-btn" onclick="showNotification('Send feature coming soon')">
+        <i class="fas fa-arrow-up"></i> Send
+      </button>
+    </div>
+  </div>
+
+  <!-- Profile Section -->
+  <div class="content-section" id="profile-content">
+    <div class="section-title">Profile</div>
+    
+    <div class="profile-info">
+      <div class="profile-header">
+        <div class="profile-avatar">
+          <i class="fas fa-user"></i>
+        </div>
+        <div class="profile-details">
+          <div class="profile-name" id="profile-name">BitC Miner</div>
+          <div class="profile-since" id="member-since">Member since 2024</div>
+        </div>
+      </div>
+      
+      <div class="stats">
+        <div class="stat-item">
+          <div class="stat-value" id="total-earned">0.000</div>
+          <div class="stat-label">Total Earned</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value" id="profile-referrals">0</div>
+          <div class="stat-label">Referrals</div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="referral-code">
+      <div>Your Referral Code</div>
+      <div class="code" id="referral-code">BITC1234</div>
+      <button class="action-btn" onclick="copyReferralCode()">
+        <i class="fas fa-copy"></i> Copy Code
+      </button>
+    </div>
+  </div>
+
+  <!-- Footer Navigation -->
+  <div class="footer">
+    <div class="footer-item active" onclick="navigate('home')">
+      <div class="footer-icon">
+        <i class="fas fa-home"></i>
+      </div>
+      <div class="footer-label">Home</div>
+    </div>
+    <div class="footer-item" onclick="navigate('wallet')">
+      <div class="footer-icon">
+        <i class="fas fa-wallet"></i>
+      </div>
+      <div class="footer-label">Wallet</div>
+    </div>
+    <div class="footer-item" onclick="navigate('profile')">
+      <div class="footer-icon">
+        <i class="fas fa-user"></i>
+      </div>
+      <div class="footer-label">Profile</div>
+    </div>
+  </div>
+
+  <!-- Notification -->
+  <div class="notification" id="notification">
+    <div class="notification-icon">
+      <i class="fas fa-info-circle"></i>
+    </div>
+    <div class="notification-message" id="notification-message">This is a notification</div>
+  </div>
+
+  <script>
+    // DOM Elements
+    const miningCircle = document.getElementById('mining-circle');
+    const miningRate = document.getElementById('mining-rate');
+    const miningTimer = document.getElementById('mining-timer');
+    const minedTotal = document.getElementById('mined-total');
+    const referralsCount = document.getElementById('referrals-count');
+    const miningSession = document.getElementById('mining-session');
+    const walletAddress = document.getElementById('wallet-address');
+    const profileName = document.getElementById('profile-name');
+    const memberSince = document.getElementById('member-since');
+    const totalEarned = document.getElementById('total-earned');
+    const profileReferrals = document.getElementById('profile-referrals');
+    const referralCode = document.getElementById('referral-code');
+    const notification = document.getElementById('notification');
+    const notificationMessage = document.getElementById('notification-message');
+    
+    // Mining state
+    let isMining = false;
+    let miningStartTime = null;
+    let miningInterval = null;
+    let sessionBitc = 0;
+    const miningRatePerHour = 0.12;
+    
+    // User data
+    const userData = {
+      minedTotal: 0.024,
+      referrals: 3,
+      walletBalance: 0.024,
+      memberSince: 'Jan 2024',
+      referralCode: 'BITC' + Math.floor(1000 + Math.random() * 9000)
+    };
+    
+    // Initialize the app
+    function initApp() {
+      updateUI();
+    }
+    
+    // Update UI with user data
+    function updateUI() {
+      minedTotal.textContent = userData.minedTotal.toFixed(3);
+      referralsCount.textContent = userData.referrals;
+      miningSession.textContent = sessionBitc.toFixed(3);
+      walletAddress.textContent = '0x' + Math.random().toString(16).substr(2, 20);
+      profileName.textContent = 'BitC Miner';
+      memberSince.textContent = 'Member since ' + userData.memberSince;
+      totalEarned.textContent = userData.minedTotal.toFixed(3);
+      profileReferrals.textContent = userData.referrals;
+      referralCode.textContent = userData.referralCode;
+    }
+    
+    // Start/stop mining
+    function toggleMining() {
+      if (!isMining) {
+        // Start mining
+        isMining = true;
+        miningCircle.classList.add('active');
+        miningStartTime = Date.now();
+        
+        miningInterval = setInterval(() => {
+          const now = Date.now();
+          const elapsedHours = (now - miningStartTime) / (1000 * 60 * 60);
+          sessionBitc = elapsedHours * miningRatePerHour;
+          
+          // Update timer
+          const elapsedSeconds = Math.floor((now - miningStartTime) / 1000);
+          const hours = Math.floor(elapsedSeconds / 3600);
+          const minutes = Math.floor((elapsedSeconds % 3600) / 60);
+          const seconds = elapsedSeconds % 60;
+          
+          miningTimer.textContent = 
+            `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+          
+          miningSession.textContent = sessionBitc.toFixed(3);
+        }, 1000);
+        
+        showNotification('Mining started!');
+      } else {
+        // Stop mining
+        isMining = false;
+        miningCircle.classList.remove('active');
+        clearInterval(miningInterval);
+        miningTimer.textContent = '00:00:00';
+        
+        // Add session earnings to total
+        userData.minedTotal += sessionBitc;
+        userData.walletBalance += sessionBitc;
+        sessionBitc = 0;
+        
+        updateUI();
+        showNotification('Mining session completed!');
+      }
+    }
+    
+    // Navigation
+    function navigate(section) {
+      // Hide all content sections
+      document.querySelectorAll('.content-section').forEach(el => {
+        el.classList.remove('active');
+      });
+      
+      // Update footer active state
+      document.querySelectorAll('.footer-item').forEach(el => {
+        el.classList.remove('active');
+      });
+      
+      // Show selected section
+      if (section === 'home') {
+        document.querySelector('.footer-item:nth-child(1)').classList.add('active');
+        document.querySelector('.mining-section').style.display = 'block';
+      } else if (section === 'wallet') {
+        document.getElementById('wallet-content').classList.add('active');
+        document.querySelector('.footer-item:nth-child(2)').classList.add('active');
+        document.querySelector('.mining-section').style.display = 'none';
+      } else if (section === 'profile') {
+        document.getElementById('profile-content').classList.add('active');
+        document.querySelector('.footer-item:nth-child(3)').classList.add('active');
+        document.querySelector('.mining-section').style.display = 'none';
+      }
+    }
+    
+    // Copy wallet address
+    function copyAddress() {
+      navigator.clipboard.writeText(walletAddress.textContent)
+        .then(() => showNotification('Wallet address copied!'))
+        .catch(() => showNotification('Failed to copy address'));
+    }
+    
+    // Copy referral code
+    function copyReferralCode() {
+      navigator.clipboard.writeText(referralCode.textContent)
+        .then(() => showNotification('Referral code copied!'))
+        .catch(() => showNotification('Failed to copy code'));
+    }
+    
+    // Show notification
+    function showNotification(message) {
+      notificationMessage.textContent = message;
+      notification.classList.add('show');
+      
+      setTimeout(() => {
+        notification.classList.remove('show');
+      }, 3000);
+    }
+    
+    // Event listeners
+    miningCircle.addEventListener('click', toggleMining);
+    
+    // Initialize the app
+    window.addEventListener('load', initApp);
+  </script>
+</body>
+</html>
