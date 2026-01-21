@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday Mom & Twins 🎉</title>
+
+<!-- Preconnect to CDNs for faster loading -->
+<link rel="preconnect" href="https://unpkg.com">
+<link rel="preconnect" href="https://cdnjs.cloudflare.com">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<!-- AOS Library -->
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+<!-- Howler.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
+
+<!-- Font Awesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Dancing+Script:wght@700&family=Great+Vibes&display=swap" rel="stylesheet">
+
+<!-- Preload critical images -->
+<link rel="preload" as="image" href="https://raw.githubusercontent.com/danvil33/bitc/refs/heads/main/assets/IMG-20260121-WA0004.jpg">
+
+<style>
+  :root {
+    --bg: #0b0f1a;
+    --card: rgba(255, 255, 255, 0.08);
+    --text: #f6f6f6;
+    --soft: rgba(255, 255, 255, 0.6);
+    --gold: #f5c06b;
+    --pink: #ff6fa8;
+    --blue: #6fa8ff;
+    --purple: #b66fff;
+    --green: #6fffb0;
+    --rose: #ff9ec0;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: "Poppins", Arial, sans-serif;
+    background: linear-gradient(135deg, #0b0f1a, #1c1f2b, #0b0f1a);
+    color: var(--text);
+    overflow-x: hidden;
+    min-height: 100vh;
+    position: relative;
+  }
+
+  /* Glitter Background Effect */
+  .glitter-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .glitter {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.9);
+    animation: glitter-animation 3s infinite linear;
+  }
+
+  @keyframes glitter-animation {
+    0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+  }
+
+  .container {
+    width: 90%;
+    max-width: 1400px;
+    margin: auto;
+    padding: 30px 0;
+    position: relative;
+    z-index: 2;
+  }
+
+  header {
+    text-align: center;
+    padding: 40px 20px;
+    background: rgba(11, 15, 26, 0.85);
+    border-radius: 25px;
+    margin-bottom: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(10px);
+    position: relative;
+    overflow: hidden;
+  }
+
+  header::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: linear-gradient(90deg, var(--pink), var(--gold), var(--blue), var(--green), var(--purple));
+  }
+
+  header h1 {
+    font-size: 64px;
+    letter-spacing: 1px;
+    color: var(--gold);
+    text-shadow: 0 0 20px rgba(245, 192, 107, 0.7);
+    margin-bottom: 10px;
+    font-weight: 700;
+    font-family: 'Great Vibes', cursive;
+    position: relative;
+    display: inline-block;
+  }
+
+  header h1::after {
+    content: "🎂🎈🎁";
+    position: absolute;
+    bottom: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 28px;
+  }
+
+  .birthday-names {
+    font-size: 32px;
+    color: var(--rose);
+    margin: 20px 0;
+    font-weight: 600;
+    text-shadow: 0 0 10px rgba(255, 158, 192, 0.5);
+    font-family: 'Dancing Script', cursive;
+  }
+
+  .subtitle {
+    font-size: 22px;
+    color: var(--rose);
+    margin-top: 40px;
+    font-weight: 500;
+    text-shadow: 0 0 10px rgba(255, 158, 192, 0.5);
+  }
+
+  header p {
+    margin-top: 15px;
+    color: var(--soft);
+    font-size: 20px;
+    font-weight: 300;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.6;
+  }
+
+  .today-badge {
+    display: inline-block;
+    background: linear-gradient(45deg, var(--pink), var(--purple), var(--gold));
+    color: white;
+    padding: 12px 30px;
+    border-radius: 50px;
+    font-weight: 700;
+    margin-top: 20px;
+    animation: pulse 2s infinite;
+    box-shadow: 0 0 20px rgba(255, 111, 168, 0.6);
+    font-size: 18px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  @keyframes pulse {
+    0% { transform: scale(1); box-shadow: 0 0 20px rgba(255, 111, 168, 0.6); }
+    50% { transform: scale(1.05); box-shadow: 0 0 30px rgba(255, 111, 168, 0.9); }
+    100% { transform: scale(1); box-shadow: 0 0 20px rgba(255, 111, 168, 0.6); }
+  }
+
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: center;
+    margin-top: 50px;
+  }
+
+  @media (max-width: 1024px) {
+    .hero {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .hero .image {
+    border-radius: 25px;
+    overflow: hidden;
+    border: 3px solid rgba(255,255,255,0.2);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+    height: 500px;
+    position: relative;
+  }
+
+  .hero .image::after {
+    content: "🎂 Today is the Day! 🎂";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to right, var(--pink), var(--purple));
+    color: white;
+    text-align: center;
+    padding: 15px;
+    font-weight: 700;
+    font-size: 22px;
+    text-shadow: 0 2px 5px rgba(0,0,0,0.3);
+  }
+
+  .hero img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    transition: transform 0.8s ease;
+  }
+
+  .hero .image:hover img {
+    transform: scale(1.05);
+  }
+
+  .hero .content {
+    padding: 40px;
+    background: rgba(255, 255, 255, 0.07);
+    border-radius: 25px;
+    border: 1px solid rgba(255,255,255,0.15);
+    backdrop-filter: blur(15px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+  }
+
+  .hero .content h2 {
+    font-size: 42px;
+    margin-bottom: 20px;
+    color: var(--pink);
+    text-shadow: 0 0 15px rgba(255, 111, 168, 0.5);
+    font-family: 'Dancing Script', cursive;
+  }
+
+  .hero .content p {
+    color: var(--soft);
+    font-size: 18px;
+    margin-bottom: 30px;
+    line-height: 1.7;
+  }
+
+  .audio-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 30px;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 16px 28px;
+    border-radius: 15px;
+    border: 1px solid rgba(255,255,255,0.2);
+    background: linear-gradient(45deg, rgba(255, 111, 168, 0.2), rgba(245, 192, 107, 0.2));
+    color: var(--text);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    font-size: 17px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s;
+  }
+
+  .btn:hover::before {
+    left: 100%;
+  }
+
+  .btn:hover {
+    transform: translateY(-5px);
+    background: linear-gradient(45deg, rgba(255, 111, 168, 0.3), rgba(245, 192, 107, 0.3));
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  .btn-play {
+    background: linear-gradient(45deg, var(--green), var(--blue));
+    color: #0b0f1a;
+  }
+
+  .btn-pause {
+    background: linear-gradient(45deg, var(--purple), var(--pink));
+  }
+
+  .btn-fireworks {
+    background: linear-gradient(45deg, var(--gold), var(--rose));
+  }
+
+  .celebration-message {
+    text-align: center;
+    margin-top: 30px;
+    padding: 25px;
+    background: linear-gradient(45deg, rgba(245, 192, 107, 0.15), rgba(255, 111, 168, 0.15));
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  }
+
+  .celebration-message h3 {
+    color: var(--gold);
+    font-size: 28px;
+    margin-bottom: 10px;
+    font-family: 'Dancing Script', cursive;
+  }
+
+  .celebration-message p {
+    color: var(--soft);
+    font-size: 18px;
+  }
+
+  .gallery {
+    margin-top: 80px;
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 25px;
+    border: 1px solid rgba(255,255,255,0.1);
+    position: relative;
+  }
+
+  .gallery::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(90deg, var(--blue), var(--green), var(--purple));
+    border-radius: 25px 25px 0 0;
+  }
+
+  .gallery h2 {
+    text-align: center;
+    margin-bottom: 40px;
+    color: var(--gold);
+    font-size: 48px;
+    font-family: 'Great Vibes', cursive;
+    text-shadow: 0 0 15px rgba(245, 192, 107, 0.5);
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+  }
+
+  @media (max-width: 1024px) {
+    .grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .grid-item {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    height: 280px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255,255,255,0.15);
+    transition: all 0.5s ease;
+  }
+
+  .grid-item:hover {
+    transform: translateY(-15px) scale(1.03);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+    border-color: var(--gold);
+  }
+
+  .grid-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.8s ease;
+  }
+
+  .grid-item:hover img {
+    transform: scale(1.1);
+  }
+
+  .grid-item .overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(11, 15, 26, 0.9), transparent);
+    padding: 20px;
+    color: white;
+    transform: translateY(100%);
+    transition: transform 0.5s ease;
+  }
+
+  .grid-item:hover .overlay {
+    transform: translateY(0);
+  }
+
+  .grid-item .overlay h3 {
+    font-size: 20px;
+    margin-bottom: 5px;
+    color: var(--gold);
+  }
+
+  /* Flower animation */
+  .flower {
+    position: fixed;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    opacity: 0.9;
+    animation: fall 6s infinite linear;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  @keyframes fall {
+    0% { transform: translateY(-50px) rotate(0deg); opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+  }
+
+  .confetti {
+    position: fixed;
+    width: 20px;
+    height: 20px;
+    opacity: 0.8;
+    animation: confettiFall 5s infinite linear;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  @keyframes confettiFall {
+    0% { transform: translateY(-50px) rotate(0deg); opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+  }
+
+  .balloon {
+    position: fixed;
+    width: 60px;
+    height: 80px;
+    border-radius: 50%;
+    animation: balloonFloat 8s infinite linear;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  @keyframes balloonFloat {
+    0% { transform: translateY(110vh) translateX(0) rotate(0deg); opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { transform: translateY(-100px) translateX(50px) rotate(10deg); opacity: 0; }
+  }
+
+  footer {
+    text-align: center;
+    margin-top: 80px;
+    padding: 30px;
+    color: var(--soft);
+    font-size: 16px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    background: rgba(11, 15, 26, 0.7);
+    border-radius: 20px;
+  }
+
+  footer p {
+    margin-bottom: 10px;
+  }
+
+  .heart {
+    color: var(--pink);
+    animation: heartbeat 1.5s infinite;
+    display: inline-block;
+  }
+
+  /* Modal for image view */
+  .modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .modal-content {
+    max-width: 90%;
+    max-height: 90%;
+    border-radius: 15px;
+    box-shadow: 0 0 50px rgba(255, 255, 255, 0.2);
+  }
+
+  .close-modal {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    color: white;
+    font-size: 40px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .close-modal:hover {
+    color: var(--pink);
+    transform: rotate(90deg);
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    header h1 { font-size: 48px; }
+    .birthday-names { font-size: 24px; }
+    .subtitle { font-size: 18px; }
+    header p { font-size: 18px; }
+    .today-badge { font-size: 16px; padding: 10px 20px; }
+    .hero .content h2 { font-size: 36px; }
+    .hero .image { height: 350px; }
+    .gallery h2 { font-size: 36px; }
+    .grid-item { height: 220px; }
+    .btn { padding: 14px 20px; font-size: 16px; }
+  }
+
+  @media (max-width: 480px) {
+    header h1 { font-size: 36px; }
+    .birthday-names { font-size: 20px; }
+    .hero .content h2 { font-size: 30px; }
+    .gallery { padding: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Glitter Background -->
+<div class="glitter-bg" id="glitterBg"></div>
+
+<!-- Floating Elements -->
+<div id="flowers"></div>
+<div id="confetti"></div>
+<div id="balloons"></div>
+
+<!-- Image Modal -->
+<div class="modal" id="imageModal">
+  <span class="close-modal" id="closeModal">&times;</span>
+  <img class="modal-content" id="modalImage">
+</div>
+
+<div class="container">
+  <header data-aos="fade-down">
+    <h1>Happy Birthday 🎉</h1>
+    <div class="birthday-names">Mary Cornel Mwangalaba & Ester Cornel Mwangalaba</div>
+    <div class="subtitle">A Celebration of Love, Joy & Beautiful Memories</div>
+    <p>Today is the most special day of the year! We celebrate with love, music, beautiful memories, and all our hearts.</p>
+    <div class="today-badge">🎂 TODAY IS THE DAY! 🎂</div>
+  </header>
+
+  <section class="hero" data-aos="fade-up">
+    <div class="image">
+      <!-- Main featured image -->
+      <img src="https://raw.githubusercontent.com/danvil33/bitc/refs/heads/main/assets/IMG-20260121-WA0004.jpg" alt="Birthday Celebration" id="mainImage" loading="eager">
+    </div>
+    <div class="content">
+      <h2>Happy Birthday! 🎈</h2>
+      <p>To the most amazing mom and the wonderful twins, may your special day be filled with endless joy, laughter, and beautiful moments. Today we celebrate you, your love, and the incredible bond you share. Wishing you a birthday as wonderful as you are!</p>
+      
+      <div class="audio-controls">
+        <button class="btn btn-play" id="playBtn">
+          <i class="fas fa-play"></i> Play Birthday Song
+        </button>
+        <button class="btn btn-pause" id="pauseBtn">
+          <i class="fas fa-pause"></i> Pause Music
+        </button>
+        <button class="btn btn-fireworks" id="fireworksBtn">
+          <i class="fas fa-fire"></i> Launch Fireworks
+        </button>
+        <button class="btn" id="toggleAnimations">
+          <i class="fas fa-magic"></i> Toggle Effects
+        </button>
+      </div>
+
+      <div class="celebration-message">
+        <h3>🎉 The Celebration Is On! 🎉</h3>
+        <p>Enjoy every moment of this wonderful day filled with love and happiness!</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Celebration Moments Section (Moved up) -->
+  <section class="gallery" data-aos="fade-up">
+    <h2>Celebration Moments</h2>
+    <div class="grid" id="galleryGrid">
+      <!-- Images will be loaded dynamically from your GitHub -->
+    </div>
+  </section>
+  
+  <footer>
+    <p>Made with <span class="heart">❤️</span> for the special birthday celebration | Today is the day to celebrate!</p>
+    <p>© 2023 Birthday Celebration | All images are from the celebration</p>
+  </footer>
+</div>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+  // Initialize AOS animations
+  AOS.init({
+    duration: 1000,
+    once: false,
+    offset: 100
+  });
+
+  // Create glitter background
+  const glitterBg = document.getElementById('glitterBg');
+  for (let i = 0; i < 150; i++) {
+    const glitter = document.createElement('div');
+    glitter.className = 'glitter';
+    glitter.style.left = Math.random() * 100 + 'vw';
+    glitter.style.animationDuration = (2 + Math.random() * 4) + 's';
+    glitter.style.animationDelay = Math.random() * 5 + 's';
+    glitterBg.appendChild(glitter);
+  }
+
+  // Create floating animations
+  const flowerContainer = document.getElementById('flowers');
+  const confettiContainer = document.getElementById('confetti');
+  const balloonContainer = document.getElementById('balloons');
+  
+  const colors = ['#ff6fa8', '#f5c06b', '#6fa8ff', '#6fffb0', '#b66fff', '#ff9ec0'];
+  
+  // Create flowers
+  for (let i = 0; i < 25; i++) {
+    const flower = document.createElement('div');
+    flower.className = 'flower';
+    flower.style.left = Math.random() * 100 + 'vw';
+    flower.style.background = `radial-gradient(circle at center, ${colors[Math.floor(Math.random() * colors.length)]}, ${colors[Math.floor(Math.random() * colors.length)]})`;
+    flower.style.width = (20 + Math.random() * 20) + 'px';
+    flower.style.height = flower.style.width;
+    flower.style.animationDuration = (4 + Math.random() * 7) + 's';
+    flower.style.animationDelay = Math.random() * 3 + 's';
+    flowerContainer.appendChild(flower);
+  }
+  
+  // Create confetti
+  for (let i = 0; i < 60; i++) {
+    const confetti = document.createElement('div');
+    confetti.className = 'confetti';
+    confetti.style.left = Math.random() * 100 + 'vw';
+    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+    confetti.style.width = (10 + Math.random() * 15) + 'px';
+    confetti.style.height = (10 + Math.random() * 15) + 'px';
+    confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+    confetti.style.animationDuration = (3 + Math.random() * 5) + 's';
+    confetti.style.animationDelay = Math.random() * 4 + 's';
+    confettiContainer.appendChild(confetti);
+  }
+  
+  // Create balloons
+  for (let i = 0; i < 15; i++) {
+    const balloon = document.createElement('div');
+    balloon.className = 'balloon';
+    balloon.style.left = Math.random() * 100 + 'vw';
+    balloon.style.background = `radial-gradient(circle at 30% 30%, ${colors[Math.floor(Math.random() * colors.length)]}, ${colors[Math.floor(Math.random() * colors.length)]})`;
+    balloon.style.width = (40 + Math.random() * 40) + 'px';
+    balloon.style.height = (60 + Math.random() * 40) + 'px';
+    balloon.style.animationDuration = (6 + Math.random() * 8) + 's';
+    balloon.style.animationDelay = Math.random() * 5 + 's';
+    balloonContainer.appendChild(balloon);
+  }
+
+  // Audio player using Howler.js
+  // Using a free birthday song URL
+  const song = new Howl({
+    src: ['https://assets.mixkit.co/music/preview/mixkit-happy-birthday-to-you-443.mp3'],
+    volume: 0.8,
+    onplay: function() {
+      console.log('Birthday song playing!');
+      document.getElementById('playBtn').innerHTML = '<i class="fas fa-volume-up"></i> Playing...';
+      createFireworks(3);
+    },
+    onpause: function() {
+      document.getElementById('playBtn').innerHTML = '<i class="fas fa-play"></i> Play Birthday Song';
+    }
+  });
+
+  document.getElementById('playBtn').addEventListener('click', () => {
+    song.play();
+    createFireworks(5);
+    Swal.fire({
+      title: 'Music Started!',
+      text: 'Enjoy the birthday song!',
+      icon: 'success',
+      timer: 2000,
+      showConfirmButton: false
+    });
+  });
+  
+  document.getElementById('pauseBtn').addEventListener('click', () => {
+    song.pause();
+    Swal.fire({
+      title: 'Music Paused',
+      text: 'Resume whenever you want!',
+      icon: 'info',
+      timer: 2000,
+      showConfirmButton: false
+    });
+  });
+  
+  // Fireworks button
+  document.getElementById('fireworksBtn').addEventListener('click', () => {
+    createFireworks(25);
+    if (!song.playing()) {
+      song.play();
+    }
+    Swal.fire({
+      title: 'Fireworks! 🎆',
+      text: 'Celebrating with fireworks!',
+      icon: 'success',
+      timer: 2000,
+      showConfirmButton: false
+    });
+  });
+
+  // Toggle animations button
+  let animationsEnabled = true;
+  document.getElementById('toggleAnimations').addEventListener('click', () => {
+    animationsEnabled = !animationsEnabled;
+    const elements = document.querySelectorAll('.flower, .confetti, .balloon, .glitter');
+    elements.forEach(el => {
+      el.style.display = animationsEnabled ? 'block' : 'none';
+    });
+    document.getElementById('toggleAnimations').innerHTML = animationsEnabled 
+      ? '<i class="fas fa-magic"></i> Disable Effects' 
+      : '<i class="fas fa-magic"></i> Enable Effects';
+    
+    Swal.fire({
+      title: animationsEnabled ? 'Effects Enabled!' : 'Effects Disabled',
+      icon: animationsEnabled ? 'success' : 'info',
+      timer: 1500,
+      showConfirmButton: false
+    });
+  });
+
+  // Load gallery images from GitHub with optimized loading
+  const imageUrls = [
+    "https://raw.githubusercontent.com/danvil33/bitc/refs/heads/main/assets/IMG-20260121-WA0004.jpg",
+    "https://raw.githubusercontent.com/danvil33/bitc/refs/heads/main/assets/IMG-20260121-WA0005.jpg",
+    "https://raw.githubusercontent.com/danvil33/bitc/refs/heads/main/assets/IMG-20260121-WA0006.jpg",
+    "https://raw.githubusercontent.com/danvil33/bitc/refs/heads/main/assets/IMG-20260121-WA0007.jpg",
+    "https://raw.githubusercontent.com/danvil33/bitc/refs/heads/main/assets/IMG-20260121-WA0008.jpg",
+    "https://raw.githubusercontent.com/danvil33/bitc/refs/heads/main/assets/IMG-20260121-WA0009.jpg",
+    "https://raw.githubusercontent.com/danvil33/bitc/refs/heads/main/assets/IMG-20260121-WA0010.jpg"
+  ];
+
+  const galleryGrid = document.getElementById('galleryGrid');
+  const captions = [
+    "Beautiful Birthday Moment",
+    "Celebration Joy",
+    "Family Happiness",
+    "Special Birthday Cake",
+    "Twins Celebration",
+    "Memorable Moments",
+    "Birthday Cheers"
+  ];
+
+  // Preload gallery images
+  const preloadImages = (urls) => {
+    urls.forEach(url => {
+      const img = new Image();
+      img.src = url;
+    });
+  };
+
+  // Load gallery images with lazy loading
+  imageUrls.forEach((url, index) => {
+    const gridItem = document.createElement('div');
+    gridItem.className = 'grid-item';
+    gridItem.setAttribute('data-aos', 'zoom-in');
+    gridItem.setAttribute('data-aos-delay', (index * 100) + '');
+    
+    const img = document.createElement('img');
+    img.src = url;
+    img.alt = captions[index] || "Birthday Celebration";
+    img.loading = "lazy";
+    img.decoding = "async";
+    
+    const overlay = document.createElement('div');
+    overlay.className = 'overlay';
+    overlay.innerHTML = `<h3>${captions[index] || "Birthday Celebration"}</h3><p>Click to view larger</p>`;
+    
+    gridItem.appendChild(img);
+    gridItem.appendChild(overlay);
+    
+    // Add click event to open modal
+    gridItem.addEventListener('click', () => openModal(url, captions[index]));
+    
+    galleryGrid.appendChild(gridItem);
+  });
+
+  // Preload all gallery images in background
+  setTimeout(() => preloadImages(imageUrls), 1000);
+
+  // Modal functionality
+  const modal = document.getElementById('imageModal');
+  const modalImage = document.getElementById('modalImage');
+  const closeModal = document.getElementById('closeModal');
+
+  function openModal(src, alt) {
+    modalImage.src = src;
+    modalImage.alt = alt || "Birthday Celebration";
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
+
+  closeModal.addEventListener('click', () => {
+    modal.style.display = 'none';
+    document.body.style.overflow = 'auto';
+  });
+
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      modal.style.display = 'none';
+      document.body.style.overflow = 'auto';
+    }
+  });
+
+  // Fireworks animation
+  function createFireworks(count) {
+    if (!animationsEnabled) return;
+    
+    for (let i = 0; i < count; i++) {
+      setTimeout(() => {
+        const firework = document.createElement('div');
+        firework.style.position = 'fixed';
+        firework.style.width = '6px';
+        firework.style.height = '6px';
+        firework.style.borderRadius = '50%';
+        firework.style.background = colors[Math.floor(Math.random() * colors.length)];
+        firework.style.left = Math.random() * 100 + 'vw';
+        firework.style.top = Math.random() * 100 + 'vh';
+        firework.style.boxShadow = `0 0 15px ${colors[Math.floor(Math.random() * colors.length)]}`;
+        firework.style.zIndex = '1000';
+        firework.style.pointerEvents = 'none';
+        document.body.appendChild(firework);
+        
+        // Animate firework
+        const size = 15 + Math.random() * 25;
+        const anim = firework.animate([
+          { transform: 'scale(1)', opacity: 1 },
+          { transform: `scale(${size})`, opacity: 0 }
+        ], {
+          duration: 1000,
+          easing: 'ease-out'
+        });
+        
+        // Remove firework after animation
+        anim.onfinish = () => {
+          document.body.removeChild(firework);
+        };
+      }, i * 100);
+    }
+  }
+
+  // Rotate main image every 10 seconds
+  let currentImageIndex = 0;
+  function rotateMainImage() {
+    currentImageIndex = (currentImageIndex + 1) % imageUrls.length;
+    const mainImage = document.getElementById('mainImage');
+    mainImage.style.opacity = 0;
+    
+    setTimeout(() => {
+      mainImage.src = imageUrls[currentImageIndex];
+      mainImage.style.opacity = 1;
+    }, 500);
+  }
+  
+  // Start rotating images after 10 seconds
+  setTimeout(() => {
+    setInterval(rotateMainImage, 10000);
+  }, 10000);
+
+  // Auto-play music after a short delay (optional)
+  setTimeout(() => {
+    // Uncomment the next line if you want music to auto-play
+    // song.play();
+    createFireworks(5);
+  }, 1500);
+  
+  // Show welcome alert
+  setTimeout(() => {
+    Swal.fire({
+      title: 'Happy Birthday! 🎂',
+      html: '<div style="font-size: 24px; margin: 20px 0;">Mary Cornel Mwangalaba &<br>Ester Cornel Mwangalaba</div><p>Enjoy this special celebration!</p>',
+      icon: 'success',
+      confirmButtonText: 'Celebrate!',
+      background: 'rgba(11, 15, 26, 0.9)',
+      color: '#f6f6f6',
+      confirmButtonColor: '#ff6fa8'
+    });
+  }, 1000);
+
+  // Add some random fireworks occasionally
+  setInterval(() => {
+    if (animationsEnabled && Math.random() > 0.7) {
+      createFireworks(2);
+    }
+  }, 5000);
+</script>
+</body>
+</html>
