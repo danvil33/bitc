@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BitC Crypto Mining - Auth</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>BitC Network - Login</title>
+    <!-- Facebook-like fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -12,295 +13,563 @@
             theme: {
                 extend: {
                     colors: {
-                        primary: {
-                            50: '#faf5ff',
-                            100: '#f3e8ff',
-                            500: '#a855f7',
-                            600: '#9333ea',
-                            700: '#7c3aed',
-                            800: '#6b21a8',
-                            900: '#4c1d95',
+                        facebook: {
+                            blue: '#1877F2',
+                            blueDark: '#166FE5',
+                            green: '#42B72A',
+                            greenDark: '#36A420',
+                            gray: '#F0F2F5',
+                            text: '#1C1E21',
+                            textSecondary: '#65676B',
+                            border: '#DDDFE2'
                         }
                     },
                     fontFamily: {
-                        'inter': ['Inter', 'sans-serif'],
+                        'segoe': ['Segoe UI', 'Helvetica Neue', 'Arial', 'sans-serif'],
                     },
-                    animation: {
-                        'pulse-slow': 'pulse 2s infinite',
+                    boxShadow: {
+                        'facebook': '0 2px 4px rgba(0, 0, 0, .1), 0 8px 16px rgba(0, 0, 0, .1)',
+                        'facebook-inset': 'inset 0 0 0 1px #dddfe2',
+                        'button': '0 1px 2px rgba(0, 0, 0, .05)',
+                    },
+                    borderRadius: {
+                        'facebook': '8px',
+                        'facebook-lg': '12px'
                     }
                 }
             }
         }
     </script>
+    <style>
+        /* Facebook-like custom styles */
+        body {
+            -webkit-tap-highlight-color: transparent;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        .input-facebook {
+            border: 1px solid #dddfe2;
+            font-size: 17px;
+            padding: 14px 16px;
+            transition: border-color 0.2s;
+        }
+        
+        .input-facebook:focus {
+            border-color: #1877F2;
+            box-shadow: 0 0 0 2px #e7f3ff;
+            outline: none;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(to bottom, #1877F2, #166FE5);
+            border: 1px solid #166FE5;
+            font-size: 20px;
+            font-weight: 600;
+            padding: 12px;
+            transition: background-color 0.2s;
+        }
+        
+        .btn-primary:hover {
+            background: linear-gradient(to bottom, #166FE5, #145CD4);
+        }
+        
+        .btn-secondary {
+            background: #42B72A;
+            border: 1px solid #42B72A;
+            font-size: 17px;
+            font-weight: 600;
+            padding: 12px;
+            transition: background-color 0.2s;
+        }
+        
+        .btn-secondary:hover {
+            background: #36A420;
+            border-color: #36A420;
+        }
+        
+        .divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: #65676B;
+            font-size: 12px;
+            margin: 20px 0;
+        }
+        
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid #dadde1;
+        }
+        
+        .divider:not(:empty)::before {
+            margin-right: 16px;
+        }
+        
+        .divider:not(:empty)::after {
+            margin-left: 16px;
+        }
+        
+        .card-facebook {
+            background: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, .1), 0 8px 16px rgba(0, 0, 0, .1);
+        }
+        
+        .loading-spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* App-like transitions */
+        .page-transition {
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+        
+        .page-enter {
+            transform: translateX(20px);
+            opacity: 0;
+        }
+        
+        .page-enter-active {
+            transform: translateX(0);
+            opacity: 1;
+        }
+        
+        .page-exit {
+            transform: translateX(-20px);
+            opacity: 0;
+        }
+        
+        /* Touch feedback */
+        .touch-feedback:active {
+            transform: scale(0.98);
+            transition: transform 0.1s;
+        }
+        
+        /* Status bar for mobile */
+        .status-bar {
+            height: 44px;
+            background: #1877F2;
+        }
+    </style>
 </head>
-<body class="bg-white flex justify-center items-center min-h-screen p-5 font-inter">
+<body class="bg-facebook-gray font-segoe text-facebook-text">
+    <!-- Status Bar (Mobile App-like) -->
+    <div class="status-bar fixed top-0 w-full z-40 flex items-center justify-center md:hidden">
+        <div class="text-white font-semibold text-lg">BitC Network</div>
+    </div>
+
     <!-- Loading Screen -->
     <div id="loadingScreen" class="fixed top-0 left-0 w-full h-full bg-white flex flex-col items-center justify-center z-50">
-        <div class="w-16 h-16 border-4 border-gray-200 rounded-full border-t-purple-700 animate-spin mb-5"></div>
-        <div class="text-gray-600 font-medium">Checking authentication...</div>
+        <div class="w-16 h-16 mb-6">
+            <div class="w-full h-full rounded-full bg-gradient-to-br from-facebook-blue to-facebook-green flex items-center justify-center">
+                <span class="text-white text-2xl font-bold">B</span>
+            </div>
+        </div>
+        <div class="text-facebook-textSecondary font-medium">Checking authentication...</div>
+        <div class="mt-4 w-48 h-1 bg-gray-200 rounded-full overflow-hidden">
+            <div class="h-full bg-facebook-blue animate-pulse" style="width: 60%"></div>
+        </div>
     </div>
 
-    <!-- LANDING PAGE -->
-    <div id="landing-page" class="hidden min-h-screen w-full flex items-center justify-center py-8 px-4">
-        <div class="w-full max-w-md flex flex-col items-center justify-between h-[calc(100vh-60px)] py-4">
-            <div class="flex flex-col items-center gap-5 pt-1">
-                <div class="w-24 h-24 flex items-center justify-center rounded-full overflow-hidden">
-                    <img src="https://bitcnetwork.com/assets/1.png" alt="BitC Logo" class="w-full h-full object-cover">
+    <!-- Main Container -->
+    <main class="min-h-screen flex flex-col items-center justify-center p-4 pt-16 md:pt-0">
+        <!-- LANDING/LOGIN PAGE (Facebook-like) -->
+        <div id="landing-page" class="page-transition w-full max-w-md">
+            <div class="flex flex-col items-center">
+                <!-- Logo/App Icon -->
+                <div class="w-20 h-20 mb-6 mt-8 md:mt-0">
+                    <div class="w-full h-full rounded-2xl bg-gradient-to-br from-facebook-blue to-facebook-green flex items-center justify-center shadow-lg">
+                        <span class="text-white text-3xl font-bold">B</span>
+                    </div>
                 </div>
-
-                <h1 class="text-2xl font-bold text-gray-800 max-w-[300px] text-center leading-tight">
-                    Mine Bitc<br/>(Blockchain & internet<br/>technology coin)
+                
+                <!-- App Name -->
+                <h1 class="text-2xl font-semibold text-facebook-text mb-8 text-center">
+                    BitC Network
                 </h1>
-            </div>
-
-            <div class="flex flex-col gap-4 w-full items-center mt-2">
-                <div class="text-sm text-purple-700 flex items-center gap-2">
-                    <span>Choose one method to continue</span>
+                
+                <!-- Login Card -->
+                <div class="card-facebook rounded-facebook-lg w-full p-6 mb-4">
+                    <form id="loginForm" onsubmit="handleLogin(event)" class="space-y-4">
+                        <input 
+                            type="email" 
+                            id="login-email"
+                            placeholder="Email address"
+                            class="input-facebook w-full rounded-facebook focus:outline-none"
+                            required
+                        >
+                        
+                        <input 
+                            type="password" 
+                            id="login-pass"
+                            placeholder="Password"
+                            class="input-facebook w-full rounded-facebook focus:outline-none"
+                            required
+                        >
+                        
+                        <button 
+                            type="submit"
+                            id="login-btn"
+                            class="btn-primary text-white w-full rounded-facebook font-semibold touch-feedback"
+                        >
+                            <span id="login-btn-text">Log In</span>
+                            <span id="login-btn-spinner" class="hidden ml-2">
+                                <div class="loading-spinner"></div>
+                            </span>
+                        </button>
+                        
+                        <div class="text-center pt-2">
+                            <a href="#" onclick="showForgotPassword()" class="text-facebook-blue text-sm font-medium hover:underline">
+                                Forgotten password?
+                            </a>
+                        </div>
+                        
+                        <div class="divider">or</div>
+                        
+                        <button 
+                            type="button"
+                            onclick="showSignup()"
+                            class="btn-secondary text-white w-full rounded-facebook font-semibold touch-feedback"
+                        >
+                            Create New Account
+                        </button>
+                    </form>
                 </div>
-
-                <div class="flex flex-col gap-3 w-full mt-3">
-                    <button onclick="showSignup()" class="w-full py-3 px-4 rounded-xl border-2 border-gray-300 bg-transparent font-bold text-base cursor-pointer text-gray-800 hover:bg-gray-50 active:translate-y-px transition-all">
-                        Continue with Email
-                    </button>
-                    <button onclick="showLogin()" class="w-full py-3 px-4 rounded-xl border-2 border-gray-300 bg-transparent font-bold text-base cursor-pointer text-gray-800 hover:bg-gray-50 active:translate-y-px transition-all">
-                        Continue to login
-                    </button>
+                
+                <!-- Create Page Link -->
+                <div class="text-center text-sm text-facebook-textSecondary mt-4">
+                    <a href="#" class="font-semibold text-facebook-text hover:underline">Create a Page</a> for a celebrity, brand or business.
                 </div>
             </div>
-
-            <div class="text-center text-xs text-gray-600 mb-1">
-                <span class="block mb-1 text-xs text-gray-400">v4.0.0</span>
-                <a class="text-purple-700 font-semibold no-underline" href="https://bitcnetwork.com/termsofservice">Terms of Service</a>
-                <span class="mx-1">-</span>
-                <a class="text-purple-700 font-semibold no-underline" href="https://bitcnetwork.com/privacy">Privacy Policy</a>
-            </div>
-        </div>
-    </div>
-
-    <!-- SIGN UP FORM -->
-    <div id="signup-form" class="hidden w-full max-w-md text-center p-10">
-        <div class="flex items-center justify-center mb-8 relative">
-            <button id="back-to-landing-from-signup" onclick="showLanding()" class="absolute left-0 text-purple-700 text-xl p-2 rounded-full hover:bg-gray-100 transition-colors">
-                <i class="fas fa-arrow-left"></i>
-            </button>
-            <h2 class="text-2xl font-semibold text-purple-800">Create Account</h2>
-        </div>
-        <p class="text-gray-600 mb-8">Join BitC network mining</p>
-        
-        <div class="mb-6 text-left">
-            <label class="block text-purple-800 mb-2 font-medium">
-                <i class="fas fa-envelope mr-2"></i> Email Address
-            </label>
-            <div class="relative">
-                <input type="email" id="signup-email" placeholder="your.email@example.com" class="w-full p-4 border border-gray-300 rounded-xl bg-gray-50 focus:outline-none focus:border-purple-600 focus:bg-white focus:ring-2 focus:ring-purple-200 transition-all">
-                <span class="absolute right-4 top-1/2 transform -translate-y-1/2 text-purple-700">
-                    <i class="fas fa-envelope"></i>
-                </span>
-            </div>
-        </div>
-        
-        <div class="mb-6 text-left">
-            <label class="block text-purple-800 mb-2 font-medium">
-                <i class="fas fa-lock mr-2"></i> Password
-            </label>
-            <div class="relative">
-                <input type="password" id="signup-pass" placeholder="Create a strong password" onkeyup="checkPasswordStrength(this.value)" class="w-full p-4 border border-gray-300 rounded-xl bg-gray-50 focus:outline-none focus:border-purple-600 focus:bg-white focus:ring-2 focus:ring-purple-200 transition-all">
-                <span class="absolute right-4 top-1/2 transform -translate-y-1/2 text-purple-700 cursor-pointer" onclick="togglePassword('signup-pass')">
-                    <i class="fas fa-eye"></i>
-                </span>
-            </div>
-            <div class="h-2 bg-gray-200 rounded-full mt-2 overflow-hidden">
-                <div id="password-strength-meter" class="h-full transition-all duration-300"></div>
-            </div>
-        </div>
-        
-        <div class="mb-6 text-left">
-            <label class="block text-purple-800 mb-2 font-medium">
-                <i class="fas fa-lock mr-2"></i> Confirm Password
-            </label>
-            <div class="relative">
-                <input type="password" id="signup-confirm" placeholder="Re-enter your password" class="w-full p-4 border border-gray-300 rounded-xl bg-gray-50 focus:outline-none focus:border-purple-600 focus:bg-white focus:ring-2 focus:ring-purple-200 transition-all">
-                <span class="absolute right-4 top-1/2 transform -translate-y-1/2 text-purple-700 cursor-pointer" onclick="togglePassword('signup-confirm')">
-                    <i class="fas fa-eye"></i>
-                </span>
-            </div>
-        </div>
-        
-        <div class="mb-6 text-left">
-            <label class="block text-purple-800 mb-2 font-medium">
-                <i class="fas fa-user-friends mr-2"></i> Referral Code <span class="text-gray-500 font-normal">(optional)</span>
-            </label>
-            <div class="relative">
-                <input type="text" id="referral-code" placeholder="Enter referral code if you have one" class="w-full p-4 border border-gray-300 rounded-xl bg-gray-50 focus:outline-none focus:border-purple-600 focus:bg-white focus:ring-2 focus:ring-purple-200 transition-all">
-                <span class="absolute right-4 top-1/2 transform -translate-y-1/2 text-purple-700">
-                    <i class="fas fa-gift"></i>
-                </span>
-            </div>
-        </div>
-        
-        <button onclick="handleSignup()" id="signup-btn" class="w-full bg-purple-700 text-white py-4 rounded-xl font-semibold shadow-lg hover:bg-purple-800 transition-all duration-300 transform hover:-translate-y-1 mt-2 relative flex items-center justify-center">
-            <i class="fas fa-user-plus mr-2"></i> SIGN UP
-        </button>
-        
-        <p class="text-gray-600 mt-7 text-center">
-            Already have an account? <a href="#" onclick="showLogin()" class="text-purple-700 font-semibold hover:underline">Log in</a>
-        </p>
-    </div>
-
-    <!-- LOGIN FORM -->
-    <div id="login-form" class="hidden w-full max-w-md text-center p-10">
-        <div class="flex items-center justify-center mb-8 relative">
-            <button id="back-to-landing-from-login" onclick="showLanding()" class="absolute left-0 text-purple-700 text-xl p-2 rounded-full hover:bg-gray-100 transition-colors">
-                <i class="fas fa-arrow-left"></i>
-            </button>
-            <h2 class="text-2xl font-semibold text-purple-800">Welcome Back</h2>
-        </div>
-        <p class="text-gray-600 mb-8">Login to your account</p>
-        
-        <div class="mb-6 text-left">
-            <label class="block text-purple-800 mb-2 font-medium">
-                <i class="fas fa-envelope mr-2"></i> Email Address
-            </label>
-            <div class="relative">
-                <input type="email" id="login-email" placeholder="your.email@example.com" class="w-full p-4 border border-gray-300 rounded-xl bg-gray-50 focus:outline-none focus:border-purple-600 focus:bg-white focus:ring-2 focus:ring-purple-200 transition-all">
-                <span class="absolute right-4 top-1/2 transform -translate-y-1/2 text-purple-700">
-                    <i class="fas fa-envelope"></i>
-                </span>
-            </div>
-        </div>
-        
-        <div class="mb-6 text-left">
-            <label class="block text-purple-800 mb-2 font-medium">
-                <i class="fas fa-lock mr-2"></i> Password
-            </label>
-            <div class="relative">
-                <input type="password" id="login-pass" placeholder="Enter your password" class="w-full p-4 border border-gray-300 rounded-xl bg-gray-50 focus:outline-none focus:border-purple-600 focus:bg-white focus:ring-2 focus:ring-purple-200 transition-all">
-                <span class="absolute right-4 top-1/2 transform -translate-y-1/2 text-purple-700 cursor-pointer" onclick="togglePassword('login-pass')">
-                    <i class="fas fa-eye"></i>
-                </span>
-            </div>
-        </div>
-        
-        <div class="text-right mb-6 -mt-2">
-            <a href="#" onclick="showForgotPassword()" class="text-purple-700 text-sm font-medium hover:underline">
-                <i class="fas fa-key mr-1"></i> Forgot Password?
-            </a>
-        </div>
-        
-        <button onclick="handleLogin()" id="login-btn" class="w-full bg-purple-700 text-white py-4 rounded-xl font-semibold shadow-lg hover:bg-purple-800 transition-all duration-300 transform hover:-translate-y-1 relative flex items-center justify-center">
-            <i class="fas fa-sign-in-alt mr-2"></i> LOG IN
-        </button>
-        
-        <p class="text-gray-600 mt-7 text-center">
-            Don't have an account? <a href="#" onclick="showSignup()" class="text-purple-700 font-semibold hover:underline">Sign up now</a>
-        </p>
-    </div>
-
-    <!-- EMAIL VERIFICATION PAGE -->
-    <div id="email-verification" class="hidden w-full max-w-md text-center p-10">
-        <div class="flex items-center justify-center mb-8 relative">
-            <button onclick="showSignup()" class="absolute left-0 text-purple-700 text-xl p-2 rounded-full hover:bg-gray-100 transition-colors">
-                <i class="fas fa-arrow-left"></i>
-            </button>
-            <h2 class="text-2xl font-semibold text-purple-800">Verify Your Email</h2>
-        </div>
-        
-        <div class="bg-purple-100 border border-purple-300 rounded-xl p-4 mb-6 text-purple-700 text-center">
-            <i class="fas fa-envelope-circle-check text-4xl mb-4 text-purple-600 animate-pulse-slow"></i>
-            <h3 class="text-lg font-semibold mb-2">Verification Email Sent</h3>
-            <p class="text-sm">We've sent a verification link to <span id="verification-email" class="font-semibold"></span></p>
-        </div>
-        
-        <div class="mb-6 text-left bg-blue-50 p-4 rounded-xl border border-blue-200">
-            <h4 class="font-semibold text-blue-800 mb-2 flex items-center">
-                <i class="fas fa-info-circle mr-2"></i> Important
-            </h4>
-            <p class="text-sm text-blue-700">Please check your inbox and click the verification link to activate your account before logging in.</p>
-        </div>
-        
-        <div class="flex flex-col gap-3">
-            <button onclick="resendVerificationEmail()" id="resend-btn" class="w-full bg-white text-purple-700 py-3 rounded-xl font-semibold border border-purple-300 hover:bg-purple-50 transition-all duration-300 flex items-center justify-center">
-                <i class="fas fa-redo mr-2"></i> Resend Verification Email
-            </button>
             
-            <button onclick="showLogin()" class="w-full bg-purple-700 text-white py-3 rounded-xl font-semibold shadow-lg hover:bg-purple-800 transition-all duration-300 flex items-center justify-center">
-                <i class="fas fa-sign-in-alt mr-2"></i> Continue to Login
-            </button>
-        </div>
-        
-        <p class="text-gray-600 mt-7 text-center text-sm">
-            Didn't receive the email? Check your spam folder or try resending.
-        </p>
-    </div>
-
-    <!-- FORGOT PASSWORD FORM -->
-    <div id="forgot-password-form" class="hidden w-full max-w-md text-center p-10">
-        <div class="flex items-center justify-center mb-8 relative">
-            <button id="back-to-login-from-forgot" onclick="showLogin()" class="absolute left-0 text-purple-700 text-xl p-2 rounded-full hover:bg-gray-100 transition-colors">
-                <i class="fas fa-arrow-left"></i>
-            </button>
-            <h2 class="text-2xl font-semibold text-purple-800">Reset Password</h2>
-        </div>
-        <p class="text-gray-600 mb-8">Enter your email to receive a reset link</p>
-        
-        <div class="mb-8 text-left">
-            <label class="block text-purple-800 mb-2 font-medium">
-                <i class="fas fa-envelope mr-2"></i> Email Address
-            </label>
-            <div class="relative">
-                <input type="email" id="reset-email" placeholder="your.email@example.com" class="w-full p-4 border border-gray-300 rounded-xl bg-gray-50 focus:outline-none focus:border-purple-600 focus:bg-white focus:ring-2 focus:ring-purple-200 transition-all">
-                <span class="absolute right-4 top-1/2 transform -translate-y-1/2 text-purple-700">
-                    <i class="fas fa-envelope"></i>
-                </span>
+            <!-- Footer Links -->
+            <div class="mt-8 text-center text-facebook-textSecondary text-xs">
+                <div class="flex flex-wrap justify-center gap-3 mb-4">
+                    <a href="#" class="hover:underline">English (UK)</a>
+                    <a href="#" class="hover:underline">മലയാളം</a>
+                    <a href="#" class="hover:underline">தமிழ்</a>
+                    <a href="#" class="hover:underline">ಕನ್ನಡ</a>
+                    <a href="#" class="hover:underline">हिन्दी</a>
+                    <a href="#" class="hover:underline">Español</a>
+                    <a href="#" class="hover:underline">Français (France)</a>
+                    <button class="hover:underline">+</button>
+                </div>
+                
+                <div class="border-t border-facebook-border pt-4">
+                    <div class="flex flex-wrap justify-center gap-3 mb-2">
+                        <a href="https://bitcnetwork.com/signup" class="hover:underline">Sign Up</a>
+                        <a href="https://bitcnetwork.com/login" class="hover:underline">Log In</a>
+                        <a href="#" class="hover:underline">Messenger</a>
+                        <a href="https://bitcnetwork.com/lite" class="hover:underline">BitC Lite</a>
+                        <a href="#" class="hover:underline">Watch</a>
+                        <a href="#" class="hover:underline">Places</a>
+                        <a href="#" class="hover:underline">Games</a>
+                        <a href="#" class="hover:underline">Marketplace</a>
+                        <a href="#" class="hover:underline">Meta Pay</a>
+                        <a href="#" class="hover:underline">Oculus</a>
+                        <a href="#" class="hover:underline">Portal</a>
+                        <a href="#" class="hover:underline">Instagram</a>
+                        <a href="#" class="hover:underline">Bulletin</a>
+                        <a href="#" class="hover:underline">Fundraisers</a>
+                    </div>
+                    
+                    <div class="flex flex-wrap justify-center gap-3 mb-2">
+                        <a href="#" class="hover:underline">Services</a>
+                        <a href="https://bitcnetwork.com/termsofservice" class="hover:underline">Terms of Service</a>
+                        <a href="https://bitcnetwork.com/privacy" class="hover:underline">Privacy Policy</a>
+                        <a href="#" class="hover:underline">Privacy Centre</a>
+                        <a href="#" class="hover:underline">Groups</a>
+                        <a href="#" class="hover:underline">About</a>
+                        <a href="#" class="hover:underline">Create Ad</a>
+                        <a href="#" class="hover:underline">Create Page</a>
+                        <a href="#" class="hover:underline">Developers</a>
+                        <a href="#" class="hover:underline">Careers</a>
+                        <a href="#" class="hover:underline">Cookies</a>
+                        <a href="#" class="hover:underline">AdChoices</a>
+                    </div>
+                    
+                    <div class="mt-3">
+                        <span>BitC Network © 2024</span>
+                    </div>
+                </div>
             </div>
         </div>
-        
-        <button onclick="submitForgotPassword()" id="reset-btn" class="w-full bg-purple-700 text-white py-4 rounded-xl font-semibold shadow-lg hover:bg-purple-800 transition-all duration-300 transform hover:-translate-y-1 relative flex items-center justify-center">
-            <i class="fas fa-share-square mr-2"></i> SEND RESET LINK
-        </button>
-        
-        <p class="text-gray-600 mt-7 text-center">
-            Remember your password? <a href="#" onclick="showLogin()" class="text-purple-700 font-semibold hover:underline">Back to login</a>
-        </p>
-    </div>
 
-    <!-- FORGOT PASSWORD SUCCESS MESSAGE -->
-    <div id="forgot-password-success" class="hidden w-full max-w-md text-center p-10">
-        <div class="flex items-center justify-center mb-8 relative">
-            <button onclick="showLogin()" class="absolute left-0 text-purple-700 text-xl p-2 rounded-full hover:bg-gray-100 transition-colors">
-                <i class="fas fa-arrow-left"></i>
-            </button>
-            <h2 class="text-2xl font-semibold text-purple-800">Check Your Email</h2>
+        <!-- SIGN UP PAGE -->
+        <div id="signup-page" class="page-transition hidden w-full max-w-md">
+            <div class="card-facebook rounded-facebook-lg w-full p-6">
+                <!-- Back Button -->
+                <button onclick="showLoginPage()" class="flex items-center text-facebook-blue mb-6 font-semibold touch-feedback">
+                    <i class="fas fa-arrow-left mr-2"></i>
+                    Back
+                </button>
+                
+                <h2 class="text-2xl font-semibold text-facebook-text mb-2">Create a new account</h2>
+                <p class="text-facebook-textSecondary mb-6">It's quick and easy.</p>
+                
+                <form id="signupForm" onsubmit="handleSignup(event)" class="space-y-4">
+                    <div class="grid grid-cols-2 gap-4">
+                        <input 
+                            type="text" 
+                            id="signup-firstname"
+                            placeholder="First name"
+                            class="input-facebook w-full rounded-facebook focus:outline-none"
+                        >
+                        
+                        <input 
+                            type="text" 
+                            id="signup-lastname"
+                            placeholder="Surname"
+                            class="input-facebook w-full rounded-facebook focus:outline-none"
+                        >
+                    </div>
+                    
+                    <input 
+                        type="email" 
+                        id="signup-email"
+                        placeholder="Email address"
+                        class="input-facebook w-full rounded-facebook focus:outline-none"
+                        required
+                    >
+                    
+                    <input 
+                        type="password" 
+                        id="signup-pass"
+                        placeholder="New password"
+                        class="input-facebook w-full rounded-facebook focus:outline-none"
+                        required
+                        onkeyup="checkPasswordStrength(this.value)"
+                    >
+                    
+                    <!-- Password Strength Indicator -->
+                    <div class="h-1 bg-gray-200 rounded-full overflow-hidden">
+                        <div id="password-strength-meter" class="h-full transition-all duration-300 w-0"></div>
+                    </div>
+                    
+                    <div class="text-sm text-facebook-textSecondary">
+                        <div class="flex items-center mb-1">
+                            <i id="length-check" class="fas fa-circle text-gray-300 mr-2 text-xs"></i>
+                            <span>At least 6 characters</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i id="complexity-check" class="fas fa-circle text-gray-300 mr-2 text-xs"></i>
+                            <span>Mix of letters, numbers, or symbols</span>
+                        </div>
+                    </div>
+                    
+                    <div class="pt-2">
+                        <label class="block text-facebook-textSecondary text-sm mb-2">Date of birth</label>
+                        <div class="grid grid-cols-3 gap-2">
+                            <select class="input-facebook rounded-facebook focus:outline-none">
+                                <option>Day</option>
+                                <?php for($i=1; $i<=31; $i++): ?>
+                                <option><?php echo $i; ?></option>
+                                <?php endfor; ?>
+                            </select>
+                            
+                            <select class="input-facebook rounded-facebook focus:outline-none">
+                                <option>Month</option>
+                                <option>Jan</option>
+                                <option>Feb</option>
+                                <option>Mar</option>
+                                <option>Apr</option>
+                                <option>May</option>
+                                <option>Jun</option>
+                                <option>Jul</option>
+                                <option>Aug</option>
+                                <option>Sep</option>
+                                <option>Oct</option>
+                                <option>Nov</option>
+                                <option>Dec</option>
+                            </select>
+                            
+                            <select class="input-facebook rounded-facebook focus:outline-none">
+                                <option>Year</option>
+                                <?php for($i=2024; $i>=1905; $i--): ?>
+                                <option><?php echo $i; ?></option>
+                                <?php endfor; ?>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="pt-2">
+                        <label class="block text-facebook-textSecondary text-sm mb-2">Gender</label>
+                        <div class="grid grid-cols-3 gap-2">
+                            <label class="flex items-center border border-facebook-border rounded-facebook p-3 cursor-pointer hover:bg-facebook-gray">
+                                <input type="radio" name="gender" class="mr-2" checked>
+                                <span>Female</span>
+                            </label>
+                            
+                            <label class="flex items-center border border-facebook-border rounded-facebook p-3 cursor-pointer hover:bg-facebook-gray">
+                                <input type="radio" name="gender" class="mr-2">
+                                <span>Male</span>
+                            </label>
+                            
+                            <label class="flex items-center border border-facebook-border rounded-facebook p-3 cursor-pointer hover:bg-facebook-gray">
+                                <input type="radio" name="gender" class="mr-2">
+                                <span>Custom</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="text-xs text-facebook-textSecondary mt-4">
+                        <p>People who use our service may have uploaded your contact information to BitC Network. <a href="#" class="text-facebook-blue hover:underline">Learn more</a>.</p>
+                        
+                        <p class="mt-2">By clicking Sign Up, you agree to our <a href="https://bitcnetwork.com/termsofservice" class="text-facebook-blue hover:underline">Terms</a>, <a href="https://bitcnetwork.com/privacy" class="text-facebook-blue hover:underline">Privacy Policy</a> and <a href="#" class="text-facebook-blue hover:underline">Cookies Policy</a>. You may receive SMS notifications from us and can opt out at any time.</p>
+                    </div>
+                    
+                    <div class="pt-4">
+                        <button 
+                            type="submit"
+                            id="signup-btn"
+                            class="btn-secondary text-white w-full rounded-facebook font-semibold text-lg py-3 touch-feedback"
+                        >
+                            <span id="signup-btn-text">Sign Up</span>
+                            <span id="signup-btn-spinner" class="hidden ml-2">
+                                <div class="loading-spinner"></div>
+                            </span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+            
+            <div class="text-center mt-4 text-sm">
+                <a href="#" onclick="showLoginPage()" class="text-facebook-blue font-semibold hover:underline">
+                    Already have an account?
+                </a>
+            </div>
         </div>
-        
-        <div class="bg-green-100 border border-green-300 rounded-xl p-4 mb-6 text-green-700 text-center">
-            <i class="fas fa-check-circle mr-2"></i> Password reset link sent!
+
+        <!-- FORGOT PASSWORD PAGE -->
+        <div id="forgot-password-page" class="page-transition hidden w-full max-w-md">
+            <div class="card-facebook rounded-facebook-lg w-full p-6">
+                <!-- Back Button -->
+                <button onclick="showLoginPage()" class="flex items-center text-facebook-blue mb-6 font-semibold touch-feedback">
+                    <i class="fas fa-arrow-left mr-2"></i>
+                    Back
+                </button>
+                
+                <h2 class="text-2xl font-semibold text-facebook-text mb-2">Find Your Account</h2>
+                <p class="text-facebook-textSecondary mb-6">Please enter your email address to search for your account.</p>
+                
+                <form id="forgotPasswordForm" onsubmit="submitForgotPassword(event)" class="space-y-4">
+                    <input 
+                        type="email" 
+                        id="reset-email"
+                        placeholder="Email address"
+                        class="input-facebook w-full rounded-facebook focus:outline-none"
+                        required
+                    >
+                    
+                    <div class="divider"></div>
+                    
+                    <div class="flex gap-3">
+                        <button 
+                            type="button"
+                            onclick="showLoginPage()"
+                            class="flex-1 border border-facebook-border text-facebook-blue font-semibold py-3 rounded-facebook hover:bg-facebook-gray touch-feedback"
+                        >
+                            Cancel
+                        </button>
+                        
+                        <button 
+                            type="submit"
+                            id="reset-btn"
+                            class="flex-1 bg-facebook-blue text-white font-semibold py-3 rounded-facebook touch-feedback"
+                        >
+                            <span id="reset-btn-text">Search</span>
+                            <span id="reset-btn-spinner" class="hidden ml-2">
+                                <div class="loading-spinner"></div>
+                            </span>
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
-        
-        <p class="text-gray-600 mb-8">
-            We've sent a password reset link to your email address. Please check your inbox and follow the instructions to reset your password.
-        </p>
-        
-        <button onclick="showLogin()" class="w-full bg-purple-700 text-white py-4 rounded-xl font-semibold shadow-lg hover:bg-purple-800 transition-all duration-300 transform hover:-translate-y-1 flex items-center justify-center">
-            <i class="fas fa-sign-in-alt mr-2"></i> BACK TO LOGIN
-        </button>
-        
-        <p class="text-gray-600 mt-7 text-center">
-            Didn't receive the email? <a href="#" onclick="showForgotPassword()" class="text-purple-700 font-semibold hover:underline">Try again</a>
-        </p>
-    </div>
+
+        <!-- EMAIL VERIFICATION PAGE -->
+        <div id="email-verification-page" class="page-transition hidden w-full max-w-md">
+            <div class="card-facebook rounded-facebook-lg w-full p-6 text-center">
+                <div class="w-16 h-16 mx-auto mb-6 rounded-full bg-green-100 flex items-center justify-center">
+                    <i class="fas fa-envelope text-green-600 text-2xl"></i>
+                </div>
+                
+                <h2 class="text-2xl font-semibold text-facebook-text mb-2">Confirm your email</h2>
+                <p class="text-facebook-textSecondary mb-6">
+                    We sent a confirmation email to:
+                    <br>
+                    <span id="verification-email" class="font-semibold text-facebook-text"></span>
+                </p>
+                
+                <p class="text-sm text-facebook-textSecondary mb-8">
+                    Check your email and click the confirmation link to continue.
+                </p>
+                
+                <div class="space-y-3">
+                    <button 
+                        onclick="resendVerificationEmail()"
+                        id="resend-btn"
+                        class="w-full border border-facebook-border text-facebook-blue font-semibold py-3 rounded-facebook hover:bg-facebook-gray touch-feedback"
+                    >
+                        <span id="resend-btn-text">Resend Email</span>
+                        <span id="resend-btn-spinner" class="hidden ml-2">
+                            <div class="loading-spinner" style="border-top-color: #1877F2;"></div>
+                        </span>
+                    </button>
+                    
+                    <button 
+                        onclick="showLoginPage()"
+                        class="w-full bg-facebook-blue text-white font-semibold py-3 rounded-facebook touch-feedback"
+                    >
+                        Back to Login
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- RESET EMAIL SENT PAGE -->
+        <div id="reset-sent-page" class="page-transition hidden w-full max-w-md">
+            <div class="card-facebook rounded-facebook-lg w-full p-6 text-center">
+                <div class="w-16 h-16 mx-auto mb-6 rounded-full bg-blue-100 flex items-center justify-center">
+                    <i class="fas fa-check-circle text-facebook-blue text-2xl"></i>
+                </div>
+                
+                <h2 class="text-2xl font-semibold text-facebook-text mb-2">Check your email</h2>
+                <p class="text-facebook-textSecondary mb-8">
+                    We sent a password reset link to:
+                    <br>
+                    <span id="reset-sent-email" class="font-semibold text-facebook-text"></span>
+                </p>
+                
+                <button 
+                    onclick="showLoginPage()"
+                    class="w-full bg-facebook-blue text-white font-semibold py-3 rounded-facebook touch-feedback"
+                >
+                    Back to Login
+                </button>
+            </div>
+        </div>
+    </main>
 
     <!-- Toast Notification -->
-    <div id="toast" class="fixed bottom-8 left-1/2 transform -translate-x-1/2 translate-y-24 px-6 py-3 rounded-xl shadow-lg z-50 opacity-0 transition-all duration-400 max-w-[90%] text-center"></div>
+    <div id="toast" class="fixed bottom-6 left-1/2 transform -translate-x-1/2 translate-y-24 px-6 py-3 rounded-facebook shadow-lg z-50 opacity-0 transition-all duration-300 max-w-[90%] text-center bg-facebook-text text-white text-sm font-medium"></div>
 
     <!-- Firebase SDK -->
     <script type="module">
-        // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail, onAuthStateChanged, sendEmailVerification } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
         import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-        // Your web app's Firebase configuration
         const firebaseConfig = {
             apiKey: "AIzaSyBEjeRSyKbpEmbNk0SYLUFPp3lbgP9x3Ow",
             authDomain: "volcanobxpl.firebaseapp.com",
@@ -311,12 +580,11 @@
             measurementId: "G-G1KWGHLZES"
         };
 
-        // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        // Make auth available globally
+        // Make available globally
         window.auth = auth;
         window.db = db;
         window.signInWithEmailAndPassword = signInWithEmailAndPassword;
@@ -326,128 +594,182 @@
         window.onAuthStateChanged = onAuthStateChanged;
         window.setDoc = setDoc;
         window.doc = doc;
-
-        console.log("Firebase initialized successfully");
     </script>
 
     <script>
-        // Check authentication state and redirect if logged in
+        // Page navigation with transitions
+        function showLoginPage() {
+            transitionPage('landing-page');
+        }
+        
+        function showSignup() {
+            transitionPage('signup-page');
+        }
+        
+        function showForgotPassword() {
+            transitionPage('forgot-password-page');
+        }
+        
+        function showEmailVerificationPage(email) {
+            document.getElementById('verification-email').textContent = email;
+            transitionPage('email-verification-page');
+        }
+        
+        function showResetSentPage(email) {
+            document.getElementById('reset-sent-email').textContent = email;
+            transitionPage('reset-sent-page');
+        }
+        
+        function transitionPage(toPageId) {
+            const pages = ['landing-page', 'signup-page', 'forgot-password-page', 'email-verification-page', 'reset-sent-page'];
+            const fromPage = pages.find(id => !document.getElementById(id).classList.contains('hidden'));
+            
+            if (fromPage) {
+                const fromElement = document.getElementById(fromPage);
+                fromElement.classList.add('page-exit');
+                
+                setTimeout(() => {
+                    fromElement.classList.add('hidden');
+                    fromElement.classList.remove('page-exit');
+                    
+                    const toElement = document.getElementById(toPageId);
+                    toElement.classList.remove('hidden');
+                    toElement.classList.add('page-enter');
+                    
+                    setTimeout(() => {
+                        toElement.classList.remove('page-enter');
+                        toElement.classList.add('page-enter-active');
+                    }, 10);
+                }, 300);
+            } else {
+                const toElement = document.getElementById(toPageId);
+                toElement.classList.remove('hidden');
+            }
+        }
+        
+        // Check auth state on load
         function checkAuthState() {
             onAuthStateChanged(auth, (user) => {
-                if (user && user.emailVerified) {
-                    // User is signed in and verified, redirect immediately
-                    console.log('User is already logged in and verified, redirecting to mining page...');
-                    redirectToMining();
-                } else if (user && !user.emailVerified) {
-                    // User is signed in but not verified
-                    console.log('User is logged in but email not verified');
-                    setTimeout(() => {
-                        document.getElementById('loadingScreen').classList.add('hidden');
-                        showEmailVerification(user.email);
-                    }, 500);
-                } else {
-                    // User is signed out, show landing page
-                    console.log('User is not logged in, showing auth page');
-                    // Hide loading screen and show landing page
-                    setTimeout(() => {
-                        document.getElementById('loadingScreen').classList.add('hidden');
-                        showLanding();
-                    }, 500);
-                }
+                setTimeout(() => {
+                    document.getElementById('loadingScreen').classList.add('hidden');
+                    
+                    if (user && user.emailVerified) {
+                        redirectToMining();
+                    } else if (user && !user.emailVerified) {
+                        showEmailVerificationPage(user.email);
+                    } else {
+                        showLoginPage();
+                    }
+                }, 1000);
             });
         }
-
+        
         // Redirect to mining page
         function redirectToMining() {
             window.location.href = 'mining.html';
         }
-
-        // Page navigation functions
-        function showLanding() {
-            hideAllPages();
-            document.getElementById('landing-page').classList.remove('hidden');
-        }
-
-        function showSignup() {
-            hideAllPages();
-            document.getElementById('signup-form').classList.remove('hidden');
-        }
-
-        function showLogin() {
-            hideAllPages();
-            document.getElementById('login-form').classList.remove('hidden');
-        }
-
-        function showForgotPassword() {
-            hideAllPages();
-            document.getElementById('forgot-password-form').classList.remove('hidden');
-        }
-
-        function showForgotPasswordSuccess() {
-            hideAllPages();
-            document.getElementById('forgot-password-success').classList.remove('hidden');
-        }
-
-        function showEmailVerification(email) {
-            hideAllPages();
-            document.getElementById('email-verification').classList.remove('hidden');
-            document.getElementById('verification-email').textContent = email;
-        }
-
-        function hideAllPages() {
-            const pages = [
-                'landing-page',
-                'signup-form', 
-                'login-form',
-                'forgot-password-form',
-                'forgot-password-success',
-                'email-verification'
-            ];
+        
+        // Handle Login
+        async function handleLogin(e) {
+            e.preventDefault();
             
-            pages.forEach(page => {
-                document.getElementById(page).classList.add('hidden');
-            });
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-pass').value;
+            
+            if (!email || !password) {
+                showToast('Please fill in all fields', 'error');
+                return;
+            }
+            
+            const buttonText = document.getElementById('login-btn-text');
+            const buttonSpinner = document.getElementById('login-btn-spinner');
+            const button = document.getElementById('login-btn');
+            
+            buttonText.classList.add('hidden');
+            buttonSpinner.classList.remove('hidden');
+            button.disabled = true;
+            
+            try {
+                const userCredential = await signInWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
+                
+                if (!user.emailVerified) {
+                    showToast('Please verify your email first', 'error');
+                    showEmailVerificationPage(user.email);
+                    return;
+                }
+                
+                showToast('Login successful!', 'success');
+                
+                setTimeout(() => {
+                    redirectToMining();
+                }, 1000);
+                
+            } catch (error) {
+                console.error('Login error:', error);
+                
+                let errorMessage = 'Login failed. ';
+                switch (error.code) {
+                    case 'auth/user-not-found':
+                        errorMessage = 'No account found with this email.';
+                        break;
+                    case 'auth/wrong-password':
+                        errorMessage = 'Incorrect password.';
+                        break;
+                    case 'auth/invalid-email':
+                        errorMessage = 'Invalid email address.';
+                        break;
+                    case 'auth/too-many-requests':
+                        errorMessage = 'Too many attempts. Try again later.';
+                        break;
+                    default:
+                        errorMessage = 'Please try again.';
+                }
+                
+                showToast(errorMessage, 'error');
+            } finally {
+                buttonText.classList.remove('hidden');
+                buttonSpinner.classList.add('hidden');
+                button.disabled = false;
+            }
         }
-
-        // Authentication functions with Firebase
-        async function handleSignup() {
+        
+        // Handle Signup
+        async function handleSignup(e) {
+            e.preventDefault();
+            
             const email = document.getElementById('signup-email').value;
             const password = document.getElementById('signup-pass').value;
-            const confirmPassword = document.getElementById('signup-confirm').value;
-            const referralCode = document.getElementById('referral-code').value;
-
-            // Basic validation
-            if (!email || !password || !confirmPassword) {
+            const firstName = document.getElementById('signup-firstname').value || 'User';
+            
+            if (!email || !password) {
                 showToast('Please fill in all required fields', 'error');
                 return;
             }
-
-            if (password !== confirmPassword) {
-                showToast('Passwords do not match', 'error');
-                return;
-            }
-
+            
             if (password.length < 6) {
                 showToast('Password must be at least 6 characters', 'error');
                 return;
             }
-
+            
+            const buttonText = document.getElementById('signup-btn-text');
+            const buttonSpinner = document.getElementById('signup-btn-spinner');
+            const button = document.getElementById('signup-btn');
+            
+            buttonText.classList.add('hidden');
+            buttonSpinner.classList.remove('hidden');
+            button.disabled = true;
+            
             try {
-                // Add loading state to button
-                const button = document.getElementById('signup-btn');
-                button.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Creating account...';
-                button.disabled = true;
-
-                // Create user with Firebase
                 const userCredential = await createUserWithEmailAndPassword(auth, email, password);
                 const user = userCredential.user;
-
-                // Send email verification
+                
                 await sendEmailVerification(user);
-
-                // Create user profile in Firestore
+                
+                // Create user profile
                 const userProfile = {
                     email: user.email,
+                    firstName: firstName,
                     createdAt: new Date().toISOString(),
                     emailVerified: false,
                     miningData: {
@@ -460,111 +782,98 @@
                         referralsCount: 0,
                         miningRateVlcPerHour: 1,
                         referralCode: user.uid.substring(0, 8),
-                        usedReferralCode: referralCode || null,
+                        usedReferralCode: null,
                         transactions: [],
                         lastMigrationTimestamp: null,
                         lastMiningDay: null
                     }
                 };
-
-                // Save user profile to Firestore
+                
                 await setDoc(doc(db, "users", user.uid), userProfile);
                 
-                showToast('Account created! Verification email sent.', 'success');
+                showToast('Account created! Check your email for verification.', 'success');
                 
-                // Show email verification page
                 setTimeout(() => {
-                    showEmailVerification(user.email);
+                    showEmailVerificationPage(user.email);
                 }, 1500);
-
+                
             } catch (error) {
                 console.error('Signup error:', error);
-                let errorMessage = 'Failed to create account. ';
                 
+                let errorMessage = 'Failed to create account. ';
                 switch (error.code) {
                     case 'auth/email-already-in-use':
-                        errorMessage += 'Email is already in use.';
+                        errorMessage = 'Email is already in use.';
                         break;
                     case 'auth/invalid-email':
-                        errorMessage += 'Invalid email address.';
+                        errorMessage = 'Invalid email address.';
                         break;
                     case 'auth/weak-password':
-                        errorMessage += 'Password is too weak.';
+                        errorMessage = 'Password is too weak.';
+                        break;
+                    case 'auth/operation-not-allowed':
+                        errorMessage = 'Email/password accounts are not enabled.';
                         break;
                     default:
-                        errorMessage += 'Please try again.';
+                        errorMessage = 'Please try again.';
                 }
                 
                 showToast(errorMessage, 'error');
             } finally {
-                // Remove loading state
-                const button = document.getElementById('signup-btn');
-                button.innerHTML = '<i class="fas fa-user-plus mr-2"></i> SIGN UP';
+                buttonText.classList.remove('hidden');
+                buttonSpinner.classList.add('hidden');
                 button.disabled = false;
             }
         }
-
-        async function handleLogin() {
-            const email = document.getElementById('login-email').value;
-            const password = document.getElementById('login-pass').value;
-
-            // Basic validation
-            if (!email || !password) {
-                showToast('Please fill in all fields', 'error');
+        
+        // Forgot Password
+        async function submitForgotPassword(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('reset-email').value;
+            
+            if (!email) {
+                showToast('Please enter your email address', 'error');
                 return;
             }
-
+            
+            const buttonText = document.getElementById('reset-btn-text');
+            const buttonSpinner = document.getElementById('reset-btn-spinner');
+            const button = document.getElementById('reset-btn');
+            
+            buttonText.classList.add('hidden');
+            buttonSpinner.classList.remove('hidden');
+            button.disabled = true;
+            
             try {
-                // Add loading state to button
-                const button = document.getElementById('login-btn');
-                button.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Logging in...';
-                button.disabled = true;
-
-                // Sign in with Firebase
-                const userCredential = await signInWithEmailAndPassword(auth, email, password);
-                const user = userCredential.user;
+                await sendPasswordResetEmail(auth, email);
+                showToast('Password reset email sent!', 'success');
+                showResetSentPage(email);
                 
-                // Check if email is verified
-                if (!user.emailVerified) {
-                    showToast('Please verify your email before logging in', 'error');
-                    showEmailVerification(user.email);
-                    return;
-                }
-                
-                showToast('Login successful!', 'success');
-                
-                // Redirect to mining page
-                setTimeout(() => {
-                    redirectToMining();
-                }, 1000);
-
             } catch (error) {
-                console.error('Login error:', error);
-                let errorMessage = 'Login failed. ';
+                console.error('Password reset error:', error);
                 
+                let errorMessage = 'Failed to send reset email. ';
                 switch (error.code) {
                     case 'auth/user-not-found':
-                        errorMessage += 'No account found with this email.';
-                        break;
-                    case 'auth/wrong-password':
-                        errorMessage += 'Incorrect password.';
+                        errorMessage = 'No account found with this email.';
                         break;
                     case 'auth/invalid-email':
-                        errorMessage += 'Invalid email address.';
+                        errorMessage = 'Invalid email address.';
                         break;
                     default:
-                        errorMessage += 'Please try again.';
+                        errorMessage = 'Please try again.';
                 }
                 
                 showToast(errorMessage, 'error');
             } finally {
-                // Remove loading state
-                const button = document.getElementById('login-btn');
-                button.innerHTML = '<i class="fas fa-sign-in-alt mr-2"></i> LOG IN';
+                buttonText.classList.remove('hidden');
+                buttonSpinner.classList.add('hidden');
                 button.disabled = false;
             }
         }
-
+        
+        // Resend Verification Email
         async function resendVerificationEmail() {
             const user = auth.currentUser;
             
@@ -572,156 +881,109 @@
                 showToast('Please sign in first', 'error');
                 return;
             }
-
+            
+            const buttonText = document.getElementById('resend-btn-text');
+            const buttonSpinner = document.getElementById('resend-btn-spinner');
+            const button = document.getElementById('resend-btn');
+            
+            buttonText.classList.add('hidden');
+            buttonSpinner.classList.remove('hidden');
+            button.disabled = true;
+            
             try {
-                // Add loading state to button
-                const button = document.getElementById('resend-btn');
-                const originalText = button.innerHTML;
-                button.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Sending...';
-                button.disabled = true;
-
-                // Send email verification
                 await sendEmailVerification(user);
-                
                 showToast('Verification email sent!', 'success');
-
+                
             } catch (error) {
                 console.error('Resend verification error:', error);
-                showToast('Failed to send verification email. Please try again.', 'error');
+                showToast('Failed to send verification email', 'error');
             } finally {
-                // Remove loading state
-                const button = document.getElementById('resend-btn');
-                button.innerHTML = '<i class="fas fa-redo mr-2"></i> Resend Verification Email';
-                button.disabled = false;
+                setTimeout(() => {
+                    buttonText.classList.remove('hidden');
+                    buttonSpinner.classList.add('hidden');
+                    button.disabled = false;
+                }, 2000);
             }
         }
-
-        async function submitForgotPassword() {
-            const email = document.getElementById('reset-email').value;
-
-            if (!email) {
-                showToast('Please enter your email address', 'error');
-                return;
-            }
-
-            try {
-                // Add loading state to button
-                const button = document.getElementById('reset-btn');
-                const originalText = button.innerHTML;
-                button.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Sending...';
-                button.disabled = true;
-
-                // Send password reset email
-                await sendPasswordResetEmail(auth, email);
-                
-                showToast('Password reset email sent!', 'success');
-                showForgotPasswordSuccess();
-
-            } catch (error) {
-                console.error('Password reset error:', error);
-                let errorMessage = 'Failed to send reset email. ';
-                
-                switch (error.code) {
-                    case 'auth/user-not-found':
-                        errorMessage += 'No account found with this email.';
-                        break;
-                    case 'auth/invalid-email':
-                        errorMessage += 'Invalid email address.';
-                        break;
-                    default:
-                        errorMessage += 'Please try again.';
-                }
-                
-                showToast(errorMessage, 'error');
-            } finally {
-                // Remove loading state
-                const button = document.getElementById('reset-btn');
-                button.innerHTML = '<i class="fas fa-share-square mr-2"></i> SEND RESET LINK';
-                button.disabled = false;
-            }
-        }
-
-        // Helper functions
-        function togglePassword(id) {
-            const input = document.getElementById(id);
-            const icon = input.parentElement.querySelector('i');
-            
-            if (input.type === "password") {
-                input.type = "text";
-                icon.classList.remove('fa-eye');
-                icon.classList.add('fa-eye-slash');
-            } else {
-                input.type = "password";
-                icon.classList.remove('fa-eye-slash');
-                icon.classList.add('fa-eye');
-            }
-        }
-
+        
+        // Password Strength Checker
         function checkPasswordStrength(password) {
             const meter = document.getElementById('password-strength-meter');
-            meter.className = 'h-full transition-all duration-300';
+            const lengthCheck = document.getElementById('length-check');
+            const complexityCheck = document.getElementById('complexity-check');
             
             if (password.length === 0) {
-                meter.classList.add('bg-gray-300');
+                meter.style.width = '0%';
+                meter.className = 'h-full transition-all duration-300';
+                lengthCheck.className = 'fas fa-circle text-gray-300 mr-2 text-xs';
+                complexityCheck.className = 'fas fa-circle text-gray-300 mr-2 text-xs';
                 return;
             }
             
-            // Simple password strength check
+            // Check length
+            const hasLength = password.length >= 6;
+            lengthCheck.className = hasLength ? 
+                'fas fa-check-circle text-green-500 mr-2 text-xs' : 
+                'fas fa-circle text-gray-300 mr-2 text-xs';
+            
+            // Check complexity
+            const hasComplexity = /[A-Z]/.test(password) || /[0-9]/.test(password) || /[^A-Za-z0-9]/.test(password);
+            complexityCheck.className = hasComplexity ? 
+                'fas fa-check-circle text-green-500 mr-2 text-xs' : 
+                'fas fa-circle text-gray-300 mr-2 text-xs';
+            
+            // Calculate strength
             let strength = 0;
+            if (hasLength) strength += 50;
+            if (hasComplexity) strength += 50;
             
-            // Length check
-            if (password.length >= 8) strength++;
+            meter.style.width = strength + '%';
             
-            // Contains lowercase and uppercase
-            if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strength++;
-            
-            // Contains numbers
-            if (/[0-9]/.test(password)) strength++;
-            
-            // Contains special characters
-            if (/[^A-Za-z0-9]/.test(password)) strength++;
-            
-            // Update strength meter
-            if (strength <= 1) {
-                meter.classList.add('bg-red-500');
-            } else if (strength <= 3) {
-                meter.classList.add('bg-yellow-500');
+            if (strength < 50) {
+                meter.className = 'h-full transition-all duration-300 bg-red-500';
+            } else if (strength < 100) {
+                meter.className = 'h-full transition-all duration-300 bg-yellow-500';
             } else {
-                meter.classList.add('bg-green-500');
+                meter.className = 'h-full transition-all duration-300 bg-green-500';
             }
         }
-
-        // Toast notification function
+        
+        // Toast Notification
         function showToast(message, type = 'success') {
             const toast = document.getElementById('toast');
             toast.textContent = message;
-            toast.className = `fixed bottom-8 left-1/2 transform -translate-x-1/2 px-6 py-3 rounded-xl shadow-lg z-50 max-w-[90%] text-center transition-all duration-400`;
+            
+            toast.className = 'fixed bottom-6 left-1/2 transform -translate-x-1/2 px-6 py-3 rounded-facebook shadow-lg z-50 transition-all duration-300 max-w-[90%] text-center text-sm font-medium ';
             
             if (type === 'success') {
                 toast.classList.add('bg-green-500', 'text-white');
             } else if (type === 'error') {
                 toast.classList.add('bg-red-500', 'text-white');
             } else {
-                toast.classList.add('bg-purple-800', 'text-white');
+                toast.classList.add('bg-facebook-text', 'text-white');
             }
             
-            // Show toast
+            // Show
             setTimeout(() => {
                 toast.classList.remove('translate-y-24', 'opacity-0');
                 toast.classList.add('translate-y-0', 'opacity-100');
             }, 10);
             
-            // Hide toast after 3 seconds
+            // Hide after 3 seconds
             setTimeout(() => {
                 toast.classList.remove('translate-y-0', 'opacity-100');
                 toast.classList.add('translate-y-24', 'opacity-0');
             }, 3000);
         }
-
-        // Initialize the application
+        
+        // Initialize app
         document.addEventListener("DOMContentLoaded", function() {
-            // Check auth state on page load
             checkAuthState();
+            
+            // Auto-hide loading screen after 3 seconds max
+            setTimeout(() => {
+                document.getElementById('loadingScreen').classList.add('hidden');
+            }, 3000);
         });
     </script>
 </body>
