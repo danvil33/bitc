@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BitC Network - Login</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Firebase and React -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js"></script>
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      background-color: #fff;
+      color: #333;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 400px;
+      padding: 20px;
+    }
+
+    .logo {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 28px;
+      font-weight: 600;
+      background: linear-gradient(135deg, #a855f7 0%, #7c3aed 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+
+    .input-group {
+      margin-bottom: 15px;
+    }
+
+    .input-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 14px;
+      color: #555;
+    }
+
+    input[type="email"], input[type="password"], input[type="text"] {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+
+    input[type="email"]:focus, input[type="password"]:focus, input[type="text"]:focus {
+      border-color: #a855f7;
+    }
+
+    .info-text {
+      font-size: 12px;
+      color: #777;
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+
+    .info-text a {
+      color: #a855f7;
+      text-decoration: underline;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, #a855f7 0%, #7c3aed 100%);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-bottom: 20px;
+      transition: transform 0.2s;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .btn:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+
+    .divider {
+      text-align: center;
+      margin: 10px 0 20px;
+      font-size: 14px;
+      color: #777;
+      position: relative;
+    }
+
+    .divider::before, .divider::after {
+      content: "";
+      height: 1px;
+      width: 40%;
+      background: #ccc;
+      position: absolute;
+      top: 50%;
+    }
+
+    .divider::before {
+      left: 0;
+    }
+
+    .divider::after {
+      right: 0;
+    }
+
+    .social-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px;
+      width: 100%;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      background: #fff;
+      font-size: 16px;
+      cursor: pointer;
+      margin-bottom: 10px;
+      transition: all 0.2s;
+    }
+
+    .social-btn i {
+      margin-right: 10px;
+    }
+
+    .social-btn:hover {
+      background-color: #f7f7f7;
+    }
+
+    .social-btn.google i {
+      color: #DB4437;
+    }
+
+    .social-btn.apple i {
+      color: #000;
+    }
+
+    .social-btn.email i {
+      color: #a855f7;
+    }
+
+    /* Bottom Nav */
+    .bottom-nav {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 40px;
+      border-top: 1px solid #eee;
+      padding-top: 10px;
+    }
+
+    .bottom-nav div {
+      text-align: center;
+      font-size: 14px;
+      color: #777;
+      cursor: pointer;
+    }
+
+    .bottom-nav div.active {
+      color: #a855f7;
+    }
+
+    .bottom-nav i {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 20px;
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 12px 24px;
+      border-radius: 8px;
+      color: white;
+      font-weight: 500;
+      z-index: 1000;
+      animation: slideUp 0.3s ease;
+    }
+
+    .toast.success {
+      background: linear-gradient(135deg, #a855f7 0%, #7c3aed 100%);
+    }
+
+    .toast.error {
+      background: linear-gradient(135deg, #ff6b6b 0%, #ff4757 100%);
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translate(-50%, 20px);
+      }
+      to {
+        opacity: 1;
+        transform: translate(-50%, 0);
+      }
+    }
+
+    /* Loading */
+    .loading {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(255,255,255,.3);
+      border-radius: 50%;
+      border-top-color: #fff;
+      animation: spin 1s ease-in-out infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Page Transitions */
+    .page {
+      display: none;
+    }
+
+    .page.active {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Password Toggle */
+    .password-container {
+      position: relative;
+    }
+
+    .toggle-password {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: #666;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    /* Forgot Password Link */
+    .forgot-password {
+      text-align: right;
+      margin-top: -10px;
+      margin-bottom: 20px;
+    }
+
+    .forgot-password a {
+      color: #a855f7;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .forgot-password a:hover {
+      text-decoration: underline;
+    }
+
+    /* Back Button */
+    .back-button {
+      margin-bottom: 20px;
+    }
+
+    .back-button button {
+      background: none;
+      border: none;
+      color: #666;
+      cursor: pointer;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .back-button button:hover {
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useEffect } = React;
+
+    // Initialize Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyBEjeRSyKbpEmbNk0SYLUFPp3lbgP9x3Ow",
+      authDomain: "volcanobxpl.firebaseapp.com",
+      projectId: "volcanobxpl",
+      storageBucket: "volcanobxpl.firebasestorage.app",
+      messagingSenderId: "742861205377",
+      appId: "1:742861205377:web:bbe8a42b78c90354a64280",
+      measurementId: "G-G1KWGHLZES"
+    };
+
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    }
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    // Toast Component
+    function Toast({ message, type, onClose }) {
+      useEffect(() => {
+        const timer = setTimeout(() => {
+          onClose();
+        }, 3000);
+        return () => clearTimeout(timer);
+      }, [onClose]);
+
+      return (
+        <div className={`toast ${type}`}>
+          <i className={`fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}`}></i> {message}
+        </div>
+      );
+    }
+
+    // Loading Component
+    function Loading() {
+      return (
+        <div className="loading"></div>
+      );
+    }
+
+    // Landing Page Component (Airbnb Style)
+    function LandingPage({ setPage, setToast }) {
+      const handleGoogleSignIn = async () => {
+        const provider = new firebase.auth.GoogleAuthProvider();
+        try {
+          const result = await auth.signInWithPopup(provider);
+          const user = result.user;
+          
+          // Check if user exists in Firestore
+          const userDoc = await db.collection("users").doc(user.uid).get();
+          
+          if (!userDoc.exists) {
+            // Create user profile for Google sign-in
+            const userProfile = {
+              email: user.email,
+              createdAt: new Date().toISOString(),
+              emailVerified: true,
+              miningData: {
+                minedVlc: 0,
+                miningStartTime: null,
+                miningElapsedSeconds: 0,
+                walletBalance: 0,
+                miningRewards: 0,
+                referralBonuses: 0,
+                referralsCount: 0,
+                miningRateVlcPerHour: 1,
+                referralCode: user.uid.substring(0, 8),
+                usedReferralCode: null,
+                transactions: [],
+                lastMigrationTimestamp: null,
+                lastMiningDay: null
+              }
+            };
+
+            await db.collection("users").doc(user.uid).set(userProfile);
+          }
+          
+          setToast({ message: 'Login successful!', type: 'success' });
+          setTimeout(() => {
+            window.location.href = 'mining.html';
+          }, 1000);
+        } catch (error) {
+          console.error('Google sign-in error:', error);
+          setToast({ message: 'Google sign-in failed', type: 'error' });
+        }
+      };
+
+      return (
+        <div className="page active">
+          <div className="logo">BitC Network</div>
+          <h2>Welcome to BitC Network</h2>
+
+          <div className="input-group">
+            <label>Email address</label>
+            <input type="email" id="landing-email" placeholder="your.email@example.com" />
+          </div>
+
+          <div className="input-group">
+            <label>Password</label>
+            <div className="password-container">
+              <input type="password" id="landing-password" placeholder="Enter your password" />
+              <button type="button" className="toggle-password">
+                <i className="fas fa-eye"></i>
+              </button>
+            </div>
+          </div>
+
+          <div className="forgot-password">
+            <a href="#" onClick={(e) => { e.preventDefault(); setPage('forgot'); }}>Forgot password?</a>
+          </div>
+
+          <div className="info-text">
+            We'll send you a confirmation email. Standard message and data rates apply. <a href="https://bitcnetwork.com/privacy">Privacy Policy</a>
+          </div>
+
+          <button className="btn" onClick={() => setPage('login')}>
+            Continue
+          </button>
+
+          <div className="divider">or</div>
+
+          <button className="social-btn google" onClick={handleGoogleSignIn}>
+            <i className="fab fa-google"></i>Continue with Google
+          </button>
+          <button className="social-btn apple">
+            <i className="fab fa-apple"></i>Continue with Apple
+          </button>
+          <button className="social-btn email" onClick={() => setPage('signup')}>
+            <i className="fas fa-envelope"></i>Continue with email
+          </button>
+
+          <div className="bottom-nav">
+            <div><i class="fas fa-home"></i><br />Home</div>
+            <div><i class="fas fa-heart"></i><br />Mining</div>
+            <div class="active"><i class="fas fa-user"></i><br />Log in</div>
+            <div><i class="fas fa-wallet"></i><br />Wallet</div>
+          </div>
+        </div>
+      );
+    }
+
+    // Login Page Component
+    function LoginPage({ setPage, setToast }) {
+      const [loading, setLoading] = useState(false);
+      const [showPassword, setShowPassword] = useState(false);
+      const [formData, setFormData] = useState({
+        email: '',
+        password: ''
+      });
+
+      const handleSubmit = async (e) => {
+        e.preventDefault();
+        
+        if (!formData.email || !formData.password) {
+          setToast({ message: 'Please fill in all fields', type: 'error' });
+          return;
+        }
+
+        setLoading(true);
+
+        try {
+          const userCredential = await auth.signInWithEmailAndPassword(formData.email, formData.password);
+          const user = userCredential.user;
+          
+          if (!user.emailVerified) {
+            setToast({ message: 'Please verify your email before logging in', type: 'error' });
+            setPage('verify');
+            return;
+          }
+          
+          setToast({ message: 'Login successful!', type: 'success' });
+          setTimeout(() => {
+            window.location.href = 'mining.html';
+          }, 1000);
+          
+        } catch (error) {
+          console.error('Login error:', error);
+          let errorMessage = 'Login failed. ';
+          
+          switch (error.code) {
+            case 'auth/user-not-found':
+              errorMessage = 'No account found with this email.';
+              break;
+            case 'auth/wrong-password':
+              errorMessage = 'Incorrect password.';
+              break;
+            case 'auth/invalid-email':
+              errorMessage = 'Invalid email address.';
+              break;
+            default:
+              errorMessage = 'Please try again.';
+          }
+          
+          setToast({ message: errorMessage, type: 'error' });
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      return (
+        <div className="page active">
+          <div className="back-button">
+            <button onClick={() => setPage('landing')}>
+              <i className="fas fa-arrow-left"></i> Back
+            </button>
+          </div>
+          
+          <div className="logo">BitC Network</div>
+          <h2>Sign In to BitC Network</h2>
+
+          <form onSubmit={handleSubmit}>
+            <div className="input-group">
+              <label>Email address</label>
+              <input 
+                type="email" 
+                value={formData.email}
+                onChange={(e) => setFormData({...formData, email: e.target.value})}
+                placeholder="your.email@example.com" 
+                required 
+              />
+            </div>
+
+            <div className="input-group">
+              <label>Password</label>
+              <div className="password-container">
+                <input 
+                  type={showPassword ? "text" : "password"} 
+                  value={formData.password}
+                  onChange={(e) => setFormData({...formData, password: e.target.value})}
+                  placeholder="Enter your password" 
+                  required 
+                />
+                <button 
+                  type="button" 
+                  className="toggle-password"
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  <i className={`fas fa-${showPassword ? 'eye-slash' : 'eye'}`}></i>
+                </button>
+              </div>
+            </div>
+
+            <div className="forgot-password">
+              <a href="#" onClick={(e) => { e.preventDefault(); setPage('forgot'); }}>Forgot password?</a>
+            </div>
+
+            <button className="btn" type="submit" disabled={loading}>
+              {loading ? <Loading /> : 'Sign In'}
+            </button>
+          </form>
+
+          <div className="divider">or</div>
+
+          <button className="social-btn google" onClick={() => {
+            const provider = new firebase.auth.GoogleAuthProvider();
+            auth.signInWithPopup(provider).then(() => {
+              window.location.href = 'mining.html';
+            }).catch(console.error);
+          }}>
+            <i className="fab fa-google"></i>Continue with Google
+          </button>
+          <button className="social-btn email" onClick={() => setPage('signup')}>
+            <i className="fas fa-envelope"></i>Create Account
+          </button>
+        </div>
+      );
+    }
+
+    // Signup Page Component
+    function SignupPage({ setPage, setToast }) {
+      const [loading, setLoading] = useState(false);
+      const [showPassword, setShowPassword] = useState(false);
+      const [formData, setFormData] = useState({
+        email: '',
+        password: '',
+        confirmPassword: '',
+        referralCode: ''
+      });
+      const [passwordStrength, setPasswordStrength] = useState(0);
+
+      const checkPasswordStrength = (password) => {
+        let strength = 0;
+        if (password.length >= 8) strength += 25;
+        if (/[a-z]/.test(password)) strength += 25;
+        if (/[A-Z]/.test(password)) strength += 25;
+        if (/[0-9]/.test(password) || /[^A-Za-z0-9]/.test(password)) strength += 25;
+        setPasswordStrength(strength);
+      };
+
+      const handleSubmit = async (e) => {
+        e.preventDefault();
+        
+        if (!formData.email || !formData.password || !formData.confirmPassword) {
+          setToast({ message: 'Please fill in all required fields', type: 'error' });
+          return;
+        }
+
+        if (formData.password !== formData.confirmPassword) {
+          setToast({ message: 'Passwords do not match', type: 'error' });
+          return;
+        }
+
+        if (formData.password.length < 6) {
+          setToast({ message: 'Password must be at least 6 characters', type: 'error' });
+          return;
+        }
+
+        setLoading(true);
+
+        try {
+          const userCredential = await auth.createUserWithEmailAndPassword(formData.email, formData.password);
+          const user = userCredential.user;
+          
+          await user.sendEmailVerification();
+
+          const userProfile = {
+            email: user.email,
+            createdAt: new Date().toISOString(),
+            emailVerified: false,
+            miningData: {
+              minedVlc: 0,
+              miningStartTime: null,
+              miningElapsedSeconds: 0,
+              walletBalance: 0,
+              miningRewards: 0,
+              referralBonuses: 0,
+              referralsCount: 0,
+              miningRateVlcPerHour: 1,
+              referralCode: user.uid.substring(0, 8),
+              usedReferralCode: formData.referralCode || null,
+              transactions: [],
+              lastMigrationTimestamp: null,
+              lastMiningDay: null
+            }
+          };
+
+          await db.collection("users").doc(user.uid).set(userProfile);
+          
+          setToast({ message: 'Account created! Verification email sent.', type: 'success' });
+          setPage('verify');
+          
+        } catch (error) {
+          console.error('Signup error:', error);
+          let errorMessage = 'Failed to create account. ';
+          
+          switch (error.code) {
+            case 'auth/email-already-in-use':
+              errorMessage = 'Email is already in use.';
+              break;
+            case 'auth/invalid-email':
+              errorMessage = 'Invalid email address.';
+              break;
+            case 'auth/weak-password':
+              errorMessage = 'Password is too weak.';
+              break;
+            default:
+              errorMessage = 'Please try again.';
+          }
+          
+          setToast({ message: errorMessage, type: 'error' });
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      return (
+        <div className="page active">
+          <div className="back-button">
+            <button onClick={() => setPage('landing')}>
+              <i className="fas fa-arrow-left"></i> Back
+            </button>
+          </div>
+          
+          <div className="logo">BitC Network</div>
+          <h2>Create BitC Account</h2>
+
+          <form onSubmit={handleSubmit}>
+            <div className="input-group">
+              <label>Email address</label>
+              <input 
+                type="email" 
+                value={formData.email}
+                onChange={(e) => setFormData({...formData, email: e.target.value})}
+                placeholder="your.email@example.com" 
+                required 
+              />
+            </div>
+
+            <div className="input-group">
+              <label>Password</label>
+              <div className="password-container">
+                <input 
+                  type={showPassword ? "text" : "password"} 
+                  value={formData.password}
+                  onChange={(e) => {
+                    setFormData({...formData, password: e.target.value});
+                    checkPasswordStrength(e.target.value);
+                  }}
+                  placeholder="Create a strong password" 
+                  required 
+                />
+                <button 
+                  type="button" 
+                  className="toggle-password"
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  <i className={`fas fa-${showPassword ? 'eye-slash' : 'eye'}`}></i>
+                </button>
+              </div>
+            </div>
+
+            <div className="input-group">
+              <label>Confirm Password</label>
+              <input 
+                type={showPassword ? "text" : "password"} 
+                value={formData.confirmPassword}
+                onChange={(e) => setFormData({...formData, confirmPassword: e.target.value})}
+                placeholder="Re-enter your password" 
+                required 
+              />
+            </div>
+
+            <div className="input-group">
+              <label>
+                Referral Code <span style={{color: '#777', fontWeight: 'normal'}}>(optional)</span>
+              </label>
+              <input 
+                type="text" 
+                value={formData.referralCode}
+                onChange={(e) => setFormData({...formData, referralCode: e.target.value})}
+                placeholder="Enter referral code if you have one" 
+              />
+            </div>
+
+            <div className="info-text">
+              By creating an account, you agree to our
+              <a href="https://bitcnetwork.com/termsofservice"> Terms of Service</a> and
+              <a href="https://bitcnetwork.com/privacy"> Privacy Policy</a>
+            </div>
+
+            <button className="btn" type="submit" disabled={loading}>
+              {loading ? <Loading /> : 'Create Account'}
+            </button>
+          </form>
+
+          <div className="divider">or</div>
+
+          <button className="social-btn google" onClick={() => {
+            const provider = new firebase.auth.GoogleAuthProvider();
+            auth.signInWithPopup(provider).then(() => {
+              window.location.href = 'mining.html';
+            }).catch(console.error);
+          }}>
+            <i className="fab fa-google"></i>Continue with Google
+          </button>
+          
+          <p style={{textAlign: 'center', marginTop: '20px', color: '#666'}}>
+            Already have an account?{' '}
+            <a href="#" onClick={(e) => { e.preventDefault(); setPage('login'); }} style={{color: '#a855f7', fontWeight: '500'}}>
+              Sign In
+            </a>
+          </p>
+        </div>
+      );
+    }
+
+    // Forgot Password Page Component
+    function ForgotPasswordPage({ setPage, setToast }) {
+      const [loading, setLoading] = useState(false);
+      const [email, setEmail] = useState('');
+
+      const handleSubmit = async (e) => {
+        e.preventDefault();
+        
+        if (!email) {
+          setToast({ message: 'Please enter your email address', type: 'error' });
+          return;
+        }
+
+        setLoading(true);
+
+        try {
+          await auth.sendPasswordResetEmail(email);
+          setToast({ message: 'Password reset email sent!', type: 'success' });
+          setTimeout(() => {
+            setPage('landing');
+          }, 2000);
+          
+        } catch (error) {
+          console.error('Password reset error:', error);
+          let errorMessage = 'Failed to send reset email. ';
+          
+          switch (error.code) {
+            case 'auth/user-not-found':
+              errorMessage = 'No account found with this email.';
+              break;
+            case 'auth/invalid-email':
+              errorMessage = 'Invalid email address.';
+              break;
+            default:
+              errorMessage = 'Please try again.';
+          }
+          
+          setToast({ message: errorMessage, type: 'error' });
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      return (
+        <div className="page active">
+          <div className="back-button">
+            <button onClick={() => setPage('login')}>
+              <i className="fas fa-arrow-left"></i> Back
+            </button>
+          </div>
+          
+          <div className="logo">BitC Network</div>
+          <h2>Reset Password</h2>
+
+          <form onSubmit={handleSubmit}>
+            <div className="input-group">
+              <label>Email address</label>
+              <input 
+                type="email" 
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="your.email@example.com" 
+                required 
+              />
+            </div>
+
+            <div className="info-text">
+              Enter your email address and we'll send you a link to reset your password.
+            </div>
+
+            <button className="btn" type="submit" disabled={loading}>
+              {loading ? <Loading /> : 'Send Reset Link'}
+            </button>
+          </form>
+        </div>
+      );
+    }
+
+    // Email Verification Page Component
+    function EmailVerificationPage({ setPage, setToast }) {
+      const [loading, setLoading] = useState(false);
+      const [user, setUser] = useState(null);
+
+      useEffect(() => {
+        const unsubscribe = auth.onAuthStateChanged((user) => {
+          setUser(user);
+        });
+        return () => unsubscribe();
+      }, []);
+
+      const handleResendEmail = async () => {
+        if (!user) {
+          setToast({ message: 'Please sign in first', type: 'error' });
+          return;
+        }
+
+        setLoading(true);
+
+        try {
+          await user.sendEmailVerification();
+          setToast({ message: 'Verification email sent!', type: 'success' });
+        } catch (error) {
+          console.error('Resend verification error:', error);
+          setToast({ message: 'Failed to send verification email', type: 'error' });
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      return (
+        <div className="page active">
+          <div className="back-button">
+            <button onClick={() => setPage('signup')}>
+              <i className="fas fa-arrow-left"></i> Back
+            </button>
+          </div>
+          
+          <div className="logo">BitC Network</div>
+          <h2>Verify Your Email</h2>
+
+          <div style={{textAlign: 'center', marginBottom: '20px'}}>
+            <div style={{fontSize: '60px', color: '#a855f7', marginBottom: '10px'}}>
+              <i className="fas fa-envelope-circle-check"></i>
+            </div>
+            <h3 style={{marginBottom: '10px'}}>Verification Email Sent</h3>
+            <p style={{color: '#666'}}>
+              We've sent a verification link to:<br />
+              <strong>{user?.email}</strong>
+            </p>
+          </div>
+
+          <div className="info-text" style={{backgroundColor: '#f0f7ff', padding: '15px', borderRadius: '8px', borderLeft: '4px solid #a855f7'}}>
+            <i className="fas fa-info-circle" style={{color: '#a855f7', marginRight: '5px'}}></i>
+            Please check your inbox and click the verification link to activate your account before logging in.
+          </div>
+
+          <button className="btn" onClick={handleResendEmail} disabled={loading} style={{marginTop: '20px'}}>
+            {loading ? <Loading /> : 'Resend Verification Email'}
+          </button>
+          
+          <button className="social-btn" onClick={() => setPage('login')} style={{marginTop: '10px'}}>
+            <i className="fas fa-sign-in-alt"></i>Continue to Login
+          </button>
+
+          <p style={{textAlign: 'center', marginTop: '20px', color: '#666', fontSize: '14px'}}>
+            Didn't receive the email? Check your spam folder or try resending.
+          </p>
+        </div>
+      );
+    }
+
+    // Main App Component
+    function App() {
+      const [currentPage, setCurrentPage] = useState('landing');
+      const [toast, setToast] = useState(null);
+      const [user, setUser] = useState(null);
+      const [loading, setLoading] = useState(true);
+
+      useEffect(() => {
+        const unsubscribe = auth.onAuthStateChanged((user) => {
+          setUser(user);
+          setLoading(false);
+          
+          if (user && user.emailVerified) {
+            window.location.href = 'mining.html';
+          } else if (user && !user.emailVerified) {
+            setCurrentPage('verify');
+          }
+        });
+
+        return () => unsubscribe();
+      }, []);
+
+      if (loading) {
+        return (
+          <div className="container" style={{textAlign: 'center', paddingTop: '100px'}}>
+            <div className="logo">BitC Network</div>
+            <div style={{margin: '30px 0'}}>
+              <div className="loading" style={{border: '3px solid #f3f3f3', borderTop: '3px solid #a855f7', width: '40px', height: '40px'}}></div>
+            </div>
+            <p style={{color: '#666'}}>Checking authentication...</p>
+          </div>
+        );
+      }
+
+      return (
+        <div className="container">
+          {toast && (
+            <Toast 
+              message={toast.message} 
+              type={toast.type} 
+              onClose={() => setToast(null)} 
+            />
+          )}
+          
+          {currentPage === 'landing' && <LandingPage setPage={setCurrentPage} setToast={setToast} />}
+          {currentPage === 'login' && <LoginPage setPage={setCurrentPage} setToast={setToast} />}
+          {currentPage === 'signup' && <SignupPage setPage={setCurrentPage} setToast={setToast} />}
+          {currentPage === 'forgot' && <ForgotPasswordPage setPage={setCurrentPage} setToast={setToast} />}
+          {currentPage === 'verify' && <EmailVerificationPage setPage={setCurrentPage} setToast={setToast} />}
+        </div>
+      );
+    }
+
+    // Initialize the app
+    ReactDOM.render(<App />, document.getElementById('root'));
+
+    // Initialize password toggle functionality
+    document.addEventListener('click', function(e) {
+      if (e.target.closest('.toggle-password')) {
+        const button = e.target.closest('.toggle-password');
+        const input = button.previousElementSibling;
+        const icon = button.querySelector('i');
+        
+        if (input.type === 'password') {
+          input.type = 'text';
+          icon.classList.remove('fa-eye');
+          icon.classList.add('fa-eye-slash');
+        } else {
+          input.type = 'password';
+          icon.classList.remove('fa-eye-slash');
+          icon.classList.add('fa-eye');
+        }
+      }
+    });
+  </script>
+</body>
+</html>
