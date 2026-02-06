@@ -4,579 +4,108 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BitC Crypto Mining - Login</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- React & Babel -->
     <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <style>
-        .airbnb-container {
-            max-width: 568px;
-            margin: 0 auto;
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
         }
-        
-        .airbnb-header {
-            border-bottom: 1px solid #ebebeb;
-            padding: 24px 0;
-            margin-bottom: 32px;
+
+        body {
+            background-color: #fff;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding: 20px;
         }
-        
-        .airbnb-title {
-            font-size: 32px;
-            line-height: 36px;
-            color: #222222;
-            font-weight: 600;
-            margin-bottom: 8px;
-        }
-        
-        .airbnb-subtitle {
-            color: #717171;
-            font-size: 16px;
-            line-height: 20px;
-        }
-        
-        .airbnb-input {
-            border: 1px solid #b0b0b0;
-            border-radius: 8px;
-            padding: 16px;
-            font-size: 16px;
+
+        .container {
             width: 100%;
-            transition: border-color 0.2s;
+            max-width: 400px;
+            padding: 20px;
         }
-        
-        .airbnb-input:focus {
+
+        .logo {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 28px;
+            font-weight: 600;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
+            color: #555;
+        }
+
+        select, input[type="text"], input[type="tel"], input[type="email"], input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 16px;
             outline: none;
-            border-color: #222222;
         }
-        
-        .airbnb-btn-primary {
-            background: linear-gradient(90deg, #FF385C 0%, #E31C5F 100%);
-            color: white;
+
+        input[type="tel"], input[type="email"], input[type="password"] {
+            margin-top: 5px;
+        }
+
+        .info-text {
+            font-size: 12px;
+            color: #777;
+            margin-bottom: 20px;
+        }
+
+        .info-text a {
+            color: #000;
+            text-decoration: underline;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(to right, #FF385C, #FF5A75);
+            color: #fff;
             border: none;
             border-radius: 8px;
-            padding: 16px;
             font-size: 16px;
-            font-weight: 600;
-            width: 100%;
             cursor: pointer;
-            transition: background-color 0.2s;
-        }
-        
-        .airbnb-btn-primary:hover {
-            background: linear-gradient(90deg, #E31C5F 0%, #D70466 100%);
-        }
-        
-        .airbnb-btn-outline {
-            border: 1px solid #222222;
-            background: white;
-            color: #222222;
-            border-radius: 8px;
-            padding: 16px;
-            font-size: 16px;
-            font-weight: 600;
-            width: 100%;
-            cursor: pointer;
+            margin-bottom: 20px;
             transition: all 0.2s;
         }
-        
-        .airbnb-btn-outline:hover {
-            background: #f7f7f7;
+
+        .btn:hover {
+            background: linear-gradient(to right, #E61E4D, #FF385C);
         }
-        
-        .airbnb-divider {
-            display: flex;
-            align-items: center;
-            margin: 24px 0;
-            color: #717171;
+
+        .btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
         }
-        
-        .airbnb-divider::before,
-        .airbnb-divider::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: #ebebeb;
-        }
-        
-        .airbnb-divider span {
-            padding: 0 16px;
-        }
-        
-        .social-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            border: 1px solid #dddddd;
-            border-radius: 8px;
-            padding: 16px;
-            width: 100%;
-            background: white;
-            font-size: 16px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        
-        .social-btn:hover {
-            background: #f7f7f7;
-        }
-        
-        .country-selector {
-            border: 1px solid #b0b0b0;
-            border-radius: 8px;
-            padding: 16px;
-            width: 100%;
-            font-size: 16px;
-            background: white;
-            cursor: pointer;
-        }
-        
-        .phone-input-container {
-            display: flex;
-            gap: 12px;
-        }
-        
-        .country-code {
-            flex: 0 0 120px;
-        }
-        
-        .phone-number {
-            flex: 1;
-        }
-        
-        .auth-switch {
+
+        .divider {
             text-align: center;
-            margin-top: 24px;
-            padding-top: 24px;
-            border-top: 1px solid #ebebeb;
-        }
-        
-        .auth-switch a {
-            color: #222222;
-            text-decoration: underline;
-            font-weight: 600;
-            cursor: pointer;
-        }
-        
-        .privacy-notice {
-            color: #717171;
-            font-size: 14px;
-            line-height: 18px;
-            margin-top: 16px;
-            text-align: center;
-        }
-        
-        .privacy-notice a {
-            color: #222222;
-            text-decoration: underline;
-        }
-        
-        .logo-container {
-            padding: 32px 0 24px;
-            text-align: center;
-        }
-        
-        .logo {
-            font-size: 32px;
-            font-weight: 700;
-            color: #222222;
-            letter-spacing: -1px;
-        }
-    </style>
-</head>
-<body class="font-sans">
-    <div id="root"></div>
-
-    <!-- Firebase SDK -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail, onAuthStateChanged, sendEmailVerification } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-        import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyBEjeRSyKbpEmbNk0SYLUFPp3lbgP9x3Ow",
-            authDomain: "volcanobxpl.firebaseapp.com",
-            projectId: "volcanobxpl",
-            storageBucket: "volcanobxpl.firebasestorage.app",
-            messagingSenderId: "742861205377",
-            appId: "1:742861205377:web:bbe8a42b78c90354a64280",
-            measurementId: "G-G1KWGHLZES"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
-
-        window.firebaseAuth = auth;
-        window.firebaseDb = db;
-        window.firebase = {
-            signInWithEmailAndPassword,
-            createUserWithEmailAndPassword,
-            sendPasswordResetEmail,
-            onAuthStateChanged,
-            sendEmailVerification,
-            setDoc,
-            doc
-        };
-    </script>
-
-    <!-- React App -->
-    <script type="text/babel">
-        const { useState, useEffect } = React;
-
-        // Main App Component
-        function App() {
-            const [mode, setMode] = useState('login'); // 'login' or 'signup'
-            const [countryCode, setCountryCode] = useState('+86'); // Default to China
-            const [phoneNumber, setPhoneNumber] = useState('');
-            const [email, setEmail] = useState('');
-            const [password, setPassword] = useState('');
-            const [confirmPassword, setConfirmPassword] = useState('');
-            const [loading, setLoading] = useState(false);
-            const [message, setMessage] = useState('');
-            const [showEmailLogin, setShowEmailLogin] = useState(false);
-
-            useEffect(() => {
-                const unsubscribe = window.firebase.onAuthStateChanged(window.firebaseAuth, (user) => {
-                    if (user && user.emailVerified) {
-                        window.location.href = 'mining.html';
-                    }
-                });
-                return () => unsubscribe();
-            }, []);
-
-            const handleSubmit = async (e) => {
-                e.preventDefault();
-                setLoading(true);
-                setMessage('');
-
-                try {
-                    if (mode === 'login') {
-                        if (!email || !password) {
-                            setMessage('Please enter email and password');
-                            return;
-                        }
-                        
-                        const userCredential = await window.firebase.signInWithEmailAndPassword(
-                            window.firebaseAuth,
-                            email,
-                            password
-                        );
-                        
-                        if (!userCredential.user.emailVerified) {
-                            setMessage('Please verify your email first');
-                            return;
-                        }
-                        
-                        setMessage('Login successful! Redirecting...');
-                        setTimeout(() => {
-                            window.location.href = 'mining.html';
-                        }, 1000);
-                    } else {
-                        // Signup logic
-                        if (!email || !password || !confirmPassword) {
-                            setMessage('Please fill all fields');
-                            return;
-                        }
-                        
-                        if (password !== confirmPassword) {
-                            setMessage('Passwords do not match');
-                            return;
-                        }
-                        
-                        const userCredential = await window.firebase.createUserWithEmailAndPassword(
-                            window.firebaseAuth,
-                            email,
-                            password
-                        );
-                        
-                        await window.firebase.sendEmailVerification(userCredential.user);
-                        
-                        const userProfile = {
-                            email: userCredential.user.email,
-                            createdAt: new Date().toISOString(),
-                            emailVerified: false,
-                            miningData: {
-                                minedVlc: 0,
-                                miningStartTime: null,
-                                miningElapsedSeconds: 0,
-                                walletBalance: 0,
-                                miningRewards: 0,
-                                referralBonuses: 0,
-                                referralsCount: 0,
-                                miningRateVlcPerHour: 1,
-                                referralCode: userCredential.user.uid.substring(0, 8),
-                                usedReferralCode: null,
-                                transactions: [],
-                                lastMigrationTimestamp: null,
-                                lastMiningDay: null
-                            }
-                        };
-                        
-                        await window.firebase.setDoc(
-                            window.firebase.doc(window.firebaseDb, "users", userCredential.user.uid),
-                            userProfile
-                        );
-                        
-                        setMessage('Account created! Please check your email for verification.');
-                        setMode('login');
-                    }
-                } catch (error) {
-                    console.error('Auth error:', error);
-                    setMessage(error.message || 'An error occurred');
-                } finally {
-                    setLoading(false);
-                }
-            };
-
-            const handleSocialLogin = (provider) => {
-                setMessage(`${provider} login would be implemented here`);
-                // In a real app, you would implement social login here
-            };
-
-            const toggleMode = () => {
-                setMode(mode === 'login' ? 'signup' : 'login');
-                setMessage('');
-            };
-
-            const toggleEmailLogin = () => {
-                setShowEmailLogin(!showEmailLogin);
-            };
-
-            return (
-                <div className="min-h-screen bg-white">
-                    <div className="airbnb-container px-4 py-8">
-                        {/* Logo */}
-                        <div className="logo-container">
-                            <div className="logo">BitC</div>
-                        </div>
-                        
-                        {/* Header */}
-                        <div className="airbnb-header">
-                            <h1 className="airbnb-title">
-                                {mode === 'login' ? 'Welcome to BitC Network' : 'Join BitC Network'}
-                            </h1>
-                            <p className="airbnb-subtitle">
-                                {mode === 'login' ? 'Sign in to your account' : 'Create your account to start mining'}
-                            </p>
-                        </div>
-                        
-                        {/* Main Form */}
-                        <form onSubmit={handleSubmit}>
-                            {mode === 'signup' && !showEmailLogin && (
-                                <div className="mb-6">
-                                    <label className="block text-gray-700 mb-2 font-medium">
-                                        Country/Region
-                                    </label>
-                                    <select 
-                                        className="country-selector"
-                                        value={countryCode}
-                                        onChange={(e) => setCountryCode(e.target.value)}
-                                    >
-                                        <option value="+86">China (+86)</option>
-                                        <option value="+1">United States (+1)</option>
-                                        <option value="+44">United Kingdom (+44)</option>
-                                        <option value="+91">India (+91)</option>
-                                        <option value="+81">Japan (+81)</option>
-                                        <option value="+82">South Korea (+82)</option>
-                                    </select>
-                                    
-                                    <div className="phone-input-container mt-4">
-                                        <div className="country-code">
-                                            <input 
-                                                type="text" 
-                                                value={countryCode}
-                                                onChange={(e) => setCountryCode(e.target.value)}
-                                                className="airbnb-input"
-                                                placeholder="+86"
-                                            />
-                                        </div>
-                                        <div className="phone-number">
-                                            <input 
-                                                type="tel" 
-                                                value={phoneNumber}
-                                                onChange={(e) => setPhoneNumber(e.target.value)}
-                                                className="airbnb-input"
-                                                placeholder="Phone number"
-                                            />
-                                        </div>
-                                    </div>
-                                    
-                                    <p className="text-gray-600 text-sm mt-2">
-                                        We'll call or text to confirm your number. Standard message and data rates apply.
-                                    </p>
-                                    
-                                    <button 
-                                        type="button"
-                                        className="airbnb-btn-primary mt-6"
-                                        onClick={() => setShowEmailLogin(true)}
-                                    >
-                                        Continue
-                                    </button>
-                                    
-                                    <div className="airbnb-divider">
-                                        <span>or</span>
-                                    </div>
-                                </div>
-                            )}
-                            
-                            {(mode === 'login' || showEmailLogin) && (
-                                <>
-                                    {!showEmailLogin && mode === 'login' && (
-                                        <>
-                                            <div className="space-y-4 mb-6">
-                                                <button 
-                                                    type="button"
-                                                    className="social-btn"
-                                                    onClick={() => handleSocialLogin('WeChat')}
-                                                >
-                                                    <i className="fab fa-weixin text-green-500"></i>
-                                                    Continue with WeChat
-                                                </button>
-                                                
-                                                <button 
-                                                    type="button"
-                                                    className="social-btn"
-                                                    onClick={() => handleSocialLogin('Google')}
-                                                >
-                                                    <i className="fab fa-google text-red-500"></i>
-                                                    Continue with Google
-                                                </button>
-                                                
-                                                <button 
-                                                    type="button"
-                                                    className="social-btn"
-                                                    onClick={() => handleSocialLogin('Apple')}
-                                                >
-                                                    <i className="fab fa-apple"></i>
-                                                    Continue with Apple
-                                                </button>
-                                                
-                                                <button 
-                                                    type="button"
-                                                    className="social-btn"
-                                                    onClick={toggleEmailLogin}
-                                                >
-                                                    <i className="fas fa-envelope"></i>
-                                                    Continue with Email
-                                                </button>
-                                                
-                                                <button 
-                                                    type="button"
-                                                    className="social-btn"
-                                                    onClick={() => handleSocialLogin('Facebook')}
-                                                >
-                                                    <i className="fab fa-facebook text-blue-600"></i>
-                                                    Continue with Facebook
-                                                </button>
-                                            </div>
-                                            
-                                            <div className="airbnb-divider">
-                                                <span>or</span>
-                                            </div>
-                                        </>
-                                    )}
-                                    
-                                    <div className="space-y-4">
-                                        <div>
-                                            <input 
-                                                type="email" 
-                                                value={email}
-                                                onChange={(e) => setEmail(e.target.value)}
-                                                className="airbnb-input"
-                                                placeholder="Email address"
-                                                required
-                                            />
-                                        </div>
-                                        
-                                        <div>
-                                            <input 
-                                                type="password" 
-                                                value={password}
-                                                onChange={(e) => setPassword(e.target.value)}
-                                                className="airbnb-input"
-                                                placeholder="Password"
-                                                required
-                                            />
-                                        </div>
-                                        
-                                        {mode === 'signup' && (
-                                            <div>
-                                                <input 
-                                                    type="password" 
-                                                    value={confirmPassword}
-                                                    onChange={(e) => setConfirmPassword(e.target.value)}
-                                                    className="airbnb-input"
-                                                    placeholder="Confirm password"
-                                                    required
-                                                />
-                                            </div>
-                                        )}
-                                        
-                                        {mode === 'login' && (
-                                            <div className="text-right">
-                                                <button 
-                                                    type="button"
-                                                    className="text-gray-600 text-sm hover:underline"
-                                                    onClick={() => alert('Password reset would be implemented')}
-                                                >
-                                                    Forgot password?
-                                                </button>
-                                            </div>
-                                        )}
-                                        
-                                        <button 
-                                            type="submit"
-                                            className="airbnb-btn-primary"
-                                            disabled={loading}
-                                        >
-                                            {loading ? (
-                                                <span>Processing...</span>
-                                            ) : mode === 'login' ? (
-                                                'Continue'
-                                            ) : (
-                                                'Sign Up'
-                                            )}
-                                        </button>
-                                        
-                                        {message && (
-                                            <div className={`p-3 rounded text-center ${
-                                                message.includes('successful') ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
-                                            }`}>
-                                                {message}
-                                            </div>
-                                        )}
-                                    </div>
-                                </>
-                            )}
-                        </form>
-                        
-                        {/* Mode Switch */}
-                        <div className="auth-switch">
-                            <span className="text-gray-600">
-                                {mode === 'login' ? "Don't have an account? " : "Already have an account? "}
-                            </span>
-                            <a onClick={toggleMode}>
-                                {mode === 'login' ? 'Sign up' : 'Log in'}
-                            </a>
-                        </div>
-                        
-                        {/* Privacy Notice */}
-                        <div className="privacy-notice">
-                            By continuing, you agree to BitC's 
-                            <a href="https://bitcnetwork.com/termsofservice" className="ml-1">Terms of Service</a>
-                            <span className="mx-1">and</span>
-                            <a href="https://bitcnetwork.com/privacy">Privacy Policy</a>
-                        </div>
-                    </div>
-                </div>
-            );
-        }
-
-        // Render the app
-        ReactDOM.render(<App />, document.getElementById('root'));
-    </script>
-</body>
-</html>
+            margin: 10px 0 20px;
