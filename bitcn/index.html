@@ -3,566 +3,131 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BitC Network - Login</title>
-    <!-- Facebook-like fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>BitC Crypto Mining - Auth</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        facebook: {
-                            blue: '#1877F2',
-                            blueDark: '#166FE5',
-                            green: '#42B72A',
-                            greenDark: '#36A420',
-                            gray: '#F0F2F5',
-                            text: '#1C1E21',
-                            textSecondary: '#65676B',
-                            border: '#DDDFE2'
+                        primary: {
+                            50: '#faf5ff',
+                            100: '#f3e8ff',
+                            500: '#a855f7',
+                            600: '#9333ea',
+                            700: '#7c3aed',
+                            800: '#6b21a8',
+                            900: '#4c1d95',
                         }
                     },
                     fontFamily: {
-                        'segoe': ['Segoe UI', 'Helvetica Neue', 'Arial', 'sans-serif'],
+                        'inter': ['Inter', 'sans-serif'],
                     },
-                    boxShadow: {
-                        'facebook': '0 2px 4px rgba(0, 0, 0, .1), 0 8px 16px rgba(0, 0, 0, .1)',
-                        'facebook-inset': 'inset 0 0 0 1px #dddfe2',
-                        'button': '0 1px 2px rgba(0, 0, 0, .05)',
+                    animation: {
+                        'slide-up': 'slideUp 0.3s ease-out',
+                        'slide-down': 'slideDown 0.3s ease-out',
+                        'fade-in': 'fadeIn 0.3s ease-out',
                     },
-                    borderRadius: {
-                        'facebook': '8px',
-                        'facebook-lg': '12px'
+                    keyframes: {
+                        slideUp: {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' }
+                        },
+                        slideDown: {
+                            '0%': { transform: 'translateY(-20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' }
+                        },
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' }
+                        }
                     }
                 }
             }
         }
     </script>
     <style>
-        /* Facebook-like custom styles */
-        body {
-            -webkit-tap-highlight-color: transparent;
-            -webkit-font-smoothing: antialiased;
+        .app-container {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
         
-        .input-facebook {
-            border: 1px solid #dddfe2;
-            font-size: 17px;
-            padding: 14px 16px;
-            transition: border-color 0.2s;
+        .auth-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
         
-        .input-facebook:focus {
-            border-color: #1877F2;
-            box-shadow: 0 0 0 2px #e7f3ff;
-            outline: none;
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
         
         .btn-primary {
-            background: linear-gradient(to bottom, #1877F2, #166FE5);
-            border: 1px solid #166FE5;
-            font-size: 20px;
-            font-weight: 600;
-            padding: 12px;
-            transition: background-color 0.2s;
+            background: linear-gradient(135deg, #a855f7 0%, #7c3aed 100%);
+            transition: all 0.3s ease;
         }
         
         .btn-primary:hover {
-            background: linear-gradient(to bottom, #166FE5, #145CD4);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(168, 85, 247, 0.3);
         }
         
-        .btn-secondary {
-            background: #42B72A;
-            border: 1px solid #42B72A;
-            font-size: 17px;
-            font-weight: 600;
-            padding: 12px;
-            transition: background-color 0.2s;
+        .input-field {
+            transition: all 0.3s ease;
         }
         
-        .btn-secondary:hover {
-            background: #36A420;
-            border-color: #36A420;
+        .input-field:focus {
+            box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.1);
+            border-color: #a855f7;
         }
         
-        .divider {
-            display: flex;
-            align-items: center;
-            text-align: center;
-            color: #65676B;
-            font-size: 12px;
-            margin: 20px 0;
+        .loading-bar {
+            background: linear-gradient(90deg, #a855f7, #7c3aed, #9333ea);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
         }
         
-        .divider::before,
-        .divider::after {
-            content: '';
-            flex: 1;
-            border-bottom: 1px solid #dadde1;
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
         }
         
-        .divider:not(:empty)::before {
-            margin-right: 16px;
+        .swipe-transition {
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
-        .divider:not(:empty)::after {
-            margin-left: 16px;
-        }
-        
-        .card-facebook {
-            background: white;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, .1), 0 8px 16px rgba(0, 0, 0, .1);
-        }
-        
-        .loading-spinner {
-            width: 20px;
-            height: 20px;
-            border: 2px solid rgba(255,255,255,.3);
-            border-radius: 50%;
-            border-top-color: #fff;
-            animation: spin 1s ease-in-out infinite;
-        }
-        
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-        
-        /* App-like transitions */
-        .page-transition {
-            transition: transform 0.3s ease, opacity 0.3s ease;
-        }
-        
-        .page-enter {
-            transform: translateX(20px);
+        .toast-enter {
+            transform: translateY(100%);
             opacity: 0;
         }
         
-        .page-enter-active {
-            transform: translateX(0);
+        .toast-enter-active {
+            transform: translateY(0);
+            opacity: 1;
+            transition: all 0.3s ease;
+        }
+        
+        .toast-exit {
+            transform: translateY(0);
             opacity: 1;
         }
         
-        .page-exit {
-            transform: translateX(-20px);
+        .toast-exit-active {
+            transform: translateY(100%);
             opacity: 0;
-        }
-        
-        /* Touch feedback */
-        .touch-feedback:active {
-            transform: scale(0.98);
-            transition: transform 0.1s;
-        }
-        
-        /* Status bar for mobile */
-        .status-bar {
-            height: 44px;
-            background: #1877F2;
+            transition: all 0.3s ease;
         }
     </style>
 </head>
-<body class="bg-facebook-gray font-segoe text-facebook-text">
-    <!-- Status Bar (Mobile App-like) -->
-    <div class="status-bar fixed top-0 w-full z-40 flex items-center justify-center md:hidden">
-        <div class="text-white font-semibold text-lg">BitC Network</div>
-    </div>
-
-    <!-- Loading Screen -->
-    <div id="loadingScreen" class="fixed top-0 left-0 w-full h-full bg-white flex flex-col items-center justify-center z-50">
-        <div class="w-16 h-16 mb-6">
-            <div class="w-full h-full rounded-full bg-gradient-to-br from-facebook-blue to-facebook-green flex items-center justify-center">
-                <span class="text-white text-2xl font-bold">B</span>
-            </div>
-        </div>
-        <div class="text-facebook-textSecondary font-medium">Checking authentication...</div>
-        <div class="mt-4 w-48 h-1 bg-gray-200 rounded-full overflow-hidden">
-            <div class="h-full bg-facebook-blue animate-pulse" style="width: 60%"></div>
-        </div>
-    </div>
-
-    <!-- Main Container -->
-    <main class="min-h-screen flex flex-col items-center justify-center p-4 pt-16 md:pt-0">
-        <!-- LANDING/LOGIN PAGE (Facebook-like) -->
-        <div id="landing-page" class="page-transition w-full max-w-md">
-            <div class="flex flex-col items-center">
-                <!-- Logo/App Icon -->
-                <div class="w-20 h-20 mb-6 mt-8 md:mt-0">
-                    <div class="w-full h-full rounded-2xl bg-gradient-to-br from-facebook-blue to-facebook-green flex items-center justify-center shadow-lg">
-                        <span class="text-white text-3xl font-bold">B</span>
-                    </div>
-                </div>
-                
-                <!-- App Name -->
-                <h1 class="text-2xl font-semibold text-facebook-text mb-8 text-center">
-                    BitC Network
-                </h1>
-                
-                <!-- Login Card -->
-                <div class="card-facebook rounded-facebook-lg w-full p-6 mb-4">
-                    <form id="loginForm" onsubmit="handleLogin(event)" class="space-y-4">
-                        <input 
-                            type="email" 
-                            id="login-email"
-                            placeholder="Email address"
-                            class="input-facebook w-full rounded-facebook focus:outline-none"
-                            required
-                        >
-                        
-                        <input 
-                            type="password" 
-                            id="login-pass"
-                            placeholder="Password"
-                            class="input-facebook w-full rounded-facebook focus:outline-none"
-                            required
-                        >
-                        
-                        <button 
-                            type="submit"
-                            id="login-btn"
-                            class="btn-primary text-white w-full rounded-facebook font-semibold touch-feedback"
-                        >
-                            <span id="login-btn-text">Log In</span>
-                            <span id="login-btn-spinner" class="hidden ml-2">
-                                <div class="loading-spinner"></div>
-                            </span>
-                        </button>
-                        
-                        <div class="text-center pt-2">
-                            <a href="#" onclick="showForgotPassword()" class="text-facebook-blue text-sm font-medium hover:underline">
-                                Forgotten password?
-                            </a>
-                        </div>
-                        
-                        <div class="divider">or</div>
-                        
-                        <button 
-                            type="button"
-                            onclick="showSignup()"
-                            class="btn-secondary text-white w-full rounded-facebook font-semibold touch-feedback"
-                        >
-                            Create New Account
-                        </button>
-                    </form>
-                </div>
-                
-                <!-- Create Page Link -->
-                <div class="text-center text-sm text-facebook-textSecondary mt-4">
-                    <a href="#" class="font-semibold text-facebook-text hover:underline">Create a Page</a> for a celebrity, brand or business.
-                </div>
-            </div>
-            
-            <!-- Footer Links -->
-            <div class="mt-8 text-center text-facebook-textSecondary text-xs">
-                <div class="flex flex-wrap justify-center gap-3 mb-4">
-                    <a href="#" class="hover:underline">English (UK)</a>
-                    <a href="#" class="hover:underline">മലയാളം</a>
-                    <a href="#" class="hover:underline">தமிழ்</a>
-                    <a href="#" class="hover:underline">ಕನ್ನಡ</a>
-                    <a href="#" class="hover:underline">हिन्दी</a>
-                    <a href="#" class="hover:underline">Español</a>
-                    <a href="#" class="hover:underline">Français (France)</a>
-                    <button class="hover:underline">+</button>
-                </div>
-                
-                <div class="border-t border-facebook-border pt-4">
-                    <div class="flex flex-wrap justify-center gap-3 mb-2">
-                        <a href="https://bitcnetwork.com/signup" class="hover:underline">Sign Up</a>
-                        <a href="https://bitcnetwork.com/login" class="hover:underline">Log In</a>
-                        <a href="#" class="hover:underline">Messenger</a>
-                        <a href="https://bitcnetwork.com/lite" class="hover:underline">BitC Lite</a>
-                        <a href="#" class="hover:underline">Watch</a>
-                        <a href="#" class="hover:underline">Places</a>
-                        <a href="#" class="hover:underline">Games</a>
-                        <a href="#" class="hover:underline">Marketplace</a>
-                        <a href="#" class="hover:underline">Meta Pay</a>
-                        <a href="#" class="hover:underline">Oculus</a>
-                        <a href="#" class="hover:underline">Portal</a>
-                        <a href="#" class="hover:underline">Instagram</a>
-                        <a href="#" class="hover:underline">Bulletin</a>
-                        <a href="#" class="hover:underline">Fundraisers</a>
-                    </div>
-                    
-                    <div class="flex flex-wrap justify-center gap-3 mb-2">
-                        <a href="#" class="hover:underline">Services</a>
-                        <a href="https://bitcnetwork.com/termsofservice" class="hover:underline">Terms of Service</a>
-                        <a href="https://bitcnetwork.com/privacy" class="hover:underline">Privacy Policy</a>
-                        <a href="#" class="hover:underline">Privacy Centre</a>
-                        <a href="#" class="hover:underline">Groups</a>
-                        <a href="#" class="hover:underline">About</a>
-                        <a href="#" class="hover:underline">Create Ad</a>
-                        <a href="#" class="hover:underline">Create Page</a>
-                        <a href="#" class="hover:underline">Developers</a>
-                        <a href="#" class="hover:underline">Careers</a>
-                        <a href="#" class="hover:underline">Cookies</a>
-                        <a href="#" class="hover:underline">AdChoices</a>
-                    </div>
-                    
-                    <div class="mt-3">
-                        <span>BitC Network © 2024</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- SIGN UP PAGE -->
-        <div id="signup-page" class="page-transition hidden w-full max-w-md">
-            <div class="card-facebook rounded-facebook-lg w-full p-6">
-                <!-- Back Button -->
-                <button onclick="showLoginPage()" class="flex items-center text-facebook-blue mb-6 font-semibold touch-feedback">
-                    <i class="fas fa-arrow-left mr-2"></i>
-                    Back
-                </button>
-                
-                <h2 class="text-2xl font-semibold text-facebook-text mb-2">Create a new account</h2>
-                <p class="text-facebook-textSecondary mb-6">It's quick and easy.</p>
-                
-                <form id="signupForm" onsubmit="handleSignup(event)" class="space-y-4">
-                    <div class="grid grid-cols-2 gap-4">
-                        <input 
-                            type="text" 
-                            id="signup-firstname"
-                            placeholder="First name"
-                            class="input-facebook w-full rounded-facebook focus:outline-none"
-                        >
-                        
-                        <input 
-                            type="text" 
-                            id="signup-lastname"
-                            placeholder="Surname"
-                            class="input-facebook w-full rounded-facebook focus:outline-none"
-                        >
-                    </div>
-                    
-                    <input 
-                        type="email" 
-                        id="signup-email"
-                        placeholder="Email address"
-                        class="input-facebook w-full rounded-facebook focus:outline-none"
-                        required
-                    >
-                    
-                    <input 
-                        type="password" 
-                        id="signup-pass"
-                        placeholder="New password"
-                        class="input-facebook w-full rounded-facebook focus:outline-none"
-                        required
-                        onkeyup="checkPasswordStrength(this.value)"
-                    >
-                    
-                    <!-- Password Strength Indicator -->
-                    <div class="h-1 bg-gray-200 rounded-full overflow-hidden">
-                        <div id="password-strength-meter" class="h-full transition-all duration-300 w-0"></div>
-                    </div>
-                    
-                    <div class="text-sm text-facebook-textSecondary">
-                        <div class="flex items-center mb-1">
-                            <i id="length-check" class="fas fa-circle text-gray-300 mr-2 text-xs"></i>
-                            <span>At least 6 characters</span>
-                        </div>
-                        <div class="flex items-center">
-                            <i id="complexity-check" class="fas fa-circle text-gray-300 mr-2 text-xs"></i>
-                            <span>Mix of letters, numbers, or symbols</span>
-                        </div>
-                    </div>
-                    
-                    <div class="pt-2">
-                        <label class="block text-facebook-textSecondary text-sm mb-2">Date of birth</label>
-                        <div class="grid grid-cols-3 gap-2">
-                            <select class="input-facebook rounded-facebook focus:outline-none">
-                                <option>Day</option>
-                                <?php for($i=1; $i<=31; $i++): ?>
-                                <option><?php echo $i; ?></option>
-                                <?php endfor; ?>
-                            </select>
-                            
-                            <select class="input-facebook rounded-facebook focus:outline-none">
-                                <option>Month</option>
-                                <option>Jan</option>
-                                <option>Feb</option>
-                                <option>Mar</option>
-                                <option>Apr</option>
-                                <option>May</option>
-                                <option>Jun</option>
-                                <option>Jul</option>
-                                <option>Aug</option>
-                                <option>Sep</option>
-                                <option>Oct</option>
-                                <option>Nov</option>
-                                <option>Dec</option>
-                            </select>
-                            
-                            <select class="input-facebook rounded-facebook focus:outline-none">
-                                <option>Year</option>
-                                <?php for($i=2024; $i>=1905; $i--): ?>
-                                <option><?php echo $i; ?></option>
-                                <?php endfor; ?>
-                            </select>
-                        </div>
-                    </div>
-                    
-                    <div class="pt-2">
-                        <label class="block text-facebook-textSecondary text-sm mb-2">Gender</label>
-                        <div class="grid grid-cols-3 gap-2">
-                            <label class="flex items-center border border-facebook-border rounded-facebook p-3 cursor-pointer hover:bg-facebook-gray">
-                                <input type="radio" name="gender" class="mr-2" checked>
-                                <span>Female</span>
-                            </label>
-                            
-                            <label class="flex items-center border border-facebook-border rounded-facebook p-3 cursor-pointer hover:bg-facebook-gray">
-                                <input type="radio" name="gender" class="mr-2">
-                                <span>Male</span>
-                            </label>
-                            
-                            <label class="flex items-center border border-facebook-border rounded-facebook p-3 cursor-pointer hover:bg-facebook-gray">
-                                <input type="radio" name="gender" class="mr-2">
-                                <span>Custom</span>
-                            </label>
-                        </div>
-                    </div>
-                    
-                    <div class="text-xs text-facebook-textSecondary mt-4">
-                        <p>People who use our service may have uploaded your contact information to BitC Network. <a href="#" class="text-facebook-blue hover:underline">Learn more</a>.</p>
-                        
-                        <p class="mt-2">By clicking Sign Up, you agree to our <a href="https://bitcnetwork.com/termsofservice" class="text-facebook-blue hover:underline">Terms</a>, <a href="https://bitcnetwork.com/privacy" class="text-facebook-blue hover:underline">Privacy Policy</a> and <a href="#" class="text-facebook-blue hover:underline">Cookies Policy</a>. You may receive SMS notifications from us and can opt out at any time.</p>
-                    </div>
-                    
-                    <div class="pt-4">
-                        <button 
-                            type="submit"
-                            id="signup-btn"
-                            class="btn-secondary text-white w-full rounded-facebook font-semibold text-lg py-3 touch-feedback"
-                        >
-                            <span id="signup-btn-text">Sign Up</span>
-                            <span id="signup-btn-spinner" class="hidden ml-2">
-                                <div class="loading-spinner"></div>
-                            </span>
-                        </button>
-                    </div>
-                </form>
-            </div>
-            
-            <div class="text-center mt-4 text-sm">
-                <a href="#" onclick="showLoginPage()" class="text-facebook-blue font-semibold hover:underline">
-                    Already have an account?
-                </a>
-            </div>
-        </div>
-
-        <!-- FORGOT PASSWORD PAGE -->
-        <div id="forgot-password-page" class="page-transition hidden w-full max-w-md">
-            <div class="card-facebook rounded-facebook-lg w-full p-6">
-                <!-- Back Button -->
-                <button onclick="showLoginPage()" class="flex items-center text-facebook-blue mb-6 font-semibold touch-feedback">
-                    <i class="fas fa-arrow-left mr-2"></i>
-                    Back
-                </button>
-                
-                <h2 class="text-2xl font-semibold text-facebook-text mb-2">Find Your Account</h2>
-                <p class="text-facebook-textSecondary mb-6">Please enter your email address to search for your account.</p>
-                
-                <form id="forgotPasswordForm" onsubmit="submitForgotPassword(event)" class="space-y-4">
-                    <input 
-                        type="email" 
-                        id="reset-email"
-                        placeholder="Email address"
-                        class="input-facebook w-full rounded-facebook focus:outline-none"
-                        required
-                    >
-                    
-                    <div class="divider"></div>
-                    
-                    <div class="flex gap-3">
-                        <button 
-                            type="button"
-                            onclick="showLoginPage()"
-                            class="flex-1 border border-facebook-border text-facebook-blue font-semibold py-3 rounded-facebook hover:bg-facebook-gray touch-feedback"
-                        >
-                            Cancel
-                        </button>
-                        
-                        <button 
-                            type="submit"
-                            id="reset-btn"
-                            class="flex-1 bg-facebook-blue text-white font-semibold py-3 rounded-facebook touch-feedback"
-                        >
-                            <span id="reset-btn-text">Search</span>
-                            <span id="reset-btn-spinner" class="hidden ml-2">
-                                <div class="loading-spinner"></div>
-                            </span>
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-
-        <!-- EMAIL VERIFICATION PAGE -->
-        <div id="email-verification-page" class="page-transition hidden w-full max-w-md">
-            <div class="card-facebook rounded-facebook-lg w-full p-6 text-center">
-                <div class="w-16 h-16 mx-auto mb-6 rounded-full bg-green-100 flex items-center justify-center">
-                    <i class="fas fa-envelope text-green-600 text-2xl"></i>
-                </div>
-                
-                <h2 class="text-2xl font-semibold text-facebook-text mb-2">Confirm your email</h2>
-                <p class="text-facebook-textSecondary mb-6">
-                    We sent a confirmation email to:
-                    <br>
-                    <span id="verification-email" class="font-semibold text-facebook-text"></span>
-                </p>
-                
-                <p class="text-sm text-facebook-textSecondary mb-8">
-                    Check your email and click the confirmation link to continue.
-                </p>
-                
-                <div class="space-y-3">
-                    <button 
-                        onclick="resendVerificationEmail()"
-                        id="resend-btn"
-                        class="w-full border border-facebook-border text-facebook-blue font-semibold py-3 rounded-facebook hover:bg-facebook-gray touch-feedback"
-                    >
-                        <span id="resend-btn-text">Resend Email</span>
-                        <span id="resend-btn-spinner" class="hidden ml-2">
-                            <div class="loading-spinner" style="border-top-color: #1877F2;"></div>
-                        </span>
-                    </button>
-                    
-                    <button 
-                        onclick="showLoginPage()"
-                        class="w-full bg-facebook-blue text-white font-semibold py-3 rounded-facebook touch-feedback"
-                    >
-                        Back to Login
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- RESET EMAIL SENT PAGE -->
-        <div id="reset-sent-page" class="page-transition hidden w-full max-w-md">
-            <div class="card-facebook rounded-facebook-lg w-full p-6 text-center">
-                <div class="w-16 h-16 mx-auto mb-6 rounded-full bg-blue-100 flex items-center justify-center">
-                    <i class="fas fa-check-circle text-facebook-blue text-2xl"></i>
-                </div>
-                
-                <h2 class="text-2xl font-semibold text-facebook-text mb-2">Check your email</h2>
-                <p class="text-facebook-textSecondary mb-8">
-                    We sent a password reset link to:
-                    <br>
-                    <span id="reset-sent-email" class="font-semibold text-facebook-text"></span>
-                </p>
-                
-                <button 
-                    onclick="showLoginPage()"
-                    class="w-full bg-facebook-blue text-white font-semibold py-3 rounded-facebook touch-feedback"
-                >
-                    Back to Login
-                </button>
-            </div>
-        </div>
-    </main>
-
-    <!-- Toast Notification -->
-    <div id="toast" class="fixed bottom-6 left-1/2 transform -translate-x-1/2 translate-y-24 px-6 py-3 rounded-facebook shadow-lg z-50 opacity-0 transition-all duration-300 max-w-[90%] text-center bg-facebook-text text-white text-sm font-medium"></div>
+<body class="font-inter">
+    <div id="root"></div>
 
     <!-- Firebase SDK -->
     <script type="module">
@@ -584,192 +149,192 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        // Make available globally
-        window.auth = auth;
-        window.db = db;
-        window.signInWithEmailAndPassword = signInWithEmailAndPassword;
-        window.createUserWithEmailAndPassword = createUserWithEmailAndPassword;
-        window.sendPasswordResetEmail = sendPasswordResetEmail;
-        window.sendEmailVerification = sendEmailVerification;
-        window.onAuthStateChanged = onAuthStateChanged;
-        window.setDoc = setDoc;
-        window.doc = doc;
+        window.firebaseAuth = auth;
+        window.firebaseDb = db;
+        window.firebase = {
+            signInWithEmailAndPassword,
+            createUserWithEmailAndPassword,
+            sendPasswordResetEmail,
+            onAuthStateChanged,
+            sendEmailVerification,
+            setDoc,
+            doc
+        };
     </script>
 
-    <script>
-        // Page navigation with transitions
-        function showLoginPage() {
-            transitionPage('landing-page');
-        }
-        
-        function showSignup() {
-            transitionPage('signup-page');
-        }
-        
-        function showForgotPassword() {
-            transitionPage('forgot-password-page');
-        }
-        
-        function showEmailVerificationPage(email) {
-            document.getElementById('verification-email').textContent = email;
-            transitionPage('email-verification-page');
-        }
-        
-        function showResetSentPage(email) {
-            document.getElementById('reset-sent-email').textContent = email;
-            transitionPage('reset-sent-page');
-        }
-        
-        function transitionPage(toPageId) {
-            const pages = ['landing-page', 'signup-page', 'forgot-password-page', 'email-verification-page', 'reset-sent-page'];
-            const fromPage = pages.find(id => !document.getElementById(id).classList.contains('hidden'));
-            
-            if (fromPage) {
-                const fromElement = document.getElementById(fromPage);
-                fromElement.classList.add('page-exit');
-                
-                setTimeout(() => {
-                    fromElement.classList.add('hidden');
-                    fromElement.classList.remove('page-exit');
-                    
-                    const toElement = document.getElementById(toPageId);
-                    toElement.classList.remove('hidden');
-                    toElement.classList.add('page-enter');
-                    
-                    setTimeout(() => {
-                        toElement.classList.remove('page-enter');
-                        toElement.classList.add('page-enter-active');
-                    }, 10);
-                }, 300);
-            } else {
-                const toElement = document.getElementById(toPageId);
-                toElement.classList.remove('hidden');
-            }
-        }
-        
-        // Check auth state on load
-        function checkAuthState() {
-            onAuthStateChanged(auth, (user) => {
-                setTimeout(() => {
-                    document.getElementById('loadingScreen').classList.add('hidden');
-                    
+    <!-- React App -->
+    <script type="text/babel">
+        const { useState, useEffect, useCallback } = React;
+
+        // App Component
+        function App() {
+            const [page, setPage] = useState('loading');
+            const [loading, setLoading] = useState(true);
+            const [user, setUser] = useState(null);
+            const [toast, setToast] = useState(null);
+
+            useEffect(() => {
+                const unsubscribe = window.firebase.onAuthStateChanged(window.firebaseAuth, (user) => {
                     if (user && user.emailVerified) {
-                        redirectToMining();
+                        window.location.href = 'mining.html';
                     } else if (user && !user.emailVerified) {
-                        showEmailVerificationPage(user.email);
+                        setUser(user);
+                        setPage('email-verification');
                     } else {
-                        showLoginPage();
+                        setPage('landing');
                     }
-                }, 1000);
+                    setLoading(false);
+                });
+
+                return () => unsubscribe();
+            }, []);
+
+            const showToast = useCallback((message, type = 'success') => {
+                setToast({ message, type });
+                setTimeout(() => setToast(null), 3000);
+            }, []);
+
+        if (loading) {
+            return <LoadingScreen />;
+        }
+
+        return (
+            <div className="app-container flex items-center justify-center p-4">
+                {toast && <Toast {...toast} />}
+                
+                <div className="w-full max-w-md animate-slide-up">
+                    {page === 'landing' && <LandingPage onNavigate={setPage} showToast={showToast} />}
+                    {page === 'signup' && <SignupPage onNavigate={setPage} showToast={showToast} />}
+                    {page === 'login' && <LoginPage onNavigate={setPage} showToast={showToast} />}
+                    {page === 'forgot-password' && <ForgotPasswordPage onNavigate={setPage} showToast={showToast} />}
+                    {page === 'email-verification' && <EmailVerificationPage user={user} onNavigate={setPage} showToast={showToast} />}
+                    {page === 'forgot-success' && <ForgotSuccessPage onNavigate={setPage} />}
+                </div>
+            </div>
+        );
+        }
+
+        // Loading Screen Component
+        function LoadingScreen() {
+            return (
+                <div className="fixed inset-0 bg-white flex flex-col items-center justify-center z-50">
+                    <div className="w-20 h-20 mb-6 relative">
+                        <div className="absolute inset-0 rounded-full border-4 border-primary-100"></div>
+                        <div className="absolute inset-0 rounded-full border-4 border-t-primary-600 animate-spin"></div>
+                        <div className="absolute inset-4 rounded-full bg-gradient-to-br from-primary-500 to-primary-700 flex items-center justify-center">
+                            <span className="text-white font-bold text-xl">B</span>
+                        </div>
+                    </div>
+                    <div className="text-gray-600 font-medium">Checking authentication...</div>
+                    <div className="mt-4 w-48 h-1 bg-gray-200 rounded-full overflow-hidden">
+                        <div className="h-full loading-bar"></div>
+                    </div>
+                </div>
+            );
+        }
+
+        // Landing Page Component
+        function LandingPage({ onNavigate, showToast }) {
+            return (
+                <div className="auth-card rounded-2xl p-8 shadow-2xl animate-fade-in">
+                    <div className="text-center mb-8">
+                        <div className="w-24 h-24 mx-auto mb-6 rounded-full overflow-hidden bg-gradient-to-br from-primary-500 to-primary-700 p-1">
+                            <div className="w-full h-full rounded-full bg-white flex items-center justify-center">
+                                <img 
+                                    src="https://bitcnetwork.com/assets/1.png" 
+                                    alt="BitC Logo" 
+                                    className="w-20 h-20 object-contain"
+                                />
+                            </div>
+                        </div>
+                        <h1 className="text-3xl font-bold text-gray-800 mb-3">BitC Network</h1>
+                        <p className="text-gray-600">Blockchain & Internet Technology Coin</p>
+                    </div>
+
+                    <div className="space-y-4">
+                        <button 
+                            onClick={() => onNavigate('signup')}
+                            className="w-full btn-primary text-white py-4 rounded-xl font-semibold text-lg flex items-center justify-center gap-3"
+                        >
+                            <i className="fas fa-user-plus"></i>
+                            <span>Create Account</span>
+                        </button>
+                        
+                        <button 
+                            onClick={() => onNavigate('login')}
+                            className="w-full bg-white text-primary-700 py-4 rounded-xl font-semibold text-lg border-2 border-primary-200 hover:bg-primary-50 flex items-center justify-center gap-3 transition-all"
+                        >
+                            <i className="fas fa-sign-in-alt"></i>
+                            <span>Sign In</span>
+                        </button>
+                    </div>
+
+                    <div className="mt-8 pt-6 border-t border-gray-200">
+                        <p className="text-center text-gray-600 text-sm">
+                            By continuing, you agree to our
+                            <a href="https://bitcnetwork.com/termsofservice" className="text-primary-600 font-medium hover:underline ml-1">Terms</a>
+                            <span className="mx-1">and</span>
+                            <a href="https://bitcnetwork.com/privacy" className="text-primary-600 font-medium hover:underline">Privacy Policy</a>
+                        </p>
+                        <p className="text-center text-gray-400 text-xs mt-4">v4.0.0</p>
+                    </div>
+                </div>
+            );
+        }
+
+        // Signup Page Component
+        function SignupPage({ onNavigate, showToast }) {
+            const [loading, setLoading] = useState(false);
+            const [formData, setFormData] = useState({
+                email: '',
+                password: '',
+                confirmPassword: '',
+                referralCode: ''
             });
-        }
-        
-        // Redirect to mining page
-        function redirectToMining() {
-            window.location.href = 'mining.html';
-        }
-        
-        // Handle Login
-        async function handleLogin(e) {
+            const [passwordStrength, setPasswordStrength] = useState(0);
+            const [showPassword, setShowPassword] = useState(false);
+
+        const checkPasswordStrength = (password) => {
+            let strength = 0;
+            if (password.length >= 8) strength += 25;
+            if (/[a-z]/.test(password)) strength += 25;
+            if (/[A-Z]/.test(password)) strength += 25;
+            if (/[0-9]/.test(password) || /[^A-Za-z0-9]/.test(password)) strength += 25;
+            setPasswordStrength(strength);
+        };
+
+        const handleSubmit = async (e) => {
             e.preventDefault();
             
-            const email = document.getElementById('login-email').value;
-            const password = document.getElementById('login-pass').value;
-            
-            if (!email || !password) {
-                showToast('Please fill in all fields', 'error');
-                return;
-            }
-            
-            const buttonText = document.getElementById('login-btn-text');
-            const buttonSpinner = document.getElementById('login-btn-spinner');
-            const button = document.getElementById('login-btn');
-            
-            buttonText.classList.add('hidden');
-            buttonSpinner.classList.remove('hidden');
-            button.disabled = true;
-            
-            try {
-                const userCredential = await signInWithEmailAndPassword(auth, email, password);
-                const user = userCredential.user;
-                
-                if (!user.emailVerified) {
-                    showToast('Please verify your email first', 'error');
-                    showEmailVerificationPage(user.email);
-                    return;
-                }
-                
-                showToast('Login successful!', 'success');
-                
-                setTimeout(() => {
-                    redirectToMining();
-                }, 1000);
-                
-            } catch (error) {
-                console.error('Login error:', error);
-                
-                let errorMessage = 'Login failed. ';
-                switch (error.code) {
-                    case 'auth/user-not-found':
-                        errorMessage = 'No account found with this email.';
-                        break;
-                    case 'auth/wrong-password':
-                        errorMessage = 'Incorrect password.';
-                        break;
-                    case 'auth/invalid-email':
-                        errorMessage = 'Invalid email address.';
-                        break;
-                    case 'auth/too-many-requests':
-                        errorMessage = 'Too many attempts. Try again later.';
-                        break;
-                    default:
-                        errorMessage = 'Please try again.';
-                }
-                
-                showToast(errorMessage, 'error');
-            } finally {
-                buttonText.classList.remove('hidden');
-                buttonSpinner.classList.add('hidden');
-                button.disabled = false;
-            }
-        }
-        
-        // Handle Signup
-        async function handleSignup(e) {
-            e.preventDefault();
-            
-            const email = document.getElementById('signup-email').value;
-            const password = document.getElementById('signup-pass').value;
-            const firstName = document.getElementById('signup-firstname').value || 'User';
-            
-            if (!email || !password) {
+            if (!formData.email || !formData.password || !formData.confirmPassword) {
                 showToast('Please fill in all required fields', 'error');
                 return;
             }
-            
-            if (password.length < 6) {
+
+            if (formData.password !== formData.confirmPassword) {
+                showToast('Passwords do not match', 'error');
+                return;
+            }
+
+            if (formData.password.length < 6) {
                 showToast('Password must be at least 6 characters', 'error');
                 return;
             }
-            
-            const buttonText = document.getElementById('signup-btn-text');
-            const buttonSpinner = document.getElementById('signup-btn-spinner');
-            const button = document.getElementById('signup-btn');
-            
-            buttonText.classList.add('hidden');
-            buttonSpinner.classList.remove('hidden');
-            button.disabled = true;
-            
+
+            setLoading(true);
+
             try {
-                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                const userCredential = await window.firebase.createUserWithEmailAndPassword(
+                    window.firebaseAuth,
+                    formData.email,
+                    formData.password
+                );
+                
                 const user = userCredential.user;
-                
-                await sendEmailVerification(user);
-                
-                // Create user profile
+                await window.firebase.sendEmailVerification(user);
+
                 const userProfile = {
                     email: user.email,
-                    firstName: firstName,
                     createdAt: new Date().toISOString(),
                     emailVerified: false,
                     miningData: {
@@ -782,25 +347,22 @@
                         referralsCount: 0,
                         miningRateVlcPerHour: 1,
                         referralCode: user.uid.substring(0, 8),
-                        usedReferralCode: null,
+                        usedReferralCode: formData.referralCode || null,
                         transactions: [],
                         lastMigrationTimestamp: null,
                         lastMiningDay: null
                     }
                 };
+
+                await window.firebase.setDoc(window.firebase.doc(window.firebaseDb, "users", user.uid), userProfile);
                 
-                await setDoc(doc(db, "users", user.uid), userProfile);
-                
-                showToast('Account created! Check your email for verification.', 'success');
-                
-                setTimeout(() => {
-                    showEmailVerificationPage(user.email);
-                }, 1500);
+                showToast('Account created! Verification email sent.', 'success');
+                onNavigate('email-verification');
                 
             } catch (error) {
                 console.error('Signup error:', error);
-                
                 let errorMessage = 'Failed to create account. ';
+                
                 switch (error.code) {
                     case 'auth/email-already-in-use':
                         errorMessage = 'Email is already in use.';
@@ -811,180 +373,531 @@
                     case 'auth/weak-password':
                         errorMessage = 'Password is too weak.';
                         break;
-                    case 'auth/operation-not-allowed':
-                        errorMessage = 'Email/password accounts are not enabled.';
-                        break;
                     default:
                         errorMessage = 'Please try again.';
                 }
                 
                 showToast(errorMessage, 'error');
             } finally {
-                buttonText.classList.remove('hidden');
-                buttonSpinner.classList.add('hidden');
-                button.disabled = false;
+                setLoading(false);
             }
+        };
+
+        return (
+            <div className="auth-card rounded-2xl p-6 shadow-2xl animate-slide-up">
+                <div className="flex items-center mb-8">
+                    <button 
+                        onClick={() => onNavigate('landing')}
+                        className="p-2 rounded-full hover:bg-gray-100 text-gray-600 transition-colors"
+                    >
+                        <i className="fas fa-arrow-left text-xl"></i>
+                    </button>
+                    <h2 className="text-2xl font-bold text-gray-800 ml-4">Create Account</h2>
+                </div>
+
+                <form onSubmit={handleSubmit} className="space-y-5">
+                    <div>
+                        <label className="block text-gray-700 mb-2 font-medium">Email Address</label>
+                        <div className="relative">
+                            <input
+                                type="email"
+                                value={formData.email}
+                                onChange={(e) => setFormData({...formData, email: e.target.value})}
+                                placeholder="your.email@example.com"
+                                className="w-full input-field p-4 rounded-xl border border-gray-300 bg-gray-50 focus:outline-none"
+                                required
+                            />
+                            <i className="fas fa-envelope absolute right-4 top-1/2 transform -translate-y-1/2 text-primary-600"></i>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label className="block text-gray-700 mb-2 font-medium">Password</label>
+                        <div className="relative">
+                            <input
+                                type={showPassword ? "text" : "password"}
+                                value={formData.password}
+                                onChange={(e) => {
+                                    setFormData({...formData, password: e.target.value});
+                                    checkPasswordStrength(e.target.value);
+                                }}
+                                placeholder="Create a strong password"
+                                className="w-full input-field p-4 rounded-xl border border-gray-300 bg-gray-50 focus:outline-none"
+                                required
+                            />
+                            <button
+                                type="button"
+                                onClick={() => setShowPassword(!showPassword)}
+                                className="absolute right-4 top-1/2 transform -translate-y-1/2 text-primary-600"
+                            >
+                                <i className={`fas fa-${showPassword ? 'eye-slash' : 'eye'}`}></i>
+                            </button>
+                        </div>
+                        <div className="mt-2 h-2 bg-gray-200 rounded-full overflow-hidden">
+                            <div 
+                                className={`h-full transition-all duration-300 ${
+                                    passwordStrength < 50 ? 'bg-red-500' : 
+                                    passwordStrength < 75 ? 'bg-yellow-500' : 'bg-green-500'
+                                }`}
+                                style={{ width: `${passwordStrength}%` }}
+                            ></div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label className="block text-gray-700 mb-2 font-medium">Confirm Password</label>
+                        <div className="relative">
+                            <input
+                                type={showPassword ? "text" : "password"}
+                                value={formData.confirmPassword}
+                                onChange={(e) => setFormData({...formData, confirmPassword: e.target.value})}
+                                placeholder="Re-enter your password"
+                                className="w-full input-field p-4 rounded-xl border border-gray-300 bg-gray-50 focus:outline-none"
+                                required
+                            />
+                            <i className="fas fa-shield-alt absolute right-4 top-1/2 transform -translate-y-1/2 text-primary-600"></i>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label className="block text-gray-700 mb-2 font-medium">
+                            Referral Code <span className="text-gray-500 font-normal">(optional)</span>
+                        </label>
+                        <div className="relative">
+                            <input
+                                type="text"
+                                value={formData.referralCode}
+                                onChange={(e) => setFormData({...formData, referralCode: e.target.value})}
+                                placeholder="Enter referral code if you have one"
+                                className="w-full input-field p-4 rounded-xl border border-gray-300 bg-gray-50 focus:outline-none"
+                            />
+                            <i className="fas fa-gift absolute right-4 top-1/2 transform -translate-y-1/2 text-primary-600"></i>
+                        </div>
+                    </div>
+
+                    <button
+                        type="submit"
+                        disabled={loading}
+                        className="w-full btn-primary text-white py-4 rounded-xl font-semibold text-lg flex items-center justify-center gap-3 disabled:opacity-70"
+                    >
+                        {loading ? (
+                            <>
+                                <i className="fas fa-spinner fa-spin"></i>
+                                <span>Creating Account...</span>
+                            </>
+                        ) : (
+                            <>
+                                <i className="fas fa-user-plus"></i>
+                                <span>Sign Up</span>
+                            </>
+                        )}
+                    </button>
+                </form>
+
+                <p className="text-center text-gray-600 mt-6">
+                    Already have an account?{' '}
+                    <button 
+                        onClick={() => onNavigate('login')}
+                        className="text-primary-600 font-semibold hover:underline"
+                    >
+                        Sign In
+                    </button>
+                </p>
+            </div>
+        );
         }
-        
-        // Forgot Password
-        async function submitForgotPassword(e) {
-            e.preventDefault();
-            
-            const email = document.getElementById('reset-email').value;
-            
-            if (!email) {
-                showToast('Please enter your email address', 'error');
-                return;
-            }
-            
-            const buttonText = document.getElementById('reset-btn-text');
-            const buttonSpinner = document.getElementById('reset-btn-spinner');
-            const button = document.getElementById('reset-btn');
-            
-            buttonText.classList.add('hidden');
-            buttonSpinner.classList.remove('hidden');
-            button.disabled = true;
-            
-            try {
-                await sendPasswordResetEmail(auth, email);
-                showToast('Password reset email sent!', 'success');
-                showResetSentPage(email);
+
+        // Login Page Component
+        function LoginPage({ onNavigate, showToast }) {
+            const [loading, setLoading] = useState(false);
+            const [formData, setFormData] = useState({
+                email: '',
+                password: ''
+            });
+            const [showPassword, setShowPassword] = useState(false);
+
+            const handleSubmit = async (e) => {
+                e.preventDefault();
                 
-            } catch (error) {
-                console.error('Password reset error:', error);
-                
-                let errorMessage = 'Failed to send reset email. ';
-                switch (error.code) {
-                    case 'auth/user-not-found':
-                        errorMessage = 'No account found with this email.';
-                        break;
-                    case 'auth/invalid-email':
-                        errorMessage = 'Invalid email address.';
-                        break;
-                    default:
-                        errorMessage = 'Please try again.';
+                if (!formData.email || !formData.password) {
+                    showToast('Please fill in all fields', 'error');
+                    return;
                 }
+
+                setLoading(true);
+
+                try {
+                    const userCredential = await window.firebase.signInWithEmailAndPassword(
+                        window.firebaseAuth,
+                        formData.email,
+                        formData.password
+                    );
+                    
+                    const user = userCredential.user;
+                    
+                    if (!user.emailVerified) {
+                        showToast('Please verify your email before logging in', 'error');
+                        onNavigate('email-verification');
+                        return;
+                    }
+                    
+                    showToast('Login successful!', 'success');
+                    window.location.href = 'mining.html';
+                    
+                } catch (error) {
+                    console.error('Login error:', error);
+                    let errorMessage = 'Login failed. ';
+                    
+                    switch (error.code) {
+                        case 'auth/user-not-found':
+                            errorMessage = 'No account found with this email.';
+                            break;
+                        case 'auth/wrong-password':
+                            errorMessage = 'Incorrect password.';
+                            break;
+                        case 'auth/invalid-email':
+                            errorMessage = 'Invalid email address.';
+                            break;
+                        default:
+                            errorMessage = 'Please try again.';
+                    }
+                    
+                    showToast(errorMessage, 'error');
+                } finally {
+                    setLoading(false);
+                }
+            };
+
+            return (
+                <div className="auth-card rounded-2xl p-6 shadow-2xl animate-slide-up">
+                    <div className="flex items-center mb-8">
+                        <button 
+                            onClick={() => onNavigate('landing')}
+                            className="p-2 rounded-full hover:bg-gray-100 text-gray-600 transition-colors"
+                        >
+                            <i className="fas fa-arrow-left text-xl"></i>
+                        </button>
+                        <h2 className="text-2xl font-bold text-gray-800 ml-4">Welcome Back</h2>
+                    </div>
+
+                    <form onSubmit={handleSubmit} className="space-y-5">
+                        <div>
+                            <label className="block text-gray-700 mb-2 font-medium">Email Address</label>
+                            <div className="relative">
+                                <input
+                                    type="email"
+                                    value={formData.email}
+                                    onChange={(e) => setFormData({...formData, email: e.target.value})}
+                                    placeholder="your.email@example.com"
+                                    className="w-full input-field p-4 rounded-xl border border-gray-300 bg-gray-50 focus:outline-none"
+                                    required
+                                />
+                                <i className="fas fa-envelope absolute right-4 top-1/2 transform -translate-y-1/2 text-primary-600"></i>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label className="block text-gray-700 mb-2 font-medium">Password</label>
+                            <div className="relative">
+                                <input
+                                    type={showPassword ? "text" : "password"}
+                                    value={formData.password}
+                                    onChange={(e) => setFormData({...formData, password: e.target.value})}
+                                    placeholder="Enter your password"
+                                    className="w-full input-field p-4 rounded-xl border border-gray-300 bg-gray-50 focus:outline-none"
+                                    required
+                                />
+                                <button
+                                    type="button"
+                                    onClick={() => setShowPassword(!showPassword)}
+                                    className="absolute right-4 top-1/2 transform -translate-y-1/2 text-primary-600"
+                                >
+                                    <i className={`fas fa-${showPassword ? 'eye-slash' : 'eye'}`}></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div className="flex justify-end">
+                            <button
+                                type="button"
+                                onClick={() => onNavigate('forgot-password')}
+                                className="text-primary-600 font-medium hover:underline text-sm"
+                            >
+                                Forgot Password?
+                            </button>
+                        </div>
+
+                        <button
+                            type="submit"
+                            disabled={loading}
+                            className="w-full btn-primary text-white py-4 rounded-xl font-semibold text-lg flex items-center justify-center gap-3 disabled:opacity-70"
+                        >
+                            {loading ? (
+                                <>
+                                    <i className="fas fa-spinner fa-spin"></i>
+                                    <span>Signing In...</span>
+                                </>
+                            ) : (
+                                <>
+                                    <i className="fas fa-sign-in-alt"></i>
+                                    <span>Sign In</span>
+                                </>
+                            )}
+                        </button>
+                    </form>
+
+                    <p className="text-center text-gray-600 mt-6">
+                        Don't have an account?{' '}
+                        <button 
+                            onClick={() => onNavigate('signup')}
+                            className="text-primary-600 font-semibold hover:underline"
+                        >
+                            Sign Up Now
+                        </button>
+                    </p>
+                </div>
+            );
+        }
+
+        // Forgot Password Page Component
+        function ForgotPasswordPage({ onNavigate, showToast }) {
+            const [loading, setLoading] = useState(false);
+            const [email, setEmail] = useState('');
+
+            const handleSubmit = async (e) => {
+                e.preventDefault();
                 
-                showToast(errorMessage, 'error');
-            } finally {
-                buttonText.classList.remove('hidden');
-                buttonSpinner.classList.add('hidden');
-                button.disabled = false;
-            }
+                if (!email) {
+                    showToast('Please enter your email address', 'error');
+                    return;
+                }
+
+                setLoading(true);
+
+                try {
+                    await window.firebase.sendPasswordResetEmail(window.firebaseAuth, email);
+                    showToast('Password reset email sent!', 'success');
+                    onNavigate('forgot-success');
+                    
+                } catch (error) {
+                    console.error('Password reset error:', error);
+                    let errorMessage = 'Failed to send reset email. ';
+                    
+                    switch (error.code) {
+                        case 'auth/user-not-found':
+                            errorMessage = 'No account found with this email.';
+                            break;
+                        case 'auth/invalid-email':
+                            errorMessage = 'Invalid email address.';
+                            break;
+                        default:
+                            errorMessage = 'Please try again.';
+                    }
+                    
+                    showToast(errorMessage, 'error');
+                } finally {
+                    setLoading(false);
+                }
+            };
+
+            return (
+                <div className="auth-card rounded-2xl p-6 shadow-2xl animate-slide-up">
+                    <div className="flex items-center mb-8">
+                        <button 
+                            onClick={() => onNavigate('login')}
+                            className="p-2 rounded-full hover:bg-gray-100 text-gray-600 transition-colors"
+                        >
+                            <i className="fas fa-arrow-left text-xl"></i>
+                        </button>
+                        <h2 className="text-2xl font-bold text-gray-800 ml-4">Reset Password</h2>
+                    </div>
+
+                    <p className="text-gray-600 mb-6">Enter your email to receive a reset link</p>
+
+                    <form onSubmit={handleSubmit} className="space-y-5">
+                        <div>
+                            <label className="block text-gray-700 mb-2 font-medium">Email Address</label>
+                            <div className="relative">
+                                <input
+                                    type="email"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    placeholder="your.email@example.com"
+                                    className="w-full input-field p-4 rounded-xl border border-gray-300 bg-gray-50 focus:outline-none"
+                                    required
+                                />
+                                <i className="fas fa-envelope absolute right-4 top-1/2 transform -translate-y-1/2 text-primary-600"></i>
+                            </div>
+                        </div>
+
+                        <button
+                            type="submit"
+                            disabled={loading}
+                            className="w-full btn-primary text-white py-4 rounded-xl font-semibold text-lg flex items-center justify-center gap-3 disabled:opacity-70"
+                        >
+                            {loading ? (
+                                <>
+                                    <i className="fas fa-spinner fa-spin"></i>
+                                    <span>Sending...</span>
+                                </>
+                            ) : (
+                                <>
+                                    <i className="fas fa-share-square"></i>
+                                    <span>Send Reset Link</span>
+                                </>
+                            )}
+                        </button>
+                    </form>
+
+                    <p className="text-center text-gray-600 mt-6">
+                        Remember your password?{' '}
+                        <button 
+                            onClick={() => onNavigate('login')}
+                            className="text-primary-600 font-semibold hover:underline"
+                        >
+                            Back to login
+                        </button>
+                    </p>
+                </div>
+            );
         }
-        
-        // Resend Verification Email
-        async function resendVerificationEmail() {
-            const user = auth.currentUser;
-            
-            if (!user) {
-                showToast('Please sign in first', 'error');
-                return;
-            }
-            
-            const buttonText = document.getElementById('resend-btn-text');
-            const buttonSpinner = document.getElementById('resend-btn-spinner');
-            const button = document.getElementById('resend-btn');
-            
-            buttonText.classList.add('hidden');
-            buttonSpinner.classList.remove('hidden');
-            button.disabled = true;
-            
-            try {
-                await sendEmailVerification(user);
-                showToast('Verification email sent!', 'success');
-                
-            } catch (error) {
-                console.error('Resend verification error:', error);
-                showToast('Failed to send verification email', 'error');
-            } finally {
-                setTimeout(() => {
-                    buttonText.classList.remove('hidden');
-                    buttonSpinner.classList.add('hidden');
-                    button.disabled = false;
-                }, 2000);
-            }
+
+        // Forgot Password Success Page Component
+        function ForgotSuccessPage({ onNavigate }) {
+            return (
+                <div className="auth-card rounded-2xl p-6 shadow-2xl animate-slide-up">
+                    <div className="text-center">
+                        <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-green-100 flex items-center justify-center">
+                            <i className="fas fa-check-circle text-green-600 text-2xl"></i>
+                        </div>
+                        
+                        <h2 className="text-2xl font-bold text-gray-800 mb-4">Check Your Email</h2>
+                        
+                        <p className="text-gray-600 mb-8">
+                            We've sent a password reset link to your email address. 
+                            Please check your inbox and follow the instructions to reset your password.
+                        </p>
+                        
+                        <button
+                            onClick={() => onNavigate('login')}
+                            className="w-full btn-primary text-white py-4 rounded-xl font-semibold text-lg flex items-center justify-center gap-3"
+                        >
+                            <i className="fas fa-sign-in-alt"></i>
+                            <span>Back to Login</span>
+                        </button>
+                    </div>
+                </div>
+            );
         }
-        
-        // Password Strength Checker
-        function checkPasswordStrength(password) {
-            const meter = document.getElementById('password-strength-meter');
-            const lengthCheck = document.getElementById('length-check');
-            const complexityCheck = document.getElementById('complexity-check');
-            
-            if (password.length === 0) {
-                meter.style.width = '0%';
-                meter.className = 'h-full transition-all duration-300';
-                lengthCheck.className = 'fas fa-circle text-gray-300 mr-2 text-xs';
-                complexityCheck.className = 'fas fa-circle text-gray-300 mr-2 text-xs';
-                return;
-            }
-            
-            // Check length
-            const hasLength = password.length >= 6;
-            lengthCheck.className = hasLength ? 
-                'fas fa-check-circle text-green-500 mr-2 text-xs' : 
-                'fas fa-circle text-gray-300 mr-2 text-xs';
-            
-            // Check complexity
-            const hasComplexity = /[A-Z]/.test(password) || /[0-9]/.test(password) || /[^A-Za-z0-9]/.test(password);
-            complexityCheck.className = hasComplexity ? 
-                'fas fa-check-circle text-green-500 mr-2 text-xs' : 
-                'fas fa-circle text-gray-300 mr-2 text-xs';
-            
-            // Calculate strength
-            let strength = 0;
-            if (hasLength) strength += 50;
-            if (hasComplexity) strength += 50;
-            
-            meter.style.width = strength + '%';
-            
-            if (strength < 50) {
-                meter.className = 'h-full transition-all duration-300 bg-red-500';
-            } else if (strength < 100) {
-                meter.className = 'h-full transition-all duration-300 bg-yellow-500';
-            } else {
-                meter.className = 'h-full transition-all duration-300 bg-green-500';
-            }
+
+        // Email Verification Page Component
+        function EmailVerificationPage({ user, onNavigate, showToast }) {
+            const [loading, setLoading] = useState(false);
+
+            const handleResendEmail = async () => {
+                if (!user) {
+                    showToast('Please sign in first', 'error');
+                    return;
+                }
+
+                setLoading(true);
+
+                try {
+                    await window.firebase.sendEmailVerification(user);
+                    showToast('Verification email sent!', 'success');
+                } catch (error) {
+                    console.error('Resend verification error:', error);
+                    showToast('Failed to send verification email', 'error');
+                } finally {
+                    setLoading(false);
+                }
+            };
+
+            return (
+                <div className="auth-card rounded-2xl p-6 shadow-2xl animate-slide-up">
+                    <div className="flex items-center mb-8">
+                        <button 
+                            onClick={() => onNavigate('signup')}
+                            className="p-2 rounded-full hover:bg-gray-100 text-gray-600 transition-colors"
+                        >
+                            <i className="fas fa-arrow-left text-xl"></i>
+                        </button>
+                        <h2 className="text-2xl font-bold text-gray-800 ml-4">Verify Your Email</h2>
+                    </div>
+
+                    <div className="text-center mb-8">
+                        <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-primary-100 flex items-center justify-center animate-pulse">
+                            <i className="fas fa-envelope-circle-check text-primary-600 text-3xl"></i>
+                        </div>
+                        
+                        <h3 className="text-xl font-semibold text-gray-800 mb-3">Verification Email Sent</h3>
+                        <p className="text-gray-600">
+                            We've sent a verification link to <br />
+                            <span className="font-semibold text-primary-700">{user?.email}</span>
+                        </p>
+                    </div>
+
+                    <div className="bg-blue-50 p-4 rounded-xl border border-blue-200 mb-6">
+                        <h4 className="font-semibold text-blue-800 mb-2 flex items-center gap-2">
+                            <i className="fas fa-info-circle"></i>
+                            <span>Important</span>
+                        </h4>
+                        <p className="text-sm text-blue-700">
+                            Please check your inbox and click the verification link to activate your account before logging in.
+                        </p>
+                    </div>
+
+                    <div className="space-y-4">
+                        <button
+                            onClick={handleResendEmail}
+                            disabled={loading}
+                            className="w-full bg-white text-primary-700 py-4 rounded-xl font-semibold border-2 border-primary-200 hover:bg-primary-50 flex items-center justify-center gap-3 disabled:opacity-70 transition-all"
+                        >
+                            {loading ? (
+                                <>
+                                    <i className="fas fa-spinner fa-spin"></i>
+                                    <span>Sending...</span>
+                                </>
+                            ) : (
+                                <>
+                                    <i className="fas fa-redo"></i>
+                                    <span>Resend Verification Email</span>
+                                </>
+                            )}
+                        </button>
+                        
+                        <button
+                            onClick={() => onNavigate('login')}
+                            className="w-full btn-primary text-white py-4 rounded-xl font-semibold flex items-center justify-center gap-3"
+                        >
+                            <i className="fas fa-sign-in-alt"></i>
+                            <span>Continue to Login</span>
+                        </button>
+                    </div>
+
+                    <p className="text-center text-gray-600 text-sm mt-6">
+                        Didn't receive the email? Check your spam folder or try resending.
+                    </p>
+                </div>
+            );
         }
-        
-        // Toast Notification
-        function showToast(message, type = 'success') {
-            const toast = document.getElementById('toast');
-            toast.textContent = message;
+
+        // Toast Component
+        function Toast({ message, type }) {
+            const bgColor = type === 'error' ? 'bg-red-500' : 'bg-green-500';
             
-            toast.className = 'fixed bottom-6 left-1/2 transform -translate-x-1/2 px-6 py-3 rounded-facebook shadow-lg z-50 transition-all duration-300 max-w-[90%] text-center text-sm font-medium ';
-            
-            if (type === 'success') {
-                toast.classList.add('bg-green-500', 'text-white');
-            } else if (type === 'error') {
-                toast.classList.add('bg-red-500', 'text-white');
-            } else {
-                toast.classList.add('bg-facebook-text', 'text-white');
-            }
-            
-            // Show
-            setTimeout(() => {
-                toast.classList.remove('translate-y-24', 'opacity-0');
-                toast.classList.add('translate-y-0', 'opacity-100');
-            }, 10);
-            
-            // Hide after 3 seconds
-            setTimeout(() => {
-                toast.classList.remove('translate-y-0', 'opacity-100');
-                toast.classList.add('translate-y-24', 'opacity-0');
-            }, 3000);
+            return (
+                <div className={`fixed bottom-8 left-1/2 transform -translate-x-1/2 ${bgColor} text-white px-6 py-3 rounded-xl shadow-lg z-50 max-w-[90%] text-center toast-enter-active`}>
+                    <div className="flex items-center justify-center gap-3">
+                        <i className={`fas fa-${type === 'error' ? 'exclamation-circle' : 'check-circle'}`}></i>
+                        <span>{message}</span>
+                    </div>
+                </div>
+            );
         }
-        
-        // Initialize app
-        document.addEventListener("DOMContentLoaded", function() {
-            checkAuthState();
-            
-            // Auto-hide loading screen after 3 seconds max
-            setTimeout(() => {
-                document.getElementById('loadingScreen').classList.add('hidden');
-            }, 3000);
-        });
+
+        // Render the app
+        ReactDOM.render(<App />, document.getElementById('root'));
     </script>
 </body>
 </html>
