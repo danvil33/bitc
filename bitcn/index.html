@@ -3,130 +3,190 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BitC Crypto Mining - Auth</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>BitC Crypto Mining - Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: {
-                            50: '#faf5ff',
-                            100: '#f3e8ff',
-                            500: '#a855f7',
-                            600: '#9333ea',
-                            700: '#7c3aed',
-                            800: '#6b21a8',
-                            900: '#4c1d95',
-                        }
-                    },
-                    fontFamily: {
-                        'inter': ['Inter', 'sans-serif'],
-                    },
-                    animation: {
-                        'slide-up': 'slideUp 0.3s ease-out',
-                        'slide-down': 'slideDown 0.3s ease-out',
-                        'fade-in': 'fadeIn 0.3s ease-out',
-                    },
-                    keyframes: {
-                        slideUp: {
-                            '0%': { transform: 'translateY(20px)', opacity: '0' },
-                            '100%': { transform: 'translateY(0)', opacity: '1' }
-                        },
-                        slideDown: {
-                            '0%': { transform: 'translateY(-20px)', opacity: '0' },
-                            '100%': { transform: 'translateY(0)', opacity: '1' }
-                        },
-                        fadeIn: {
-                            '0%': { opacity: '0' },
-                            '100%': { opacity: '1' }
-                        }
-                    }
-                }
-            }
-        }
-    </script>
     <style>
-        .app-container {
-            min-height: 100vh;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        .airbnb-container {
+            max-width: 568px;
+            margin: 0 auto;
         }
         
-        .auth-card {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+        .airbnb-header {
+            border-bottom: 1px solid #ebebeb;
+            padding: 24px 0;
+            margin-bottom: 32px;
         }
         
-        .glass-effect {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+        .airbnb-title {
+            font-size: 32px;
+            line-height: 36px;
+            color: #222222;
+            font-weight: 600;
+            margin-bottom: 8px;
         }
         
-        .btn-primary {
-            background: linear-gradient(135deg, #a855f7 0%, #7c3aed 100%);
-            transition: all 0.3s ease;
+        .airbnb-subtitle {
+            color: #717171;
+            font-size: 16px;
+            line-height: 20px;
         }
         
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(168, 85, 247, 0.3);
+        .airbnb-input {
+            border: 1px solid #b0b0b0;
+            border-radius: 8px;
+            padding: 16px;
+            font-size: 16px;
+            width: 100%;
+            transition: border-color 0.2s;
         }
         
-        .input-field {
-            transition: all 0.3s ease;
+        .airbnb-input:focus {
+            outline: none;
+            border-color: #222222;
         }
         
-        .input-field:focus {
-            box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.1);
-            border-color: #a855f7;
+        .airbnb-btn-primary {
+            background: linear-gradient(90deg, #FF385C 0%, #E31C5F 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 16px;
+            font-size: 16px;
+            font-weight: 600;
+            width: 100%;
+            cursor: pointer;
+            transition: background-color 0.2s;
         }
         
-        .loading-bar {
-            background: linear-gradient(90deg, #a855f7, #7c3aed, #9333ea);
-            background-size: 200% 100%;
-            animation: loading 1.5s infinite;
+        .airbnb-btn-primary:hover {
+            background: linear-gradient(90deg, #E31C5F 0%, #D70466 100%);
         }
         
-        @keyframes loading {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
+        .airbnb-btn-outline {
+            border: 1px solid #222222;
+            background: white;
+            color: #222222;
+            border-radius: 8px;
+            padding: 16px;
+            font-size: 16px;
+            font-weight: 600;
+            width: 100%;
+            cursor: pointer;
+            transition: all 0.2s;
         }
         
-        .swipe-transition {
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        .airbnb-btn-outline:hover {
+            background: #f7f7f7;
         }
         
-        .toast-enter {
-            transform: translateY(100%);
-            opacity: 0;
+        .airbnb-divider {
+            display: flex;
+            align-items: center;
+            margin: 24px 0;
+            color: #717171;
         }
         
-        .toast-enter-active {
-            transform: translateY(0);
-            opacity: 1;
-            transition: all 0.3s ease;
+        .airbnb-divider::before,
+        .airbnb-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #ebebeb;
         }
         
-        .toast-exit {
-            transform: translateY(0);
-            opacity: 1;
+        .airbnb-divider span {
+            padding: 0 16px;
         }
         
-        .toast-exit-active {
-            transform: translateY(100%);
-            opacity: 0;
-            transition: all 0.3s ease;
+        .social-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            border: 1px solid #dddddd;
+            border-radius: 8px;
+            padding: 16px;
+            width: 100%;
+            background: white;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .social-btn:hover {
+            background: #f7f7f7;
+        }
+        
+        .country-selector {
+            border: 1px solid #b0b0b0;
+            border-radius: 8px;
+            padding: 16px;
+            width: 100%;
+            font-size: 16px;
+            background: white;
+            cursor: pointer;
+        }
+        
+        .phone-input-container {
+            display: flex;
+            gap: 12px;
+        }
+        
+        .country-code {
+            flex: 0 0 120px;
+        }
+        
+        .phone-number {
+            flex: 1;
+        }
+        
+        .auth-switch {
+            text-align: center;
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid #ebebeb;
+        }
+        
+        .auth-switch a {
+            color: #222222;
+            text-decoration: underline;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        
+        .privacy-notice {
+            color: #717171;
+            font-size: 14px;
+            line-height: 18px;
+            margin-top: 16px;
+            text-align: center;
+        }
+        
+        .privacy-notice a {
+            color: #222222;
+            text-decoration: underline;
+        }
+        
+        .logo-container {
+            padding: 32px 0 24px;
+            text-align: center;
+        }
+        
+        .logo {
+            font-size: 32px;
+            font-weight: 700;
+            color: #222222;
+            letter-spacing: -1px;
         }
     </style>
 </head>
-<body class="font-inter">
+<body class="font-sans">
     <div id="root"></div>
 
     <!-- Firebase SDK -->
@@ -164,733 +224,352 @@
 
     <!-- React App -->
     <script type="text/babel">
-        const { useState, useEffect, useCallback } = React;
+        const { useState, useEffect } = React;
 
-        // App Component
+        // Main App Component
         function App() {
-            const [page, setPage] = useState('loading');
-            const [loading, setLoading] = useState(true);
-            const [user, setUser] = useState(null);
-            const [toast, setToast] = useState(null);
+            const [mode, setMode] = useState('login'); // 'login' or 'signup'
+            const [countryCode, setCountryCode] = useState('+86'); // Default to China
+            const [phoneNumber, setPhoneNumber] = useState('');
+            const [email, setEmail] = useState('');
+            const [password, setPassword] = useState('');
+            const [confirmPassword, setConfirmPassword] = useState('');
+            const [loading, setLoading] = useState(false);
+            const [message, setMessage] = useState('');
+            const [showEmailLogin, setShowEmailLogin] = useState(false);
 
             useEffect(() => {
                 const unsubscribe = window.firebase.onAuthStateChanged(window.firebaseAuth, (user) => {
                     if (user && user.emailVerified) {
                         window.location.href = 'mining.html';
-                    } else if (user && !user.emailVerified) {
-                        setUser(user);
-                        setPage('email-verification');
-                    } else {
-                        setPage('landing');
                     }
-                    setLoading(false);
                 });
-
                 return () => unsubscribe();
             }, []);
 
-            const showToast = useCallback((message, type = 'success') => {
-                setToast({ message, type });
-                setTimeout(() => setToast(null), 3000);
-            }, []);
+            const handleSubmit = async (e) => {
+                e.preventDefault();
+                setLoading(true);
+                setMessage('');
 
-        if (loading) {
-            return <LoadingScreen />;
-        }
-
-        return (
-            <div className="app-container flex items-center justify-center p-4">
-                {toast && <Toast {...toast} />}
-                
-                <div className="w-full max-w-md animate-slide-up">
-                    {page === 'landing' && <LandingPage onNavigate={setPage} showToast={showToast} />}
-                    {page === 'signup' && <SignupPage onNavigate={setPage} showToast={showToast} />}
-                    {page === 'login' && <LoginPage onNavigate={setPage} showToast={showToast} />}
-                    {page === 'forgot-password' && <ForgotPasswordPage onNavigate={setPage} showToast={showToast} />}
-                    {page === 'email-verification' && <EmailVerificationPage user={user} onNavigate={setPage} showToast={showToast} />}
-                    {page === 'forgot-success' && <ForgotSuccessPage onNavigate={setPage} />}
-                </div>
-            </div>
-        );
-        }
-
-        // Loading Screen Component
-        function LoadingScreen() {
-            return (
-                <div className="fixed inset-0 bg-white flex flex-col items-center justify-center z-50">
-                    <div className="w-20 h-20 mb-6 relative">
-                        <div className="absolute inset-0 rounded-full border-4 border-primary-100"></div>
-                        <div className="absolute inset-0 rounded-full border-4 border-t-primary-600 animate-spin"></div>
-                        <div className="absolute inset-4 rounded-full bg-gradient-to-br from-primary-500 to-primary-700 flex items-center justify-center">
-                            <span className="text-white font-bold text-xl">B</span>
-                        </div>
-                    </div>
-                    <div className="text-gray-600 font-medium">Checking authentication...</div>
-                    <div className="mt-4 w-48 h-1 bg-gray-200 rounded-full overflow-hidden">
-                        <div className="h-full loading-bar"></div>
-                    </div>
-                </div>
-            );
-        }
-
-        // Landing Page Component
-        function LandingPage({ onNavigate, showToast }) {
-            return (
-                <div className="auth-card rounded-2xl p-8 shadow-2xl animate-fade-in">
-                    <div className="text-center mb-8">
-                        <div className="w-24 h-24 mx-auto mb-6 rounded-full overflow-hidden bg-gradient-to-br from-primary-500 to-primary-700 p-1">
-                            <div className="w-full h-full rounded-full bg-white flex items-center justify-center">
-                                <img 
-                                    src="https://bitcnetwork.com/assets/1.png" 
-                                    alt="BitC Logo" 
-                                    className="w-20 h-20 object-contain"
-                                />
-                            </div>
-                        </div>
-                        <h1 className="text-3xl font-bold text-gray-800 mb-3">BitC Network</h1>
-                        <p className="text-gray-600">Blockchain & Internet Technology Coin</p>
-                    </div>
-
-                    <div className="space-y-4">
-                        <button 
-                            onClick={() => onNavigate('signup')}
-                            className="w-full btn-primary text-white py-4 rounded-xl font-semibold text-lg flex items-center justify-center gap-3"
-                        >
-                            <i className="fas fa-user-plus"></i>
-                            <span>Create Account</span>
-                        </button>
+                try {
+                    if (mode === 'login') {
+                        if (!email || !password) {
+                            setMessage('Please enter email and password');
+                            return;
+                        }
                         
-                        <button 
-                            onClick={() => onNavigate('login')}
-                            className="w-full bg-white text-primary-700 py-4 rounded-xl font-semibold text-lg border-2 border-primary-200 hover:bg-primary-50 flex items-center justify-center gap-3 transition-all"
-                        >
-                            <i className="fas fa-sign-in-alt"></i>
-                            <span>Sign In</span>
-                        </button>
-                    </div>
+                        const userCredential = await window.firebase.signInWithEmailAndPassword(
+                            window.firebaseAuth,
+                            email,
+                            password
+                        );
+                        
+                        if (!userCredential.user.emailVerified) {
+                            setMessage('Please verify your email first');
+                            return;
+                        }
+                        
+                        setMessage('Login successful! Redirecting...');
+                        setTimeout(() => {
+                            window.location.href = 'mining.html';
+                        }, 1000);
+                    } else {
+                        // Signup logic
+                        if (!email || !password || !confirmPassword) {
+                            setMessage('Please fill all fields');
+                            return;
+                        }
+                        
+                        if (password !== confirmPassword) {
+                            setMessage('Passwords do not match');
+                            return;
+                        }
+                        
+                        const userCredential = await window.firebase.createUserWithEmailAndPassword(
+                            window.firebaseAuth,
+                            email,
+                            password
+                        );
+                        
+                        await window.firebase.sendEmailVerification(userCredential.user);
+                        
+                        const userProfile = {
+                            email: userCredential.user.email,
+                            createdAt: new Date().toISOString(),
+                            emailVerified: false,
+                            miningData: {
+                                minedVlc: 0,
+                                miningStartTime: null,
+                                miningElapsedSeconds: 0,
+                                walletBalance: 0,
+                                miningRewards: 0,
+                                referralBonuses: 0,
+                                referralsCount: 0,
+                                miningRateVlcPerHour: 1,
+                                referralCode: userCredential.user.uid.substring(0, 8),
+                                usedReferralCode: null,
+                                transactions: [],
+                                lastMigrationTimestamp: null,
+                                lastMiningDay: null
+                            }
+                        };
+                        
+                        await window.firebase.setDoc(
+                            window.firebase.doc(window.firebaseDb, "users", userCredential.user.uid),
+                            userProfile
+                        );
+                        
+                        setMessage('Account created! Please check your email for verification.');
+                        setMode('login');
+                    }
+                } catch (error) {
+                    console.error('Auth error:', error);
+                    setMessage(error.message || 'An error occurred');
+                } finally {
+                    setLoading(false);
+                }
+            };
 
-                    <div className="mt-8 pt-6 border-t border-gray-200">
-                        <p className="text-center text-gray-600 text-sm">
-                            By continuing, you agree to our
-                            <a href="https://bitcnetwork.com/termsofservice" className="text-primary-600 font-medium hover:underline ml-1">Terms</a>
+            const handleSocialLogin = (provider) => {
+                setMessage(`${provider} login would be implemented here`);
+                // In a real app, you would implement social login here
+            };
+
+            const toggleMode = () => {
+                setMode(mode === 'login' ? 'signup' : 'login');
+                setMessage('');
+            };
+
+            const toggleEmailLogin = () => {
+                setShowEmailLogin(!showEmailLogin);
+            };
+
+            return (
+                <div className="min-h-screen bg-white">
+                    <div className="airbnb-container px-4 py-8">
+                        {/* Logo */}
+                        <div className="logo-container">
+                            <div className="logo">BitC</div>
+                        </div>
+                        
+                        {/* Header */}
+                        <div className="airbnb-header">
+                            <h1 className="airbnb-title">
+                                {mode === 'login' ? 'Welcome to BitC Network' : 'Join BitC Network'}
+                            </h1>
+                            <p className="airbnb-subtitle">
+                                {mode === 'login' ? 'Sign in to your account' : 'Create your account to start mining'}
+                            </p>
+                        </div>
+                        
+                        {/* Main Form */}
+                        <form onSubmit={handleSubmit}>
+                            {mode === 'signup' && !showEmailLogin && (
+                                <div className="mb-6">
+                                    <label className="block text-gray-700 mb-2 font-medium">
+                                        Country/Region
+                                    </label>
+                                    <select 
+                                        className="country-selector"
+                                        value={countryCode}
+                                        onChange={(e) => setCountryCode(e.target.value)}
+                                    >
+                                        <option value="+86">China (+86)</option>
+                                        <option value="+1">United States (+1)</option>
+                                        <option value="+44">United Kingdom (+44)</option>
+                                        <option value="+91">India (+91)</option>
+                                        <option value="+81">Japan (+81)</option>
+                                        <option value="+82">South Korea (+82)</option>
+                                    </select>
+                                    
+                                    <div className="phone-input-container mt-4">
+                                        <div className="country-code">
+                                            <input 
+                                                type="text" 
+                                                value={countryCode}
+                                                onChange={(e) => setCountryCode(e.target.value)}
+                                                className="airbnb-input"
+                                                placeholder="+86"
+                                            />
+                                        </div>
+                                        <div className="phone-number">
+                                            <input 
+                                                type="tel" 
+                                                value={phoneNumber}
+                                                onChange={(e) => setPhoneNumber(e.target.value)}
+                                                className="airbnb-input"
+                                                placeholder="Phone number"
+                                            />
+                                        </div>
+                                    </div>
+                                    
+                                    <p className="text-gray-600 text-sm mt-2">
+                                        We'll call or text to confirm your number. Standard message and data rates apply.
+                                    </p>
+                                    
+                                    <button 
+                                        type="button"
+                                        className="airbnb-btn-primary mt-6"
+                                        onClick={() => setShowEmailLogin(true)}
+                                    >
+                                        Continue
+                                    </button>
+                                    
+                                    <div className="airbnb-divider">
+                                        <span>or</span>
+                                    </div>
+                                </div>
+                            )}
+                            
+                            {(mode === 'login' || showEmailLogin) && (
+                                <>
+                                    {!showEmailLogin && mode === 'login' && (
+                                        <>
+                                            <div className="space-y-4 mb-6">
+                                                <button 
+                                                    type="button"
+                                                    className="social-btn"
+                                                    onClick={() => handleSocialLogin('WeChat')}
+                                                >
+                                                    <i className="fab fa-weixin text-green-500"></i>
+                                                    Continue with WeChat
+                                                </button>
+                                                
+                                                <button 
+                                                    type="button"
+                                                    className="social-btn"
+                                                    onClick={() => handleSocialLogin('Google')}
+                                                >
+                                                    <i className="fab fa-google text-red-500"></i>
+                                                    Continue with Google
+                                                </button>
+                                                
+                                                <button 
+                                                    type="button"
+                                                    className="social-btn"
+                                                    onClick={() => handleSocialLogin('Apple')}
+                                                >
+                                                    <i className="fab fa-apple"></i>
+                                                    Continue with Apple
+                                                </button>
+                                                
+                                                <button 
+                                                    type="button"
+                                                    className="social-btn"
+                                                    onClick={toggleEmailLogin}
+                                                >
+                                                    <i className="fas fa-envelope"></i>
+                                                    Continue with Email
+                                                </button>
+                                                
+                                                <button 
+                                                    type="button"
+                                                    className="social-btn"
+                                                    onClick={() => handleSocialLogin('Facebook')}
+                                                >
+                                                    <i className="fab fa-facebook text-blue-600"></i>
+                                                    Continue with Facebook
+                                                </button>
+                                            </div>
+                                            
+                                            <div className="airbnb-divider">
+                                                <span>or</span>
+                                            </div>
+                                        </>
+                                    )}
+                                    
+                                    <div className="space-y-4">
+                                        <div>
+                                            <input 
+                                                type="email" 
+                                                value={email}
+                                                onChange={(e) => setEmail(e.target.value)}
+                                                className="airbnb-input"
+                                                placeholder="Email address"
+                                                required
+                                            />
+                                        </div>
+                                        
+                                        <div>
+                                            <input 
+                                                type="password" 
+                                                value={password}
+                                                onChange={(e) => setPassword(e.target.value)}
+                                                className="airbnb-input"
+                                                placeholder="Password"
+                                                required
+                                            />
+                                        </div>
+                                        
+                                        {mode === 'signup' && (
+                                            <div>
+                                                <input 
+                                                    type="password" 
+                                                    value={confirmPassword}
+                                                    onChange={(e) => setConfirmPassword(e.target.value)}
+                                                    className="airbnb-input"
+                                                    placeholder="Confirm password"
+                                                    required
+                                                />
+                                            </div>
+                                        )}
+                                        
+                                        {mode === 'login' && (
+                                            <div className="text-right">
+                                                <button 
+                                                    type="button"
+                                                    className="text-gray-600 text-sm hover:underline"
+                                                    onClick={() => alert('Password reset would be implemented')}
+                                                >
+                                                    Forgot password?
+                                                </button>
+                                            </div>
+                                        )}
+                                        
+                                        <button 
+                                            type="submit"
+                                            className="airbnb-btn-primary"
+                                            disabled={loading}
+                                        >
+                                            {loading ? (
+                                                <span>Processing...</span>
+                                            ) : mode === 'login' ? (
+                                                'Continue'
+                                            ) : (
+                                                'Sign Up'
+                                            )}
+                                        </button>
+                                        
+                                        {message && (
+                                            <div className={`p-3 rounded text-center ${
+                                                message.includes('successful') ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
+                                            }`}>
+                                                {message}
+                                            </div>
+                                        )}
+                                    </div>
+                                </>
+                            )}
+                        </form>
+                        
+                        {/* Mode Switch */}
+                        <div className="auth-switch">
+                            <span className="text-gray-600">
+                                {mode === 'login' ? "Don't have an account? " : "Already have an account? "}
+                            </span>
+                            <a onClick={toggleMode}>
+                                {mode === 'login' ? 'Sign up' : 'Log in'}
+                            </a>
+                        </div>
+                        
+                        {/* Privacy Notice */}
+                        <div className="privacy-notice">
+                            By continuing, you agree to BitC's 
+                            <a href="https://bitcnetwork.com/termsofservice" className="ml-1">Terms of Service</a>
                             <span className="mx-1">and</span>
-                            <a href="https://bitcnetwork.com/privacy" className="text-primary-600 font-medium hover:underline">Privacy Policy</a>
-                        </p>
-                        <p className="text-center text-gray-400 text-xs mt-4">v4.0.0</p>
-                    </div>
-                </div>
-            );
-        }
-
-        // Signup Page Component
-        function SignupPage({ onNavigate, showToast }) {
-            const [loading, setLoading] = useState(false);
-            const [formData, setFormData] = useState({
-                email: '',
-                password: '',
-                confirmPassword: '',
-                referralCode: ''
-            });
-            const [passwordStrength, setPasswordStrength] = useState(0);
-            const [showPassword, setShowPassword] = useState(false);
-
-        const checkPasswordStrength = (password) => {
-            let strength = 0;
-            if (password.length >= 8) strength += 25;
-            if (/[a-z]/.test(password)) strength += 25;
-            if (/[A-Z]/.test(password)) strength += 25;
-            if (/[0-9]/.test(password) || /[^A-Za-z0-9]/.test(password)) strength += 25;
-            setPasswordStrength(strength);
-        };
-
-        const handleSubmit = async (e) => {
-            e.preventDefault();
-            
-            if (!formData.email || !formData.password || !formData.confirmPassword) {
-                showToast('Please fill in all required fields', 'error');
-                return;
-            }
-
-            if (formData.password !== formData.confirmPassword) {
-                showToast('Passwords do not match', 'error');
-                return;
-            }
-
-            if (formData.password.length < 6) {
-                showToast('Password must be at least 6 characters', 'error');
-                return;
-            }
-
-            setLoading(true);
-
-            try {
-                const userCredential = await window.firebase.createUserWithEmailAndPassword(
-                    window.firebaseAuth,
-                    formData.email,
-                    formData.password
-                );
-                
-                const user = userCredential.user;
-                await window.firebase.sendEmailVerification(user);
-
-                const userProfile = {
-                    email: user.email,
-                    createdAt: new Date().toISOString(),
-                    emailVerified: false,
-                    miningData: {
-                        minedVlc: 0,
-                        miningStartTime: null,
-                        miningElapsedSeconds: 0,
-                        walletBalance: 0,
-                        miningRewards: 0,
-                        referralBonuses: 0,
-                        referralsCount: 0,
-                        miningRateVlcPerHour: 1,
-                        referralCode: user.uid.substring(0, 8),
-                        usedReferralCode: formData.referralCode || null,
-                        transactions: [],
-                        lastMigrationTimestamp: null,
-                        lastMiningDay: null
-                    }
-                };
-
-                await window.firebase.setDoc(window.firebase.doc(window.firebaseDb, "users", user.uid), userProfile);
-                
-                showToast('Account created! Verification email sent.', 'success');
-                onNavigate('email-verification');
-                
-            } catch (error) {
-                console.error('Signup error:', error);
-                let errorMessage = 'Failed to create account. ';
-                
-                switch (error.code) {
-                    case 'auth/email-already-in-use':
-                        errorMessage = 'Email is already in use.';
-                        break;
-                    case 'auth/invalid-email':
-                        errorMessage = 'Invalid email address.';
-                        break;
-                    case 'auth/weak-password':
-                        errorMessage = 'Password is too weak.';
-                        break;
-                    default:
-                        errorMessage = 'Please try again.';
-                }
-                
-                showToast(errorMessage, 'error');
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        return (
-            <div className="auth-card rounded-2xl p-6 shadow-2xl animate-slide-up">
-                <div className="flex items-center mb-8">
-                    <button 
-                        onClick={() => onNavigate('landing')}
-                        className="p-2 rounded-full hover:bg-gray-100 text-gray-600 transition-colors"
-                    >
-                        <i className="fas fa-arrow-left text-xl"></i>
-                    </button>
-                    <h2 className="text-2xl font-bold text-gray-800 ml-4">Create Account</h2>
-                </div>
-
-                <form onSubmit={handleSubmit} className="space-y-5">
-                    <div>
-                        <label className="block text-gray-700 mb-2 font-medium">Email Address</label>
-                        <div className="relative">
-                            <input
-                                type="email"
-                                value={formData.email}
-                                onChange={(e) => setFormData({...formData, email: e.target.value})}
-                                placeholder="your.email@example.com"
-                                className="w-full input-field p-4 rounded-xl border border-gray-300 bg-gray-50 focus:outline-none"
-                                required
-                            />
-                            <i className="fas fa-envelope absolute right-4 top-1/2 transform -translate-y-1/2 text-primary-600"></i>
+                            <a href="https://bitcnetwork.com/privacy">Privacy Policy</a>
                         </div>
-                    </div>
-
-                    <div>
-                        <label className="block text-gray-700 mb-2 font-medium">Password</label>
-                        <div className="relative">
-                            <input
-                                type={showPassword ? "text" : "password"}
-                                value={formData.password}
-                                onChange={(e) => {
-                                    setFormData({...formData, password: e.target.value});
-                                    checkPasswordStrength(e.target.value);
-                                }}
-                                placeholder="Create a strong password"
-                                className="w-full input-field p-4 rounded-xl border border-gray-300 bg-gray-50 focus:outline-none"
-                                required
-                            />
-                            <button
-                                type="button"
-                                onClick={() => setShowPassword(!showPassword)}
-                                className="absolute right-4 top-1/2 transform -translate-y-1/2 text-primary-600"
-                            >
-                                <i className={`fas fa-${showPassword ? 'eye-slash' : 'eye'}`}></i>
-                            </button>
-                        </div>
-                        <div className="mt-2 h-2 bg-gray-200 rounded-full overflow-hidden">
-                            <div 
-                                className={`h-full transition-all duration-300 ${
-                                    passwordStrength < 50 ? 'bg-red-500' : 
-                                    passwordStrength < 75 ? 'bg-yellow-500' : 'bg-green-500'
-                                }`}
-                                style={{ width: `${passwordStrength}%` }}
-                            ></div>
-                        </div>
-                    </div>
-
-                    <div>
-                        <label className="block text-gray-700 mb-2 font-medium">Confirm Password</label>
-                        <div className="relative">
-                            <input
-                                type={showPassword ? "text" : "password"}
-                                value={formData.confirmPassword}
-                                onChange={(e) => setFormData({...formData, confirmPassword: e.target.value})}
-                                placeholder="Re-enter your password"
-                                className="w-full input-field p-4 rounded-xl border border-gray-300 bg-gray-50 focus:outline-none"
-                                required
-                            />
-                            <i className="fas fa-shield-alt absolute right-4 top-1/2 transform -translate-y-1/2 text-primary-600"></i>
-                        </div>
-                    </div>
-
-                    <div>
-                        <label className="block text-gray-700 mb-2 font-medium">
-                            Referral Code <span className="text-gray-500 font-normal">(optional)</span>
-                        </label>
-                        <div className="relative">
-                            <input
-                                type="text"
-                                value={formData.referralCode}
-                                onChange={(e) => setFormData({...formData, referralCode: e.target.value})}
-                                placeholder="Enter referral code if you have one"
-                                className="w-full input-field p-4 rounded-xl border border-gray-300 bg-gray-50 focus:outline-none"
-                            />
-                            <i className="fas fa-gift absolute right-4 top-1/2 transform -translate-y-1/2 text-primary-600"></i>
-                        </div>
-                    </div>
-
-                    <button
-                        type="submit"
-                        disabled={loading}
-                        className="w-full btn-primary text-white py-4 rounded-xl font-semibold text-lg flex items-center justify-center gap-3 disabled:opacity-70"
-                    >
-                        {loading ? (
-                            <>
-                                <i className="fas fa-spinner fa-spin"></i>
-                                <span>Creating Account...</span>
-                            </>
-                        ) : (
-                            <>
-                                <i className="fas fa-user-plus"></i>
-                                <span>Sign Up</span>
-                            </>
-                        )}
-                    </button>
-                </form>
-
-                <p className="text-center text-gray-600 mt-6">
-                    Already have an account?{' '}
-                    <button 
-                        onClick={() => onNavigate('login')}
-                        className="text-primary-600 font-semibold hover:underline"
-                    >
-                        Sign In
-                    </button>
-                </p>
-            </div>
-        );
-        }
-
-        // Login Page Component
-        function LoginPage({ onNavigate, showToast }) {
-            const [loading, setLoading] = useState(false);
-            const [formData, setFormData] = useState({
-                email: '',
-                password: ''
-            });
-            const [showPassword, setShowPassword] = useState(false);
-
-            const handleSubmit = async (e) => {
-                e.preventDefault();
-                
-                if (!formData.email || !formData.password) {
-                    showToast('Please fill in all fields', 'error');
-                    return;
-                }
-
-                setLoading(true);
-
-                try {
-                    const userCredential = await window.firebase.signInWithEmailAndPassword(
-                        window.firebaseAuth,
-                        formData.email,
-                        formData.password
-                    );
-                    
-                    const user = userCredential.user;
-                    
-                    if (!user.emailVerified) {
-                        showToast('Please verify your email before logging in', 'error');
-                        onNavigate('email-verification');
-                        return;
-                    }
-                    
-                    showToast('Login successful!', 'success');
-                    window.location.href = 'mining.html';
-                    
-                } catch (error) {
-                    console.error('Login error:', error);
-                    let errorMessage = 'Login failed. ';
-                    
-                    switch (error.code) {
-                        case 'auth/user-not-found':
-                            errorMessage = 'No account found with this email.';
-                            break;
-                        case 'auth/wrong-password':
-                            errorMessage = 'Incorrect password.';
-                            break;
-                        case 'auth/invalid-email':
-                            errorMessage = 'Invalid email address.';
-                            break;
-                        default:
-                            errorMessage = 'Please try again.';
-                    }
-                    
-                    showToast(errorMessage, 'error');
-                } finally {
-                    setLoading(false);
-                }
-            };
-
-            return (
-                <div className="auth-card rounded-2xl p-6 shadow-2xl animate-slide-up">
-                    <div className="flex items-center mb-8">
-                        <button 
-                            onClick={() => onNavigate('landing')}
-                            className="p-2 rounded-full hover:bg-gray-100 text-gray-600 transition-colors"
-                        >
-                            <i className="fas fa-arrow-left text-xl"></i>
-                        </button>
-                        <h2 className="text-2xl font-bold text-gray-800 ml-4">Welcome Back</h2>
-                    </div>
-
-                    <form onSubmit={handleSubmit} className="space-y-5">
-                        <div>
-                            <label className="block text-gray-700 mb-2 font-medium">Email Address</label>
-                            <div className="relative">
-                                <input
-                                    type="email"
-                                    value={formData.email}
-                                    onChange={(e) => setFormData({...formData, email: e.target.value})}
-                                    placeholder="your.email@example.com"
-                                    className="w-full input-field p-4 rounded-xl border border-gray-300 bg-gray-50 focus:outline-none"
-                                    required
-                                />
-                                <i className="fas fa-envelope absolute right-4 top-1/2 transform -translate-y-1/2 text-primary-600"></i>
-                            </div>
-                        </div>
-
-                        <div>
-                            <label className="block text-gray-700 mb-2 font-medium">Password</label>
-                            <div className="relative">
-                                <input
-                                    type={showPassword ? "text" : "password"}
-                                    value={formData.password}
-                                    onChange={(e) => setFormData({...formData, password: e.target.value})}
-                                    placeholder="Enter your password"
-                                    className="w-full input-field p-4 rounded-xl border border-gray-300 bg-gray-50 focus:outline-none"
-                                    required
-                                />
-                                <button
-                                    type="button"
-                                    onClick={() => setShowPassword(!showPassword)}
-                                    className="absolute right-4 top-1/2 transform -translate-y-1/2 text-primary-600"
-                                >
-                                    <i className={`fas fa-${showPassword ? 'eye-slash' : 'eye'}`}></i>
-                                </button>
-                            </div>
-                        </div>
-
-                        <div className="flex justify-end">
-                            <button
-                                type="button"
-                                onClick={() => onNavigate('forgot-password')}
-                                className="text-primary-600 font-medium hover:underline text-sm"
-                            >
-                                Forgot Password?
-                            </button>
-                        </div>
-
-                        <button
-                            type="submit"
-                            disabled={loading}
-                            className="w-full btn-primary text-white py-4 rounded-xl font-semibold text-lg flex items-center justify-center gap-3 disabled:opacity-70"
-                        >
-                            {loading ? (
-                                <>
-                                    <i className="fas fa-spinner fa-spin"></i>
-                                    <span>Signing In...</span>
-                                </>
-                            ) : (
-                                <>
-                                    <i className="fas fa-sign-in-alt"></i>
-                                    <span>Sign In</span>
-                                </>
-                            )}
-                        </button>
-                    </form>
-
-                    <p className="text-center text-gray-600 mt-6">
-                        Don't have an account?{' '}
-                        <button 
-                            onClick={() => onNavigate('signup')}
-                            className="text-primary-600 font-semibold hover:underline"
-                        >
-                            Sign Up Now
-                        </button>
-                    </p>
-                </div>
-            );
-        }
-
-        // Forgot Password Page Component
-        function ForgotPasswordPage({ onNavigate, showToast }) {
-            const [loading, setLoading] = useState(false);
-            const [email, setEmail] = useState('');
-
-            const handleSubmit = async (e) => {
-                e.preventDefault();
-                
-                if (!email) {
-                    showToast('Please enter your email address', 'error');
-                    return;
-                }
-
-                setLoading(true);
-
-                try {
-                    await window.firebase.sendPasswordResetEmail(window.firebaseAuth, email);
-                    showToast('Password reset email sent!', 'success');
-                    onNavigate('forgot-success');
-                    
-                } catch (error) {
-                    console.error('Password reset error:', error);
-                    let errorMessage = 'Failed to send reset email. ';
-                    
-                    switch (error.code) {
-                        case 'auth/user-not-found':
-                            errorMessage = 'No account found with this email.';
-                            break;
-                        case 'auth/invalid-email':
-                            errorMessage = 'Invalid email address.';
-                            break;
-                        default:
-                            errorMessage = 'Please try again.';
-                    }
-                    
-                    showToast(errorMessage, 'error');
-                } finally {
-                    setLoading(false);
-                }
-            };
-
-            return (
-                <div className="auth-card rounded-2xl p-6 shadow-2xl animate-slide-up">
-                    <div className="flex items-center mb-8">
-                        <button 
-                            onClick={() => onNavigate('login')}
-                            className="p-2 rounded-full hover:bg-gray-100 text-gray-600 transition-colors"
-                        >
-                            <i className="fas fa-arrow-left text-xl"></i>
-                        </button>
-                        <h2 className="text-2xl font-bold text-gray-800 ml-4">Reset Password</h2>
-                    </div>
-
-                    <p className="text-gray-600 mb-6">Enter your email to receive a reset link</p>
-
-                    <form onSubmit={handleSubmit} className="space-y-5">
-                        <div>
-                            <label className="block text-gray-700 mb-2 font-medium">Email Address</label>
-                            <div className="relative">
-                                <input
-                                    type="email"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    placeholder="your.email@example.com"
-                                    className="w-full input-field p-4 rounded-xl border border-gray-300 bg-gray-50 focus:outline-none"
-                                    required
-                                />
-                                <i className="fas fa-envelope absolute right-4 top-1/2 transform -translate-y-1/2 text-primary-600"></i>
-                            </div>
-                        </div>
-
-                        <button
-                            type="submit"
-                            disabled={loading}
-                            className="w-full btn-primary text-white py-4 rounded-xl font-semibold text-lg flex items-center justify-center gap-3 disabled:opacity-70"
-                        >
-                            {loading ? (
-                                <>
-                                    <i className="fas fa-spinner fa-spin"></i>
-                                    <span>Sending...</span>
-                                </>
-                            ) : (
-                                <>
-                                    <i className="fas fa-share-square"></i>
-                                    <span>Send Reset Link</span>
-                                </>
-                            )}
-                        </button>
-                    </form>
-
-                    <p className="text-center text-gray-600 mt-6">
-                        Remember your password?{' '}
-                        <button 
-                            onClick={() => onNavigate('login')}
-                            className="text-primary-600 font-semibold hover:underline"
-                        >
-                            Back to login
-                        </button>
-                    </p>
-                </div>
-            );
-        }
-
-        // Forgot Password Success Page Component
-        function ForgotSuccessPage({ onNavigate }) {
-            return (
-                <div className="auth-card rounded-2xl p-6 shadow-2xl animate-slide-up">
-                    <div className="text-center">
-                        <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-green-100 flex items-center justify-center">
-                            <i className="fas fa-check-circle text-green-600 text-2xl"></i>
-                        </div>
-                        
-                        <h2 className="text-2xl font-bold text-gray-800 mb-4">Check Your Email</h2>
-                        
-                        <p className="text-gray-600 mb-8">
-                            We've sent a password reset link to your email address. 
-                            Please check your inbox and follow the instructions to reset your password.
-                        </p>
-                        
-                        <button
-                            onClick={() => onNavigate('login')}
-                            className="w-full btn-primary text-white py-4 rounded-xl font-semibold text-lg flex items-center justify-center gap-3"
-                        >
-                            <i className="fas fa-sign-in-alt"></i>
-                            <span>Back to Login</span>
-                        </button>
-                    </div>
-                </div>
-            );
-        }
-
-        // Email Verification Page Component
-        function EmailVerificationPage({ user, onNavigate, showToast }) {
-            const [loading, setLoading] = useState(false);
-
-            const handleResendEmail = async () => {
-                if (!user) {
-                    showToast('Please sign in first', 'error');
-                    return;
-                }
-
-                setLoading(true);
-
-                try {
-                    await window.firebase.sendEmailVerification(user);
-                    showToast('Verification email sent!', 'success');
-                } catch (error) {
-                    console.error('Resend verification error:', error);
-                    showToast('Failed to send verification email', 'error');
-                } finally {
-                    setLoading(false);
-                }
-            };
-
-            return (
-                <div className="auth-card rounded-2xl p-6 shadow-2xl animate-slide-up">
-                    <div className="flex items-center mb-8">
-                        <button 
-                            onClick={() => onNavigate('signup')}
-                            className="p-2 rounded-full hover:bg-gray-100 text-gray-600 transition-colors"
-                        >
-                            <i className="fas fa-arrow-left text-xl"></i>
-                        </button>
-                        <h2 className="text-2xl font-bold text-gray-800 ml-4">Verify Your Email</h2>
-                    </div>
-
-                    <div className="text-center mb-8">
-                        <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-primary-100 flex items-center justify-center animate-pulse">
-                            <i className="fas fa-envelope-circle-check text-primary-600 text-3xl"></i>
-                        </div>
-                        
-                        <h3 className="text-xl font-semibold text-gray-800 mb-3">Verification Email Sent</h3>
-                        <p className="text-gray-600">
-                            We've sent a verification link to <br />
-                            <span className="font-semibold text-primary-700">{user?.email}</span>
-                        </p>
-                    </div>
-
-                    <div className="bg-blue-50 p-4 rounded-xl border border-blue-200 mb-6">
-                        <h4 className="font-semibold text-blue-800 mb-2 flex items-center gap-2">
-                            <i className="fas fa-info-circle"></i>
-                            <span>Important</span>
-                        </h4>
-                        <p className="text-sm text-blue-700">
-                            Please check your inbox and click the verification link to activate your account before logging in.
-                        </p>
-                    </div>
-
-                    <div className="space-y-4">
-                        <button
-                            onClick={handleResendEmail}
-                            disabled={loading}
-                            className="w-full bg-white text-primary-700 py-4 rounded-xl font-semibold border-2 border-primary-200 hover:bg-primary-50 flex items-center justify-center gap-3 disabled:opacity-70 transition-all"
-                        >
-                            {loading ? (
-                                <>
-                                    <i className="fas fa-spinner fa-spin"></i>
-                                    <span>Sending...</span>
-                                </>
-                            ) : (
-                                <>
-                                    <i className="fas fa-redo"></i>
-                                    <span>Resend Verification Email</span>
-                                </>
-                            )}
-                        </button>
-                        
-                        <button
-                            onClick={() => onNavigate('login')}
-                            className="w-full btn-primary text-white py-4 rounded-xl font-semibold flex items-center justify-center gap-3"
-                        >
-                            <i className="fas fa-sign-in-alt"></i>
-                            <span>Continue to Login</span>
-                        </button>
-                    </div>
-
-                    <p className="text-center text-gray-600 text-sm mt-6">
-                        Didn't receive the email? Check your spam folder or try resending.
-                    </p>
-                </div>
-            );
-        }
-
-        // Toast Component
-        function Toast({ message, type }) {
-            const bgColor = type === 'error' ? 'bg-red-500' : 'bg-green-500';
-            
-            return (
-                <div className={`fixed bottom-8 left-1/2 transform -translate-x-1/2 ${bgColor} text-white px-6 py-3 rounded-xl shadow-lg z-50 max-w-[90%] text-center toast-enter-active`}>
-                    <div className="flex items-center justify-center gap-3">
-                        <i className={`fas fa-${type === 'error' ? 'exclamation-circle' : 'check-circle'}`}></i>
-                        <span>{message}</span>
                     </div>
                 </div>
             );
