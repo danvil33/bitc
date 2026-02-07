@@ -1,1266 +1,1436 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BitC Network - Crypto Mining</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
-        }
-
-        body {
-            background-color: #fff;
-            color: #333;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-
-        .auth-container {
-            width: 100%;
-            max-width: 450px;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-            position: relative;
-        }
-
-        /* Header */
-        .auth-header {
-            padding: 40px 40px 30px;
-            text-align: center;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
-
-        .logo {
-            font-size: 36px;
-            font-weight: 700;
-            margin-bottom: 10px;
-            letter-spacing: 1px;
-        }
-
-        .logo span {
-            background: linear-gradient(135deg, #a855f7 0%, #7c3aed 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .tagline {
-            font-size: 16px;
-            opacity: 0.9;
-            font-weight: 400;
-        }
-
-        /* Content */
-        .auth-content {
-            padding: 40px;
-        }
-
-        .page-title {
-            font-size: 28px;
-            font-weight: 600;
-            margin-bottom: 30px;
-            text-align: center;
-            color: #222;
-        }
-
-        /* Form Styles */
-        .form-group {
-            margin-bottom: 24px;
-        }
-
-        .form-label {
-            display: block;
-            margin-bottom: 8px;
-            font-size: 14px;
-            font-weight: 500;
-            color: #555;
-        }
-
-        .form-input {
-            width: 100%;
-            padding: 16px;
-            border: 2px solid #e1e5e9;
-            border-radius: 12px;
-            font-size: 16px;
-            transition: all 0.3s ease;
-            background: #f8fafc;
-        }
-
-        .form-input:focus {
-            outline: none;
-            border-color: #a855f7;
-            background: white;
-            box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.1);
-        }
-
-        .input-with-icon {
-            position: relative;
-        }
-
-        .input-icon {
-            position: absolute;
-            right: 16px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #a855f7;
-            font-size: 18px;
-        }
-
-        .password-toggle {
-            position: absolute;
-            right: 16px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: none;
-            border: none;
-            color: #666;
-            cursor: pointer;
-            font-size: 18px;
-        }
-
-        /* Password Strength */
-        .password-strength {
-            height: 6px;
-            background: #e1e5e9;
-            border-radius: 3px;
-            margin-top: 8px;
-            overflow: hidden;
-        }
-
-        .strength-bar {
-            height: 100%;
-            width: 0%;
-            border-radius: 3px;
-            transition: all 0.3s ease;
-        }
-
-        .strength-weak { 
-            background: #ff4757; 
-            width: 33%; 
-        }
-        .strength-medium { 
-            background: #ffa502; 
-            width: 66%; 
-        }
-        .strength-strong { 
-            background: #2ed573; 
-            width: 100%; 
-        }
-
-        /* Buttons */
-        .btn-primary {
-            width: 100%;
-            padding: 18px;
-            background: linear-gradient(135deg, #a855f7 0%, #7c3aed 100%);
-            color: white;
-            border: none;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        .btn-primary:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(168, 85, 247, 0.3);
-        }
-
-        .btn-primary:disabled {
-            opacity: 0.7;
-            cursor: not-allowed;
-        }
-
-        .btn-secondary {
-            width: 100%;
-            padding: 18px;
-            background: white;
-            color: #7c3aed;
-            border: 2px solid #e1e5e9;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        .btn-secondary:hover {
-            background: #f8fafc;
-            border-color: #a855f7;
-        }
-
-        /* Divider */
-        .divider {
-            text-align: center;
-            margin: 30px 0;
-            position: relative;
-            color: #666;
-            font-size: 14px;
-        }
-
-        .divider::before,
-        .divider::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            width: 45%;
-            height: 1px;
-            background: #e1e5e9;
-        }
-
-        .divider::before {
-            left: 0;
-        }
-
-        .divider::after {
-            right: 0;
-        }
-
-        /* Social Buttons */
-        .social-btn {
-            width: 100%;
-            padding: 16px;
-            border: 2px solid #e1e5e9;
-            border-radius: 12px;
-            background: white;
-            font-size: 16px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            margin-bottom: 12px;
-        }
-
-        .social-btn:hover {
-            background: #f8fafc;
-            border-color: #d1d9e6;
-            transform: translateY(-1px);
-        }
-
-        .social-btn.google i { color: #DB4437; }
-        .social-btn.apple i { color: #000; }
-        .social-btn.email i { color: #7c3aed; }
-
-        /* Links */
-        .link-text {
-            text-align: center;
-            margin-top: 24px;
-            color: #666;
-            font-size: 15px;
-        }
-
-        .link-text a {
-            color: #7c3aed;
-            text-decoration: none;
-            font-weight: 600;
-            margin-left: 5px;
-        }
-
-        .link-text a:hover {
-            text-decoration: underline;
-        }
-
-        .forgot-link {
-            display: block;
-            text-align: right;
-            margin-top: 8px;
-            color: #7c3aed;
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 500;
-        }
-
-        .forgot-link:hover {
-            text-decoration: underline;
-        }
-
-        /* Terms */
-        .terms-text {
-            font-size: 12px;
-            color: #666;
-            text-align: center;
-            margin-top: 30px;
-            line-height: 1.5;
-        }
-
-        .terms-text a {
-            color: #7c3aed;
-            text-decoration: none;
-        }
-
-        .terms-text a:hover {
-            text-decoration: underline;
-        }
-
-        /* Toast */
-        .toast {
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            padding: 16px 24px;
-            border-radius: 12px;
-            color: white;
-            font-weight: 500;
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            animation: slideUp 0.3s ease;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-        }
-
-        .toast.success {
-            background: linear-gradient(135deg, #2ed573 0%, #1dd1a1 100%);
-        }
-
-        .toast.error {
-            background: linear-gradient(135deg, #ff6b6b 0%, #ff4757 100%);
-        }
-
-        .toast.info {
-            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
-        }
-
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translate(-50%, 20px);
-            }
-            to {
-                opacity: 1;
-                transform: translate(-50%, 0);
-            }
-        }
-
-        /* Loading */
-        .loading {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            border-top-color: white;
-            animation: spin 1s ease-in-out infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        /* Page Transitions */
-        .page {
-            display: none;
-        }
-
-        .page.active {
-            display: block;
-            animation: fadeIn 0.3s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Verification Page */
-        .verification-icon {
-            font-size: 80px;
-            color: #a855f7;
-            margin-bottom: 20px;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-
-        .info-box {
-            background: #f0f7ff;
-            padding: 20px;
-            border-radius: 12px;
-            border-left: 4px solid #a855f7;
-            margin: 25px 0;
-        }
-
-        .info-box i {
-            color: #a855f7;
-            margin-right: 10px;
-        }
-
-        /* Bottom Navigation */
-        .bottom-nav {
-            display: flex;
-            justify-content: space-around;
-            border-top: 1px solid #e1e5e9;
-            padding: 20px 0 0;
-            margin-top: 40px;
-        }
-
-        .nav-item {
-            text-align: center;
-            color: #666;
-            cursor: pointer;
-            padding: 10px;
-            border-radius: 8px;
-            transition: all 0.2s;
-            flex: 1;
-        }
-
-        .nav-item:hover {
-            background: #f8fafc;
-            color: #7c3aed;
-        }
-
-        .nav-item.active {
-            color: #7c3aed;
-            font-weight: 600;
-        }
-
-        .nav-item i {
-            display: block;
-            font-size: 22px;
-            margin-bottom: 8px;
-        }
-
-        /* Responsive */
-        @media (max-width: 480px) {
-            .auth-container {
-                border-radius: 0;
-                box-shadow: none;
-            }
-            
-            .auth-content {
-                padding: 30px 20px;
-            }
-            
-            .auth-header {
-                padding: 30px 20px 20px;
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <title>Bitc Network - Authentication</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    /* Reset & Base */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+    
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #ffffff;
+      color: #000000;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    
+    /* App Container */
+    .app {
+      max-width: 480px;
+      margin: 0 auto;
+      min-height: 100vh;
+      position: relative;
+      background: #ffffff;
+    }
+    
+    /* Pages */
+    .page {
+      display: none;
+      padding: 0 20px;
+    }
+    
+    .page.active {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    /* Header */
+    .header {
+      padding: 20px 0 0;
+      margin-bottom: 24px;
+    }
+    
+    .back-btn {
+      background: none;
+      border: none;
+      font-size: 20px;
+      color: #000000;
+      padding: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .back-btn i {
+      font-size: 18px;
+    }
+    
+    .back-btn span {
+      font-size: 16px;
+      font-weight: 500;
+    }
+    
+    /* Logo */
+    .logo-container {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+    
+    .logo {
+      font-size: 32px;
+      font-weight: 700;
+      color: #000000;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      letter-spacing: -0.5px;
+    }
+    
+    .logo-icon {
+      color: #2563eb;
+      background: #eff6ff;
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+    }
+    
+    /* Title Section */
+    .title-section {
+      margin-bottom: 32px;
+    }
+    
+    .title {
+      font-size: 28px;
+      font-weight: 700;
+      color: #000000;
+      margin-bottom: 8px;
+      letter-spacing: -0.5px;
+    }
+    
+    .subtitle {
+      font-size: 16px;
+      color: #666666;
+      font-weight: 400;
+    }
+    
+    /* Forms */
+    .form {
+      margin-bottom: 24px;
+    }
+    
+    .form-group {
+      margin-bottom: 20px;
+    }
+    
+    .input-label {
+      font-size: 15px;
+      font-weight: 500;
+      color: #000000;
+      margin-bottom: 8px;
+      display: block;
+    }
+    
+    .input-container {
+      position: relative;
+    }
+    
+    .form-input {
+      width: 100%;
+      padding: 16px;
+      font-size: 16px;
+      border-radius: 12px;
+      border: 1.5px solid #E5E7EB;
+      background: #ffffff;
+      color: #000000;
+      transition: all 0.2s;
+    }
+    
+    .form-input:focus {
+      outline: none;
+      border-color: #2563eb;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+    
+    .form-input::placeholder {
+      color: #9CA3AF;
+    }
+    
+    .input-icon {
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #6B7280;
+      cursor: pointer;
+      background: none;
+      border: none;
+      font-size: 18px;
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    /* Terms Checkbox */
+    .terms-container {
+      margin: 24px 0;
+      padding: 16px 0;
+    }
+    
+    .checkbox-group {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+    
+    .checkbox-input {
+      width: 20px;
+      height: 20px;
+      border-radius: 6px;
+      border: 1.5px solid #D1D5DB;
+      background: #ffffff;
+      margin-top: 2px;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    
+    .checkbox-label {
+      font-size: 14px;
+      color: #4B5563;
+      line-height: 1.5;
+    }
+    
+    .terms-link {
+      color: #2563eb;
+      font-weight: 500;
+      text-decoration: none;
+    }
+    
+    /* Buttons */
+    .btn {
+      width: 100%;
+      padding: 18px;
+      font-size: 16px;
+      font-weight: 600;
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: center;
+    }
+    
+    .btn:active {
+      transform: scale(0.98);
+    }
+    
+    .btn-primary {
+      background: #000000;
+      color: #ffffff;
+      margin-bottom: 16px;
+    }
+    
+    .btn-primary:active {
+      background: #374151;
+    }
+    
+    .btn-outline {
+      background: #ffffff;
+      color: #000000;
+      border: 1.5px solid #D1D5DB;
+    }
+    
+    .btn-outline:active {
+      background: #F9FAFB;
+    }
+    
+    .btn-google {
+      background: #ffffff;
+      color: #000000;
+      border: 1.5px solid #D1D5DB;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    
+    .btn-google:active {
+      background: #F9FAFB;
+    }
+    
+    /* Divider */
+    .divider {
+      display: flex;
+      align-items: center;
+      margin: 24px 0;
+      color: #9CA3AF;
+      font-size: 14px;
+      font-weight: 500;
+    }
+    
+    .divider-line {
+      flex: 1;
+      height: 1px;
+      background: #E5E7EB;
+    }
+    
+    .divider-text {
+      padding: 0 16px;
+    }
+    
+    /* Footer Links */
+    .footer {
+      text-align: center;
+      padding: 20px 0 40px;
+      color: #6B7280;
+      font-size: 15px;
+      line-height: 1.5;
+    }
+    
+    .footer-link {
+      color: #2563eb;
+      font-weight: 500;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    
+    /* Forgot Password */
+    .forgot-password {
+      text-align: right;
+      margin-bottom: 24px;
+    }
+    
+    .forgot-link {
+      color: #2563eb;
+      font-size: 15px;
+      font-weight: 500;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    
+    /* Error Message */
+    .error-message {
+      color: #DC2626;
+      font-size: 14px;
+      margin-top: 8px;
+      display: none;
+    }
+    
+    /* Welcome Illustration */
+    .illustration {
+      text-align: center;
+      margin: 40px 0;
+    }
+    
+    .illustration-icon {
+      font-size: 80px;
+      color: #2563eb;
+      background: #eff6ff;
+      width: 120px;
+      height: 120px;
+      border-radius: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto;
+    }
+    
+    /* Network Status */
+    .network-status {
+      text-align: center;
+      font-size: 14px;
+      color: #059669;
+      background: #D1FAE5;
+      padding: 8px 16px;
+      border-radius: 8px;
+      display: inline-block;
+      margin-top: 12px;
+    }
+    
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 16px 24px;
+      border-radius: 12px;
+      color: white;
+      font-weight: 500;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      animation: slideUp 0.3s ease;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      max-width: 90%;
+      width: auto;
+    }
+    
+    .toast.success {
+      background: linear-gradient(135deg, #2ed573 0%, #1dd1a1 100%);
+    }
+    
+    .toast.error {
+      background: linear-gradient(135deg, #ff6b6b 0%, #ff4757 100%);
+    }
+    
+    .toast.info {
+      background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+    }
+    
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translate(-50%, 20px);
+      }
+      to {
+        opacity: 1;
+        transform: translate(-50%, 0);
+      }
+    }
+    
+    /* Loading */
+    .loading {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top-color: white;
+      animation: spin 1s ease-in-out infinite;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    
+    /* Verification Page */
+    .verify-page {
+      text-align: center;
+      padding: 20px 0;
+    }
+    
+    .verification-icon {
+      font-size: 80px;
+      color: #2563eb;
+      margin-bottom: 20px;
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+    
+    .info-box {
+      background: #f0f7ff;
+      padding: 20px;
+      border-radius: 12px;
+      border-left: 4px solid #2563eb;
+      margin: 25px 0;
+      text-align: left;
+      font-size: 14px;
+      color: #4B5563;
+    }
+    
+    .info-box i {
+      color: #2563eb;
+      margin-right: 10px;
+    }
+    
+    /* Responsive */
+    @media (max-width: 380px) {
+      .page {
+        padding: 0 16px;
+      }
+      
+      .title {
+        font-size: 24px;
+      }
+      
+      .logo {
+        font-size: 28px;
+      }
+      
+      .illustration-icon {
+        font-size: 60px;
+        width: 100px;
+        height: 100px;
+      }
+    }
+    
+    @media (min-width: 768px) {
+      body {
+        padding: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #ffffff;
+      }
+      
+      .app {
+        width: 100%;
+        max-width: 400px;
+        min-height: auto;
+        border-radius: 0;
+        box-shadow: none;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div class="auth-container">
-        <!-- Header -->
-        <div class="auth-header">
-            <div class="logo"><span>BitC</span> Network</div>
-            <div class="tagline">Blockchain & Internet Technology Coin</div>
+  <div class="app">
+    <!-- LOADING PAGE -->
+    <div class="page active" id="loading">
+      <div class="header">
+        <!-- No back button on loading page -->
+      </div>
+      
+      <div class="logo-container">
+        <div class="logo">
+          <div class="logo-icon">
+            <i class="fas fa-bolt"></i>
+          </div>
+          Bitc Network
         </div>
-
-        <!-- Loading Screen -->
-        <div id="loading-page" class="page active">
-            <div class="auth-content" style="text-align: center; padding: 60px 40px;">
-                <div class="loading" style="border: 3px solid #f3f3f3; border-top: 3px solid #a855f7; width: 50px; height: 50px; margin: 0 auto 30px;"></div>
-                <h2 style="color: #666; font-weight: 500;">Checking Authentication...</h2>
-            </div>
+      </div>
+      
+      <div class="illustration">
+        <div class="illustration-icon">
+          <i class="fas fa-network-wired"></i>
         </div>
-
-        <!-- Landing Page -->
-        <div id="landing-page" class="page">
-            <div class="auth-content">
-                <h2 class="page-title">Welcome to BitC</h2>
-                
-                <div class="form-group">
-                    <label class="form-label">Email address</label>
-                    <div class="input-with-icon">
-                        <input type="email" class="form-input" id="landing-email" placeholder="your.email@example.com">
-                        <i class="fas fa-envelope input-icon"></i>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">Password</label>
-                    <div class="input-with-icon">
-                        <input type="password" class="form-input" id="landing-password" placeholder="Enter your password">
-                        <button type="button" class="password-toggle" data-target="landing-password">
-                            <i class="fas fa-eye"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <div style="text-align: right; margin-bottom: 20px;">
-                    <a href="#" class="forgot-link" id="forgot-password-link">Forgot password?</a>
-                </div>
-
-                <div class="info-box">
-                    <i class="fas fa-info-circle"></i>
-                    We'll send you a confirmation email. Standard message and data rates apply.
-                    <a href="https://bitcnetwork.com/privacy" style="color: #7c3aed; text-decoration: none;"> Privacy Policy</a>
-                </div>
-
-                <button class="btn-primary" id="continue-btn">
-                    Continue
-                </button>
-
-                <div class="divider">or</div>
-
-                <button class="social-btn google" id="google-btn">
-                    <i class="fab fa-google"></i>Continue with Google
-                </button>
-                <button class="social-btn apple" id="apple-btn">
-                    <i class="fab fa-apple"></i>Continue with Apple
-                </button>
-                <button class="social-btn email" id="email-signup-btn">
-                    <i class="fas fa-envelope"></i>Continue with email
-                </button>
-
-                <div class="terms-text">
-                    By continuing, you agree to our
-                    <a href="https://bitcnetwork.com/termsofservice">Terms</a> and
-                    <a href="https://bitcnetwork.com/privacy">Privacy Policy</a>
-                    <br>v4.0.0
-                </div>
-
-                <div class="bottom-nav">
-                    <div class="nav-item">
-                        <i class="fas fa-home"></i>
-                        Home
-                    </div>
-                    <div class="nav-item">
-                        <i class="fas fa-chart-line"></i>
-                        Mining
-                    </div>
-                    <div class="nav-item active">
-                        <i class="fas fa-user"></i>
-                        Account
-                    </div>
-                    <div class="nav-item">
-                        <i class="fas fa-wallet"></i>
-                        Wallet
-                    </div>
-                </div>
-            </div>
+      </div>
+      
+      <div class="title-section" style="text-align: center;">
+        <h1 class="title">Checking Authentication</h1>
+        <p class="subtitle">Connecting to Bitc Network...</p>
+        <div style="margin-top: 30px;">
+          <div class="loading" style="border: 3px solid #f3f3f3; border-top: 3px solid #2563eb; width: 40px; height: 40px;"></div>
         </div>
-
-        <!-- Login Page -->
-        <div id="login-page" class="page">
-            <div class="auth-content">
-                <h2 class="page-title">Welcome Back</h2>
-                
-                <form id="login-form">
-                    <div class="form-group">
-                        <label class="form-label">Email address</label>
-                        <div class="input-with-icon">
-                            <input type="email" class="form-input" id="login-email" placeholder="your.email@example.com" required>
-                            <i class="fas fa-envelope input-icon"></i>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">Password</label>
-                        <div class="input-with-icon">
-                            <input type="password" class="form-input" id="login-password" placeholder="Enter your password" required>
-                            <button type="button" class="password-toggle" data-target="login-password">
-                                <i class="fas fa-eye"></i>
-                            </button>
-                        </div>
-                        <a href="#" class="forgot-link" id="forgot-password-link2">Forgot password?</a>
-                    </div>
-
-                    <button class="btn-primary" type="submit" id="login-btn">
-                        Sign In
-                    </button>
-                </form>
-
-                <div class="divider">or</div>
-
-                <button class="social-btn google" id="google-login-btn">
-                    <i class="fab fa-google"></i>Continue with Google
-                </button>
-                <button class="social-btn email" id="create-account-btn">
-                    <i class="fas fa-envelope"></i>Create Account
-                </button>
-
-                <div class="link-text">
-                    Don't have an account?
-                    <a href="#" id="signup-link">Sign Up Now</a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Signup Page -->
-        <div id="signup-page" class="page">
-            <div class="auth-content">
-                <h2 class="page-title">Create Account</h2>
-                
-                <form id="signup-form">
-                    <div class="form-group">
-                        <label class="form-label">Email address</label>
-                        <div class="input-with-icon">
-                            <input type="email" class="form-input" id="signup-email" placeholder="your.email@example.com" required>
-                            <i class="fas fa-envelope input-icon"></i>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">Password</label>
-                        <div class="input-with-icon">
-                            <input type="password" class="form-input" id="signup-password" placeholder="Create a strong password" required>
-                            <button type="button" class="password-toggle" data-target="signup-password">
-                                <i class="fas fa-eye"></i>
-                            </button>
-                        </div>
-                        <div class="password-strength">
-                            <div class="strength-bar" id="password-strength-bar"></div>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">Confirm Password</label>
-                        <div class="input-with-icon">
-                            <input type="password" class="form-input" id="signup-confirm-password" placeholder="Re-enter your password" required>
-                            <i class="fas fa-shield-alt input-icon"></i>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">
-                            Referral Code <span style="color: #666; font-weight: normal">(optional)</span>
-                        </label>
-                        <div class="input-with-icon">
-                            <input type="text" class="form-input" id="referral-code" placeholder="Enter referral code if you have one">
-                            <i class="fas fa-gift input-icon"></i>
-                        </div>
-                    </div>
-
-                    <div class="info-box">
-                        <i class="fas fa-info-circle"></i>
-                        Password must be at least 6 characters long and include uppercase, lowercase, and numbers.
-                    </div>
-
-                    <button class="btn-primary" type="submit" id="signup-btn">
-                        <i class="fas fa-user-plus"></i>Sign Up
-                    </button>
-                </form>
-
-                <div class="divider">or</div>
-
-                <button class="social-btn google" id="google-signup-btn">
-                    <i class="fab fa-google"></i>Continue with Google
-                </button>
-
-                <div class="link-text">
-                    Already have an account?
-                    <a href="#" id="login-link">Sign In</a>
-                </div>
-
-                <div class="terms-text">
-                    By creating an account, you agree to our
-                    <a href="https://bitcnetwork.com/termsofservice">Terms of Service</a> and
-                    <a href="https://bitcnetwork.com/privacy">Privacy Policy</a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Forgot Password Page -->
-        <div id="forgot-page" class="page">
-            <div class="auth-content">
-                <h2 class="page-title">Reset Password</h2>
-                
-                <form id="forgot-form">
-                    <div class="form-group">
-                        <label class="form-label">Email address</label>
-                        <div class="input-with-icon">
-                            <input type="email" class="form-input" id="forgot-email" placeholder="your.email@example.com" required>
-                            <i class="fas fa-envelope input-icon"></i>
-                        </div>
-                    </div>
-
-                    <div class="info-box">
-                        <i class="fas fa-info-circle"></i>
-                        Enter your email address and we'll send you a link to reset your password.
-                    </div>
-
-                    <button class="btn-primary" type="submit" id="forgot-btn">
-                        <i class="fas fa-share-square"></i>Send Reset Link
-                    </button>
-                </form>
-
-                <div class="link-text">
-                    Remember your password?
-                    <a href="#" id="back-to-login">Back to login</a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Email Verification Page -->
-        <div id="verify-page" class="page">
-            <div class="auth-content" style="text-align: center;">
-                <div class="verification-icon">
-                    <i class="fas fa-envelope-circle-check"></i>
-                </div>
-                
-                <h2 class="page-title">Verify Your Email</h2>
-                
-                <h3 style="margin-bottom: 10px; color: #444;">Verification Email Sent</h3>
-                <p style="color: #666; margin-bottom: 25px;">
-                    We've sent a verification link to <br>
-                    <strong id="user-email" style="color: #7c3aed;"></strong>
-                </p>
-
-                <div class="info-box">
-                    <i class="fas fa-info-circle"></i>
-                    Please check your inbox and click the verification link to activate your account before logging in.
-                </div>
-
-                <button class="btn-secondary" id="resend-btn" style="margin-bottom: 15px;">
-                    <i class="fas fa-redo"></i>Resend Verification Email
-                </button>
-                
-                <button class="btn-primary" id="continue-login-btn">
-                    <i class="fas fa-sign-in-alt"></i>Continue to Login
-                </button>
-
-                <p style="color: #666; margin-top: 20px; font-size: 14px;">
-                    Didn't receive the email? Check your spam folder or try resending.
-                </p>
-            </div>
-        </div>
+      </div>
     </div>
+    
+    <!-- WELCOME PAGE -->
+    <div class="page" id="welcome">
+      <div class="header">
+        <!-- No back button on welcome page -->
+      </div>
+      
+      <div class="logo-container">
+        <div class="logo">
+          <div class="logo-icon">
+            <i class="fas fa-bolt"></i>
+          </div>
+          Bitc Network
+        </div>
+      </div>
+      
+      <div class="illustration">
+        <div class="illustration-icon">
+          <i class="fas fa-network-wired"></i>
+        </div>
+        <div class="network-status">
+          <i class="fas fa-check-circle"></i> Network Active
+        </div>
+      </div>
+      
+      <div class="title-section">
+        <h1 class="title">Welcome to Bitc Network</h1>
+        <p class="subtitle">Connect to the decentralized future</p>
+      </div>
+      
+      <button class="btn btn-primary" onclick="navigateTo('login')">
+        Sign In
+      </button>
+      
+      <button class="btn btn-outline" onclick="navigateTo('register')">
+        Create Account
+      </button>
+      
+      <div class="divider">
+        <div class="divider-line"></div>
+        <div class="divider-text">or</div>
+        <div class="divider-line"></div>
+      </div>
+      
+      <button class="btn btn-google" onclick="handleGoogleAuth()">
+        <i class="fab fa-google"></i> Continue with Google
+      </button>
+      
+      <div class="footer">
+        By continuing, you agree to Bitc Network's <span class="footer-link" onclick="showTerms()">Terms</span> and <span class="footer-link" onclick="showPrivacy()">Privacy Policy</span>
+      </div>
+    </div>
+    
+    <!-- LOGIN PAGE -->
+    <div class="page" id="login">
+      <div class="header">
+        <button class="back-btn" onclick="navigateTo('welcome')">
+          <i class="fas fa-arrow-left"></i>
+          <span>Back</span>
+        </button>
+      </div>
+      
+      <div class="logo-container">
+        <div class="logo">
+          <div class="logo-icon">
+            <i class="fas fa-bolt"></i>
+          </div>
+          Bitc Network
+        </div>
+      </div>
+      
+      <div class="title-section">
+        <h1 class="title">Sign In</h1>
+        <p class="subtitle">Access your Bitc Network account</p>
+      </div>
+      
+      <form class="form" id="loginForm" onsubmit="handleLogin(event)">
+        <div class="form-group">
+          <label class="input-label" for="loginEmail">Email Address</label>
+          <div class="input-container">
+            <input 
+              type="email" 
+              id="loginEmail" 
+              class="form-input" 
+              placeholder="Enter your email"
+              required
+            >
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label class="input-label" for="loginPassword">Password</label>
+          <div class="input-container">
+            <input 
+              type="password" 
+              id="loginPassword" 
+              class="form-input" 
+              placeholder="Enter your password"
+              required
+            >
+            <button type="button" class="input-icon" onclick="togglePassword('loginPassword', this)">
+              <i class="fas fa-eye"></i>
+            </button>
+          </div>
+          <div class="error-message" id="loginError"></div>
+        </div>
+        
+        <div class="forgot-password">
+          <span class="forgot-link" onclick="navigateTo('forgot')">Forgot password?</span>
+        </div>
+        
+        <button type="submit" class="btn btn-primary" id="loginBtn">
+          Sign In
+        </button>
+        
+        <div class="divider">
+          <div class="divider-line"></div>
+          <div class="divider-text">or</div>
+          <div class="divider-line"></div>
+        </div>
+        
+        <button type="button" class="btn btn-google" onclick="handleGoogleAuth()">
+          <i class="fab fa-google"></i> Sign in with Google
+        </button>
+        
+        <div class="footer">
+          Don't have an account? <span class="footer-link" onclick="navigateTo('register')">Sign up</span>
+        </div>
+      </form>
+    </div>
+    
+    <!-- REGISTER PAGE -->
+    <div class="page" id="register">
+      <div class="header">
+        <button class="back-btn" onclick="navigateTo('welcome')">
+          <i class="fas fa-arrow-left"></i>
+          <span>Back</span>
+        </button>
+      </div>
+      
+      <div class="logo-container">
+        <div class="logo">
+          <div class="logo-icon">
+            <i class="fas fa-bolt"></i>
+          </div>
+          Bitc Network
+        </div>
+      </div>
+      
+      <div class="title-section">
+        <h1 class="title">Create Account</h1>
+        <p class="subtitle">Join the decentralized network</p>
+      </div>
+      
+      <form class="form" id="registerForm" onsubmit="handleRegister(event)">
+        <div class="form-group">
+          <label class="input-label" for="registerEmail">Email Address</label>
+          <div class="input-container">
+            <input 
+              type="email" 
+              id="registerEmail" 
+              class="form-input" 
+              placeholder="Enter your email"
+              required
+            >
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label class="input-label" for="registerPassword">Password</label>
+          <div class="input-container">
+            <input 
+              type="password" 
+              id="registerPassword" 
+              class="form-input" 
+              placeholder="Create a password (min. 6 characters)"
+              required
+              minlength="6"
+            >
+            <button type="button" class="input-icon" onclick="togglePassword('registerPassword', this)">
+              <i class="fas fa-eye"></i>
+            </button>
+          </div>
+          <div class="error-message" id="passwordError"></div>
+        </div>
+        
+        <div class="form-group">
+          <label class="input-label" for="registerConfirm">Confirm Password</label>
+          <div class="input-container">
+            <input 
+              type="password" 
+              id="registerConfirm" 
+              class="form-input" 
+              placeholder="Confirm your password"
+              required
+              minlength="6"
+            >
+            <button type="button" class="input-icon" onclick="togglePassword('registerConfirm', this)">
+              <i class="fas fa-eye"></i>
+            </button>
+          </div>
+          <div class="error-message" id="confirmError"></div>
+        </div>
+        
+        <div class="form-group">
+          <label class="input-label" for="referralCode">
+            Referral Code <span style="color: #666; font-weight: normal">(optional)</span>
+          </label>
+          <div class="input-container">
+            <input 
+              type="text" 
+              id="referralCode" 
+              class="form-input" 
+              placeholder="Enter referral code if you have one"
+            >
+          </div>
+        </div>
+        
+        <div class="info-box">
+          <i class="fas fa-info-circle"></i>
+          Password must be at least 6 characters long. We recommend using a combination of letters, numbers, and symbols for better security.
+        </div>
+        
+        <div class="terms-container">
+          <div class="checkbox-group">
+            <input type="checkbox" id="termsCheckbox" class="checkbox-input" required>
+            <label for="termsCheckbox" class="checkbox-label">
+              By signing up you agree to Bitc Network's <span class="terms-link" onclick="showTerms()">Terms of Service</span>, <span class="terms-link" onclick="showPrivacy()">Privacy Policy</span>, and <span class="terms-link" onclick="showCookiePolicy()">Cookie Policy</span>
+            </label>
+          </div>
+        </div>
+        
+        <button type="submit" class="btn btn-primary" id="registerBtn">
+          Create Account
+        </button>
+        
+        <div class="divider">
+          <div class="divider-line"></div>
+          <div class="divider-text">or</div>
+          <div class="divider-line"></div>
+        </div>
+        
+        <button type="button" class="btn btn-google" onclick="handleGoogleAuth()">
+          <i class="fab fa-google"></i> Sign up with Google
+        </button>
+        
+        <div class="footer">
+          Already have an account? <span class="footer-link" onclick="navigateTo('login')">Sign in</span>
+        </div>
+      </form>
+    </div>
+    
+    <!-- FORGOT PASSWORD PAGE -->
+    <div class="page" id="forgot">
+      <div class="header">
+        <button class="back-btn" onclick="navigateTo('login')">
+          <i class="fas fa-arrow-left"></i>
+          <span>Back</span>
+        </button>
+      </div>
+      
+      <div class="logo-container">
+        <div class="logo">
+          <div class="logo-icon">
+            <i class="fas fa-bolt"></i>
+          </div>
+          Bitc Network
+        </div>
+      </div>
+      
+      <div class="title-section">
+        <h1 class="title">Reset Password</h1>
+        <p class="subtitle">We'll send you a reset link</p>
+      </div>
+      
+      <form class="form" id="forgotForm" onsubmit="handleForgotPassword(event)">
+        <div class="form-group">
+          <label class="input-label" for="forgotEmail">Email Address</label>
+          <div class="input-container">
+            <input 
+              type="email" 
+              id="forgotEmail" 
+              class="form-input" 
+              placeholder="Enter your email"
+              required
+            >
+          </div>
+        </div>
+        
+        <div class="info-box">
+          <i class="fas fa-info-circle"></i>
+          Enter your email address and we'll send you a link to reset your password. The link will expire in 1 hour for security.
+        </div>
+        
+        <button type="submit" class="btn btn-primary" id="forgotBtn">
+          Send Reset Link
+        </button>
+        
+        <div class="footer">
+          Remember your password? <span class="footer-link" onclick="navigateTo('login')">Back to login</span>
+        </div>
+      </form>
+    </div>
+    
+    <!-- VERIFICATION PAGE -->
+    <div class="page" id="verify">
+      <div class="verify-page">
+        <div class="header">
+          <button class="back-btn" onclick="navigateTo('login')">
+            <i class="fas fa-arrow-left"></i>
+            <span>Back</span>
+          </button>
+        </div>
+        
+        <div class="logo-container">
+          <div class="logo">
+            <div class="logo-icon">
+              <i class="fas fa-bolt"></i>
+            </div>
+            Bitc Network
+          </div>
+        </div>
+        
+        <div class="verification-icon">
+          <i class="fas fa-envelope-circle-check"></i>
+        </div>
+        
+        <div class="title-section">
+          <h1 class="title">Verify Your Email</h1>
+          <p class="subtitle" id="verifySubtitle"></p>
+        </div>
+        
+        <div class="info-box">
+          <i class="fas fa-info-circle"></i>
+          Please check your inbox and click the verification link to activate your account before logging in. If you don't see the email, check your spam folder.
+        </div>
+        
+        <button class="btn btn-outline" id="resendBtn" onclick="resendVerification()">
+          <i class="fas fa-redo"></i> Resend Verification Email
+        </button>
+        
+        <button class="btn btn-primary" onclick="navigateTo('login')">
+          <i class="fas fa-sign-in-alt"></i> Continue to Login
+        </button>
+        
+        <div class="footer" style="margin-top: 20px;">
+          v4.0.0 - Blockchain & Internet Technology Coin
+        </div>
+      </div>
+    </div>
+  </div>
 
-    <!-- Firebase SDK -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { 
-            getAuth, 
-            signInWithEmailAndPassword, 
-            createUserWithEmailAndPassword, 
-            sendPasswordResetEmail, 
-            onAuthStateChanged, 
-            sendEmailVerification,
-            signInWithPopup,
-            GoogleAuthProvider
-        } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-        import { 
-            getFirestore, 
-            doc, 
-            setDoc, 
-            getDoc 
-        } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+  <!-- Firebase SDK -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { 
+      getAuth, 
+      signInWithEmailAndPassword, 
+      createUserWithEmailAndPassword, 
+      sendPasswordResetEmail, 
+      onAuthStateChanged, 
+      sendEmailVerification,
+      signInWithPopup,
+      GoogleAuthProvider
+    } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+    import { 
+      getFirestore, 
+      doc, 
+      setDoc, 
+      getDoc 
+    } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyBEjeRSyKbpEmbNk0SYLUFPp3lbgP9x3Ow",
-            authDomain: "volcanobxpl.firebaseapp.com",
-            projectId: "volcanobxpl",
-            storageBucket: "volcanobxpl.firebasestorage.app",
-            messagingSenderId: "742861205377",
-            appId: "1:742861205377:web:bbe8a42b78c90354a64280",
-            measurementId: "G-G1KWGHLZES"
+    const firebaseConfig = {
+      apiKey: "AIzaSyBEjeRSyKbpEmbNk0SYLUFPp3lbgP9x3Ow",
+      authDomain: "volcanobxpl.firebaseapp.com",
+      projectId: "volcanobxpl",
+      storageBucket: "volcanobxpl.firebasestorage.app",
+      messagingSenderId: "742861205377",
+      appId: "1:742861205377:web:bbe8a42b78c90354a64280",
+      measurementId: "G-G1KWGHLZES"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+    const googleProvider = new GoogleAuthProvider();
+
+    // Make auth available globally
+    window.firebaseAuth = auth;
+    window.firebaseDb = db;
+    window.firebase = {
+      signInWithEmailAndPassword,
+      createUserWithEmailAndPassword,
+      sendPasswordResetEmail,
+      onAuthStateChanged,
+      sendEmailVerification,
+      signInWithPopup,
+      setDoc,
+      doc,
+      getDoc,
+      googleProvider
+    };
+    
+    console.log('Firebase initialized');
+  </script>
+
+  <script>
+    // State management
+    let currentUser = null;
+    let userEmailForVerification = '';
+    
+    // DOM Elements
+    const pages = {
+      loading: document.getElementById('loading'),
+      welcome: document.getElementById('welcome'),
+      login: document.getElementById('login'),
+      register: document.getElementById('register'),
+      forgot: document.getElementById('forgot'),
+      verify: document.getElementById('verify')
+    };
+    
+    // Toast function
+    function showToast(message, type = 'success') {
+      const toast = document.createElement('div');
+      toast.className = `toast ${type}`;
+      toast.innerHTML = `
+        <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i>
+        ${message}
+      `;
+      
+      document.body.appendChild(toast);
+      
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translate(-50%, 20px)';
+        setTimeout(() => toast.remove(), 300);
+      }, 3000);
+    }
+    
+    // Navigate to page
+    function navigateTo(pageName) {
+      // Hide all pages
+      Object.values(pages).forEach(page => {
+        page.classList.remove('active');
+      });
+      
+      // Show selected page
+      if (pages[pageName]) {
+        pages[pageName].classList.add('active');
+      }
+      
+      // Update verification page if needed
+      if (pageName === 'verify' && userEmailForVerification) {
+        document.getElementById('verifySubtitle').textContent = `Verification email sent to ${userEmailForVerification}`;
+      }
+      
+      window.scrollTo(0, 0);
+    }
+    
+    // Toggle Password Visibility
+    function togglePassword(inputId, button) {
+      const input = document.getElementById(inputId);
+      const icon = button.querySelector('i');
+      
+      if (input.type === 'password') {
+        input.type = 'text';
+        icon.classList.replace('fa-eye', 'fa-eye-slash');
+      } else {
+        input.type = 'password';
+        icon.classList.replace('fa-eye-slash', 'fa-eye');
+      }
+    }
+    
+    // Show Error Message
+    function showError(elementId, message) {
+      const errorElement = document.getElementById(elementId);
+      errorElement.textContent = message;
+      errorElement.style.display = 'block';
+    }
+    
+    // Hide Error Message
+    function hideError(elementId) {
+      const errorElement = document.getElementById(elementId);
+      errorElement.style.display = 'none';
+    }
+    
+    // Validate Password Match
+    function validatePasswords() {
+      const password = document.getElementById('registerPassword').value;
+      const confirm = document.getElementById('registerConfirm').value;
+      
+      hideError('passwordError');
+      hideError('confirmError');
+      
+      if (password.length < 6) {
+        showError('passwordError', 'Password must be at least 6 characters');
+        return false;
+      }
+      
+      if (password !== confirm) {
+        showError('confirmError', 'Passwords do not match');
+        return false;
+      }
+      
+      return true;
+    }
+    
+    // Create user profile in Firestore
+    async function createUserProfile(user, referralCode = null) {
+      try {
+        const userProfile = {
+          email: user.email,
+          createdAt: new Date().toISOString(),
+          emailVerified: user.emailVerified || false,
+          miningData: {
+            minedVlc: 0,
+            miningStartTime: null,
+            miningElapsedSeconds: 0,
+            walletBalance: 0,
+            miningRewards: 0,
+            referralBonuses: 0,
+            referralsCount: 0,
+            miningRateVlcPerHour: 1,
+            referralCode: user.uid.substring(0, 8).toUpperCase(),
+            usedReferralCode: referralCode || null,
+            transactions: [],
+            lastMigrationTimestamp: null,
+            lastMiningDay: null
+          }
         };
 
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
-        const googleProvider = new GoogleAuthProvider();
-
-        // Make auth available globally
-        window.firebaseAuth = auth;
-        window.firebaseDb = db;
-        window.firebase = {
-            signInWithEmailAndPassword,
-            createUserWithEmailAndPassword,
-            sendPasswordResetEmail,
-            onAuthStateChanged,
-            sendEmailVerification,
-            signInWithPopup,
-            setDoc,
-            doc,
-            getDoc,
-            googleProvider
-        };
-    </script>
-
-    <script>
-        // State management
-        let currentUser = null;
-
-        // DOM Elements
-        const pages = {
-            loading: document.getElementById('loading-page'),
-            landing: document.getElementById('landing-page'),
-            login: document.getElementById('login-page'),
-            signup: document.getElementById('signup-page'),
-            forgot: document.getElementById('forgot-page'),
-            verify: document.getElementById('verify-page')
-        };
-
-        // Toast function
-        function showToast(message, type = 'success') {
-            const toast = document.createElement('div');
-            toast.className = `toast ${type}`;
-            toast.innerHTML = `
-                <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i>
-                ${message}
-            `;
-            
-            document.body.appendChild(toast);
-            
-            setTimeout(() => {
-                toast.style.opacity = '0';
-                toast.style.transform = 'translate(-50%, 20px)';
-                setTimeout(() => toast.remove(), 300);
-            }, 3000);
+        await window.firebase.setDoc(
+          window.firebase.doc(window.firebaseDb, "users", user.uid), 
+          userProfile
+        );
+        
+        return true;
+      } catch (error) {
+        console.error('Error creating user profile:', error);
+        throw error;
+      }
+    }
+    
+    // Handle Login with Firebase
+    async function handleLogin(event) {
+      event.preventDefault();
+      
+      const email = document.getElementById('loginEmail').value;
+      const password = document.getElementById('loginPassword').value;
+      const loginBtn = document.getElementById('loginBtn');
+      
+      hideError('loginError');
+      
+      if (!email || !password) {
+        showError('loginError', 'Please fill in all fields');
+        return;
+      }
+      
+      // Show loading state
+      const originalText = loginBtn.innerHTML;
+      loginBtn.innerHTML = '<div class="loading"></div> Signing In...';
+      loginBtn.disabled = true;
+      
+      try {
+        const userCredential = await window.firebase.signInWithEmailAndPassword(
+          window.firebaseAuth,
+          email,
+          password
+        );
+        
+        const user = userCredential.user;
+        
+        if (!user.emailVerified) {
+          showToast('Please verify your email before logging in', 'error');
+          userEmailForVerification = user.email;
+          document.getElementById('verifySubtitle').textContent = `Verification required for ${user.email}`;
+          navigateTo('verify');
+          currentUser = user;
+          return;
         }
-
-        // Navigate to page
-        function navigateTo(pageName) {
-            // Hide all pages
-            Object.values(pages).forEach(page => {
-                page.classList.remove('active');
-            });
-            
-            // Show selected page
-            if (pages[pageName]) {
-                pages[pageName].classList.add('active');
-            }
+        
+        showToast('Login successful!', 'success');
+        setTimeout(() => {
+          window.location.href = 'mining.html';
+        }, 1000);
+        
+      } catch (error) {
+        console.error('Login error:', error);
+        let message = 'Login failed. Please try again.';
+        
+        switch (error.code) {
+          case 'auth/user-not-found':
+            message = 'No account found with this email.';
+            break;
+          case 'auth/wrong-password':
+            message = 'Incorrect password.';
+            break;
+          case 'auth/invalid-email':
+            message = 'Invalid email address.';
+            break;
+          case 'auth/too-many-requests':
+            message = 'Too many attempts. Please try again later.';
+            break;
         }
-
-        // Check password strength
-        function checkPasswordStrength(password) {
-            let strength = 0;
-            if (password.length >= 8) strength += 1;
-            if (/[a-z]/.test(password)) strength += 1;
-            if (/[A-Z]/.test(password)) strength += 1;
-            if (/[0-9]/.test(password) || /[^A-Za-z0-9]/.test(password)) strength += 1;
-            
-            const bar = document.getElementById('password-strength-bar');
-            bar.className = 'strength-bar';
-            
-            if (strength <= 1) {
-                bar.classList.add('strength-weak');
-            } else if (strength <= 2) {
-                bar.classList.add('strength-medium');
-            } else {
-                bar.classList.add('strength-strong');
-            }
-        }
-
-        // Toggle password visibility
-        function initializePasswordToggle() {
-            document.addEventListener('click', function(e) {
-                if (e.target.closest('.password-toggle')) {
-                    const button = e.target.closest('.password-toggle');
-                    const targetId = button.getAttribute('data-target');
-                    const input = document.getElementById(targetId);
-                    const icon = button.querySelector('i');
-                    
-                    if (input.type === 'password') {
-                        input.type = 'text';
-                        icon.classList.remove('fa-eye');
-                        icon.classList.add('fa-eye-slash');
-                    } else {
-                        input.type = 'password';
-                        icon.classList.remove('fa-eye-slash');
-                        icon.classList.add('fa-eye');
-                    }
-                }
-            });
-        }
-
+        
+        showError('loginError', message);
+        showToast(message, 'error');
+      } finally {
+        loginBtn.innerHTML = originalText;
+        loginBtn.disabled = false;
+      }
+    }
+    
+    // Handle Registration with Firebase
+    async function handleRegister(event) {
+      event.preventDefault();
+      
+      const email = document.getElementById('registerEmail').value;
+      const password = document.getElementById('registerPassword').value;
+      const confirmPassword = document.getElementById('registerConfirm').value;
+      const referralCode = document.getElementById('referralCode').value;
+      const registerBtn = document.getElementById('registerBtn');
+      const termsChecked = document.getElementById('termsCheckbox').checked;
+      
+      // Validate passwords
+      if (!validatePasswords()) {
+        return;
+      }
+      
+      if (password !== confirmPassword) {
+        showError('confirmError', 'Passwords do not match');
+        return;
+      }
+      
+      if (!termsChecked) {
+        showToast('Please agree to the Terms of Service, Privacy Policy, and Cookie Policy', 'error');
+        return;
+      }
+      
+      // Show loading state
+      const originalText = registerBtn.innerHTML;
+      registerBtn.innerHTML = '<div class="loading"></div> Creating Account...';
+      registerBtn.disabled = true;
+      
+      try {
+        // Create user with Firebase
+        const userCredential = await window.firebase.createUserWithEmailAndPassword(
+          window.firebaseAuth,
+          email,
+          password
+        );
+        
+        const user = userCredential.user;
+        
+        // Send verification email
+        await window.firebase.sendEmailVerification(user);
+        
         // Create user profile in Firestore
-        async function createUserProfile(user, referralCode = null) {
-            try {
-                const userProfile = {
-                    email: user.email,
-                    createdAt: new Date().toISOString(),
-                    emailVerified: user.emailVerified || false,
-                    miningData: {
-                        minedVlc: 0,
-                        miningStartTime: null,
-                        miningElapsedSeconds: 0,
-                        walletBalance: 0,
-                        miningRewards: 0,
-                        referralBonuses: 0,
-                        referralsCount: 0,
-                        miningRateVlcPerHour: 1,
-                        referralCode: user.uid.substring(0, 8).toUpperCase(),
-                        usedReferralCode: referralCode || null,
-                        transactions: [],
-                        lastMigrationTimestamp: null,
-                        lastMiningDay: null
-                    }
-                };
-
-                await window.firebase.setDoc(
-                    window.firebase.doc(window.firebaseDb, "users", user.uid), 
-                    userProfile
-                );
-                
-                return true;
-            } catch (error) {
-                console.error('Error creating user profile:', error);
-                throw error;
-            }
+        await createUserProfile(user, referralCode);
+        
+        showToast('Account created! Verification email sent.', 'success');
+        userEmailForVerification = email;
+        document.getElementById('verifySubtitle').textContent = `Verification email sent to ${email}`;
+        navigateTo('verify');
+        currentUser = user;
+        
+        // Reset form
+        document.getElementById('registerForm').reset();
+        
+      } catch (error) {
+        console.error('Signup error:', error);
+        let message = 'Failed to create account. Please try again.';
+        
+        switch (error.code) {
+          case 'auth/email-already-in-use':
+            message = 'Email is already in use.';
+            break;
+          case 'auth/invalid-email':
+            message = 'Invalid email address.';
+            break;
+          case 'auth/weak-password':
+            message = 'Password is too weak. Please use a stronger password.';
+            break;
         }
-
-        // Handle Google Sign In
-        async function handleGoogleSignIn() {
-            const btn = event.target.closest('button');
-            const originalText = btn.innerHTML;
-            
-            try {
-                btn.disabled = true;
-                btn.innerHTML = '<div class="loading"></div> Signing in...';
-                
-                const result = await window.firebase.signInWithPopup(
-                    window.firebaseAuth, 
-                    window.firebase.googleProvider
-                );
-                
-                const user = result.user;
-                
-                // Check if user profile exists
-                const userDoc = await window.firebase.getDoc(
-                    window.firebase.doc(window.firebaseDb, "users", user.uid)
-                );
-                
-                if (!userDoc.exists()) {
-                    // Create profile for Google user
-                    await createUserProfile(user);
-                }
-                
-                showToast('Login successful!', 'success');
-                setTimeout(() => {
-                    window.location.href = 'mining.html';
-                }, 1000);
-                
-            } catch (error) {
-                console.error('Google sign-in error:', error);
-                showToast('Google sign-in failed. Please try again.', 'error');
-                btn.disabled = false;
-                btn.innerHTML = originalText;
-            }
+        
+        showToast(message, 'error');
+      } finally {
+        registerBtn.innerHTML = originalText;
+        registerBtn.disabled = false;
+      }
+    }
+    
+    // Handle Google Authentication
+    async function handleGoogleAuth() {
+      const btn = event.target;
+      const originalText = btn.innerHTML;
+      
+      try {
+        btn.disabled = true;
+        btn.innerHTML = '<div class="loading"></div> Connecting...';
+        
+        const result = await window.firebase.signInWithPopup(
+          window.firebaseAuth, 
+          window.firebase.googleProvider
+        );
+        
+        const user = result.user;
+        
+        // Check if user profile exists
+        const userDoc = await window.firebase.getDoc(
+          window.firebase.doc(window.firebaseDb, "users", user.uid)
+        );
+        
+        if (!userDoc.exists()) {
+          // Create profile for Google user
+          await createUserProfile(user);
         }
-
-        // Initialize everything when Firebase is loaded
-        async function initializeApp() {
-            // Wait for Firebase to load
-            await new Promise(resolve => {
-                const checkFirebase = () => {
-                    if (window.firebase && window.firebaseAuth) {
-                        resolve();
-                    } else {
-                        setTimeout(checkFirebase, 100);
-                    }
-                };
-                checkFirebase();
-            });
-
-            // Initialize password toggle
-            initializePasswordToggle();
-
-            // Check auth state
-            window.firebase.onAuthStateChanged(window.firebaseAuth, async (user) => {
-                if (user) {
-                    // Check if email is verified
-                    if (user.emailVerified) {
-                        // Redirect to mining page
-                        window.location.href = 'mining.html';
-                    } else {
-                        // Show verification page
-                        document.getElementById('user-email').textContent = user.email;
-                        navigateTo('verify');
-                        currentUser = user;
-                    }
-                } else {
-                    // Show landing page
-                    navigateTo('landing');
-                }
-            });
-
-            // Landing page event listeners
-            document.getElementById('continue-btn').addEventListener('click', () => {
-                navigateTo('login');
-            });
-
-            document.getElementById('forgot-password-link').addEventListener('click', (e) => {
-                e.preventDefault();
-                navigateTo('forgot');
-            });
-
-            document.getElementById('email-signup-btn').addEventListener('click', () => {
-                navigateTo('signup');
-            });
-
-            // Google button
-            document.getElementById('google-btn').addEventListener('click', handleGoogleSignIn);
-
-            // Apple button (demo)
-            document.getElementById('apple-btn').addEventListener('click', () => {
-                showToast('Apple sign-in coming soon!', 'info');
-            });
-
-            // Login form
-            document.getElementById('login-form').addEventListener('submit', async (e) => {
-                e.preventDefault();
-                const email = document.getElementById('login-email').value;
-                const password = document.getElementById('login-password').value;
-                
-                const loginBtn = document.getElementById('login-btn');
-                const originalText = loginBtn.innerHTML;
-                
-                try {
-                    loginBtn.disabled = true;
-                    loginBtn.innerHTML = '<div class="loading"></div> Signing In...';
-                    
-                    const userCredential = await window.firebase.signInWithEmailAndPassword(
-                        window.firebaseAuth,
-                        email,
-                        password
-                    );
-                    
-                    const user = userCredential.user;
-                    
-                    if (!user.emailVerified) {
-                        showToast('Please verify your email before logging in', 'error');
-                        document.getElementById('user-email').textContent = user.email;
-                        navigateTo('verify');
-                        currentUser = user;
-                        return;
-                    }
-                    
-                    showToast('Login successful!', 'success');
-                    setTimeout(() => {
-                        window.location.href = 'mining.html';
-                    }, 1000);
-                    
-                } catch (error) {
-                    console.error('Login error:', error);
-                    let message = 'Login failed. Please try again.';
-                    
-                    switch (error.code) {
-                        case 'auth/user-not-found':
-                            message = 'No account found with this email.';
-                            break;
-                        case 'auth/wrong-password':
-                            message = 'Incorrect password.';
-                            break;
-                        case 'auth/invalid-email':
-                            message = 'Invalid email address.';
-                            break;
-                        case 'auth/too-many-requests':
-                            message = 'Too many attempts. Please try again later.';
-                            break;
-                    }
-                    
-                    showToast(message, 'error');
-                    loginBtn.disabled = false;
-                    loginBtn.innerHTML = originalText;
-                }
-            });
-
-            document.getElementById('forgot-password-link2').addEventListener('click', (e) => {
-                e.preventDefault();
-                navigateTo('forgot');
-            });
-
-            document.getElementById('create-account-btn').addEventListener('click', () => {
-                navigateTo('signup');
-            });
-
-            document.getElementById('signup-link').addEventListener('click', (e) => {
-                e.preventDefault();
-                navigateTo('signup');
-            });
-
-            // Signup form
-            document.getElementById('signup-password').addEventListener('input', (e) => {
-                checkPasswordStrength(e.target.value);
-            });
-
-            document.getElementById('signup-form').addEventListener('submit', async (e) => {
-                e.preventDefault();
-                const email = document.getElementById('signup-email').value;
-                const password = document.getElementById('signup-password').value;
-                const confirmPassword = document.getElementById('signup-confirm-password').value;
-                const referralCode = document.getElementById('referral-code').value;
-                
-                if (password !== confirmPassword) {
-                    showToast('Passwords do not match!', 'error');
-                    return;
-                }
-                
-                if (password.length < 6) {
-                    showToast('Password must be at least 6 characters', 'error');
-                    return;
-                }
-                
-                const signupBtn = document.getElementById('signup-btn');
-                const originalText = signupBtn.innerHTML;
-                
-                try {
-                    signupBtn.disabled = true;
-                    signupBtn.innerHTML = '<div class="loading"></div> Creating Account...';
-                    
-                    // Create user
-                    const userCredential = await window.firebase.createUserWithEmailAndPassword(
-                        window.firebaseAuth,
-                        email,
-                        password
-                    );
-                    
-                    const user = userCredential.user;
-                    
-                    // Send verification email
-                    await window.firebase.sendEmailVerification(user);
-                    
-                    // Create user profile
-                    await createUserProfile(user, referralCode);
-                    
-                    showToast('Account created! Verification email sent.', 'success');
-                    document.getElementById('user-email').textContent = email;
-                    navigateTo('verify');
-                    currentUser = user;
-                    
-                } catch (error) {
-                    console.error('Signup error:', error);
-                    let message = 'Failed to create account. Please try again.';
-                    
-                    switch (error.code) {
-                        case 'auth/email-already-in-use':
-                            message = 'Email is already in use.';
-                            break;
-                        case 'auth/invalid-email':
-                            message = 'Invalid email address.';
-                            break;
-                        case 'auth/weak-password':
-                            message = 'Password is too weak. Please use a stronger password.';
-                            break;
-                    }
-                    
-                    showToast(message, 'error');
-                    signupBtn.disabled = false;
-                    signupBtn.innerHTML = originalText;
-                }
-            });
-
-            document.getElementById('login-link').addEventListener('click', (e) => {
-                e.preventDefault();
-                navigateTo('login');
-            });
-
-            document.getElementById('google-signup-btn').addEventListener('click', handleGoogleSignIn);
-            document.getElementById('google-login-btn').addEventListener('click', handleGoogleSignIn);
-
-            // Forgot password form
-            document.getElementById('forgot-form').addEventListener('submit', async (e) => {
-                e.preventDefault();
-                const email = document.getElementById('forgot-email').value;
-                
-                const forgotBtn = document.getElementById('forgot-btn');
-                const originalText = forgotBtn.innerHTML;
-                
-                try {
-                    forgotBtn.disabled = true;
-                    forgotBtn.innerHTML = '<div class="loading"></div> Sending...';
-                    
-                    await window.firebase.sendPasswordResetEmail(window.firebaseAuth, email);
-                    
-                    showToast('Password reset email sent! Check your inbox.', 'success');
-                    setTimeout(() => {
-                        navigateTo('login');
-                    }, 2000);
-                    
-                } catch (error) {
-                    console.error('Password reset error:', error);
-                    let message = 'Failed to send reset email.';
-                    
-                    switch (error.code) {
-                        case 'auth/user-not-found':
-                            message = 'No account found with this email.';
-                            break;
-                        case 'auth/invalid-email':
-                            message = 'Invalid email address.';
-                            break;
-                    }
-                    
-                    showToast(message, 'error');
-                    forgotBtn.disabled = false;
-                    forgotBtn.innerHTML = originalText;
-                }
-            });
-
-            document.getElementById('back-to-login').addEventListener('click', (e) => {
-                e.preventDefault();
-                navigateTo('login');
-            });
-
-            // Verification page
-            document.getElementById('resend-btn').addEventListener('click', async () => {
-                if (!currentUser) {
-                    showToast('Please sign in first', 'error');
-                    return;
-                }
-                
-                const resendBtn = document.getElementById('resend-btn');
-                const originalText = resendBtn.innerHTML;
-                
-                try {
-                    resendBtn.disabled = true;
-                    resendBtn.innerHTML = '<div class="loading"></div> Sending...';
-                    
-                    await window.firebase.sendEmailVerification(currentUser);
-                    
-                    showToast('Verification email sent!', 'success');
-                    
-                } catch (error) {
-                    console.error('Resend error:', error);
-                    showToast('Failed to send verification email', 'error');
-                } finally {
-                    resendBtn.disabled = false;
-                    resendBtn.innerHTML = originalText;
-                }
-            });
-
-            document.getElementById('continue-login-btn').addEventListener('click', () => {
-                navigateTo('login');
-            });
-
-            // Bottom nav
-            document.querySelectorAll('.nav-item').forEach(item => {
-                item.addEventListener('click', () => {
-                    document.querySelectorAll('.nav-item').forEach(nav => {
-                        nav.classList.remove('active');
-                    });
-                    item.classList.add('active');
-                    
-                    if (item.textContent.includes('Home')) {
-                        window.location.href = 'index.html';
-                    } else if (item.textContent.includes('Mining')) {
-                        window.location.href = 'mining.html';
-                    }
-                });
-            });
+        
+        showToast('Login successful!', 'success');
+        setTimeout(() => {
+          window.location.href = 'mining.html';
+        }, 1000);
+        
+      } catch (error) {
+        console.error('Google sign-in error:', error);
+        showToast('Google sign-in failed. Please try again.', 'error');
+        btn.disabled = false;
+        btn.innerHTML = originalText;
+      }
+    }
+    
+    // Handle Forgot Password
+    async function handleForgotPassword(event) {
+      event.preventDefault();
+      
+      const email = document.getElementById('forgotEmail').value;
+      const forgotBtn = document.getElementById('forgotBtn');
+      
+      if (!email) {
+        showToast('Please enter your email address', 'error');
+        return;
+      }
+      
+      // Show loading state
+      const originalText = forgotBtn.innerHTML;
+      forgotBtn.innerHTML = '<div class="loading"></div> Sending...';
+      forgotBtn.disabled = true;
+      
+      try {
+        await window.firebase.sendPasswordResetEmail(window.firebaseAuth, email);
+        
+        showToast('Password reset email sent! Check your inbox.', 'success');
+        setTimeout(() => {
+          navigateTo('login');
+        }, 2000);
+        
+      } catch (error) {
+        console.error('Password reset error:', error);
+        let message = 'Failed to send reset email.';
+        
+        switch (error.code) {
+          case 'auth/user-not-found':
+            message = 'No account found with this email.';
+            break;
+          case 'auth/invalid-email':
+            message = 'Invalid email address.';
+            break;
         }
-
-        // Start the app
-        document.addEventListener('DOMContentLoaded', initializeApp);
-    </script>
+        
+        showToast(message, 'error');
+      } finally {
+        forgotBtn.innerHTML = originalText;
+        forgotBtn.disabled = false;
+      }
+    }
+    
+    // Resend verification email
+    async function resendVerification() {
+      if (!currentUser) {
+        showToast('Please sign in first', 'error');
+        return;
+      }
+      
+      const resendBtn = document.getElementById('resendBtn');
+      const originalText = resendBtn.innerHTML;
+      
+      try {
+        resendBtn.disabled = true;
+        resendBtn.innerHTML = '<div class="loading"></div> Sending...';
+        
+        await window.firebase.sendEmailVerification(currentUser);
+        
+        showToast('Verification email sent!', 'success');
+        
+      } catch (error) {
+        console.error('Resend error:', error);
+        showToast('Failed to send verification email', 'error');
+      } finally {
+        setTimeout(() => {
+          resendBtn.disabled = false;
+          resendBtn.innerHTML = originalText;
+        }, 2000);
+      }
+    }
+    
+    // Initialize the application
+    async function initializeApp() {
+      // Wait for Firebase to load
+      await new Promise(resolve => {
+        const checkFirebase = () => {
+          if (window.firebase && window.firebaseAuth) {
+            resolve();
+          } else {
+            setTimeout(checkFirebase, 100);
+          }
+        };
+        checkFirebase();
+      });
+      
+      // Check auth state
+      window.firebase.onAuthStateChanged(window.firebaseAuth, async (user) => {
+        if (user) {
+          // Check if email is verified
+          if (user.emailVerified) {
+            // Redirect to mining page
+            showToast('Authentication successful!', 'success');
+            setTimeout(() => {
+              window.location.href = 'mining.html';
+            }, 1000);
+          } else {
+            // Show verification page
+            currentUser = user;
+            userEmailForVerification = user.email;
+            document.getElementById('verifySubtitle').textContent = `Verification required for ${user.email}`;
+            navigateTo('verify');
+          }
+        } else {
+          // Show welcome page
+          setTimeout(() => {
+            navigateTo('welcome');
+          }, 500);
+        }
+      });
+      
+      // Initialize event listeners
+      document.addEventListener('DOMContentLoaded', function() {
+        // Validate password on input
+        document.getElementById('registerPassword').addEventListener('input', function() {
+          hideError('passwordError');
+        });
+        
+        document.getElementById('registerConfirm').addEventListener('input', function() {
+          hideError('confirmError');
+        });
+        
+        // Smooth fade in
+        document.body.style.opacity = '0';
+        setTimeout(() => {
+          document.body.style.transition = 'opacity 0.3s';
+          document.body.style.opacity = '1';
+        }, 10);
+        
+        // Network status indicator
+        updateNetworkStatus();
+      });
+    }
+    
+    // Simulate network status updates
+    function updateNetworkStatus() {
+      const statusElement = document.querySelector('.network-status');
+      if (statusElement) {
+        // Simulate periodic updates
+        setInterval(() => {
+          const isActive = Math.random() > 0.1; // 90% chance of being active
+          if (isActive) {
+            statusElement.innerHTML = '<i class="fas fa-check-circle"></i> Network Active';
+            statusElement.style.color = '#059669';
+            statusElement.style.background = '#D1FAE5';
+          } else {
+            statusElement.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Network Busy';
+            statusElement.style.color = '#DC2626';
+            statusElement.style.background = '#FEE2E2';
+          }
+        }, 5000);
+      }
+    }
+    
+    // Show terms and policies (demo functions)
+    function showTerms() {
+      showToast('Terms of Service - Coming Soon', 'info');
+    }
+    
+    function showPrivacy() {
+      showToast('Privacy Policy - Coming Soon', 'info');
+    }
+    
+    function showCookiePolicy() {
+      showToast('Cookie Policy - Coming Soon', 'info');
+    }
+    
+    // Start the app
+    initializeApp().catch(console.error);
+  </script>
 </body>
 </html>
