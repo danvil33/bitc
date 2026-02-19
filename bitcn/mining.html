@@ -54,7 +54,6 @@
   
   <!-- Firebase SDK -->
   <script type="module">
-      // Firebase configuration remains the same
       import { initializeApp } from "https://www.gstatic.com/firebasejs/10.3.0/firebase-app.js";
       import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.3.0/firebase-analytics.js";
       import { 
@@ -117,6 +116,38 @@
   
   <style>
     /* Custom styles for animations and specific elements */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --primary: #f0b90b;
+      --primary-hover: #d4a017;
+      --secondary: #333333;
+      --tertiary: #666666;
+      --light: #f8fafc;
+      --card: #ffffff;
+      --border: #e0e0e0;
+      --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      --radius: 16px;
+      --radius-sm: 10px;
+      --danger: #dc3545;
+      --danger-hover: #c82333;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #1a1a2e;
+      color: #ffffff;
+      min-height: 100vh;
+      padding-bottom: 80px;
+      overflow-x: hidden;
+      -webkit-tap-highlight-color: transparent;
+      -webkit-text-size-adjust: 100%;
+    }
+
     .balance-increment {
       animation: floatUpBalance 0.8s ease-out forwards;
     }
@@ -201,171 +232,1418 @@
     .floating-element {
       animation: float 6s ease-in-out infinite;
     }
+
+    /* Header */
+    header {
+      background: #21213e;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .menu {
+      font-size: 24px;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+      color: var(--primary);
+      padding: 8px;
+      border-radius: 8px;
+    }
+
+    .menu:active {
+      transform: scale(0.95);
+    }
+
+    .balance {
+      font-size: 16px;
+      font-weight: 500;
+      position: relative;
+    }
+
+    .balance strong {
+      font-size: 24px;
+      color: var(--primary);
+      transition: color 0.3s ease;
+    }
+
+    .user-menu {
+      display: flex;
+      align-items: center;
+      font-size: 14px;
+      cursor: pointer;
+      position: relative;
+      padding: 8px;
+      border-radius: 8px;
+    }
+
+    .user-menu i {
+      margin-right: 8px;
+      color: var(--primary);
+    }
+
+    .user-options {
+      display: none;
+      position: absolute;
+      top: 40px;
+      right: 0;
+      background: #2a2a4a;
+      border-radius: 8px;
+      padding: 10px;
+      z-index: 100;
+      min-width: 150px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .user-options div {
+      padding: 8px;
+      cursor: pointer;
+      transition: background 0.2s;
+      border-radius: 4px;
+    }
+
+    .user-options div:active {
+      background: #3a3a5a;
+    }
+
+    .user-menu:hover .user-options {
+      display: block;
+    }
+
+    /* Side Menu */
+    .side-menu {
+      position: fixed;
+      top: 0;
+      left: -300px;
+      width: 280px;
+      height: 100%;
+      background: #21213e;
+      z-index: 2000;
+      transition: left 0.3s ease;
+      padding: 20px;
+      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
+      overflow-y: auto;
+    }
+
+    .side-menu.active {
+      left: 0;
+    }
+
+    .side-menu-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid #3a3a5a;
+    }
+
+    .side-menu-title {
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    .close-menu {
+      font-size: 24px;
+      cursor: pointer;
+      color: #aaa;
+      transition: color 0.2s;
+      padding: 8px;
+      border-radius: 8px;
+    }
+
+    .close-menu:active {
+      color: #fff;
+      background: rgba(255,255,255,0.1);
+    }
+
+    .side-menu-item {
+      padding: 15px;
+      margin-bottom: 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .side-menu-item:active {
+      background: #2a2a4a;
+    }
+
+    .side-menu-item i {
+      font-size: 18px;
+      width: 24px;
+      text-align: center;
+      color: var(--primary);
+    }
+
+    .side-menu-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1999;
+      display: none;
+    }
+
+    .side-menu-overlay.active {
+      display: block;
+    }
+
+    /* Main Section */
+    .main {
+      position: relative;
+      text-align: center;
+      padding: 50px 20px;
+      color: #ffffff;
+      background-image: linear-gradient(rgba(26, 26, 46, 0.85), rgba(26, 26, 46, 0.9)), url('https://bitcnetwork.com/1.jpeg');
+      background-size: cover;
+      background-position: center;
+      min-height: 360px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      border-bottom: 1px solid #2a2a4a;
+    }
+
+    .main h2 {
+      margin: 0 0 15px;
+      font-size: 28px;
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    .main p {
+      font-size: 16px;
+      background: rgba(0, 0, 0, 0.7);
+      display: inline-block;
+      padding: 10px 15px;
+      border-radius: 8px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      position: fixed;
+      right: 20px;
+      top: 80px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      z-index: 999;
+      transition: transform 0.3s ease;
+    }
+
+    .sidebar.hidden {
+      transform: translateX(100px);
+    }
+
+    .sidebar div {
+      background: #2a2a4a;
+      padding: 12px;
+      border-radius: 12px;
+      text-align: center;
+      font-size: 14px;
+      width: 60px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .sidebar div:active {
+      background: #3a3a5a;
+      transform: translateY(2px);
+    }
+
+    .sidebar div i {
+      font-size: 18px;
+      margin-bottom: 6px;
+      color: var(--primary);
+    }
+
+    .sidebar .mining-counter {
+      font-size: 12px;
+      margin-top: 4px;
+      color: var(--primary);
+    }
+
+    .sidebar div.active {
+      background: #3a3a5a;
+      box-shadow: 0 0 10px rgba(240, 185, 11, 0.5);
+    }
+
+    /* BitC Info Section */
+    .bitc-info {
+      background: #21213e;
+      padding: 20px;
+      max-width: 800px;
+      margin: 20px auto;
+      border-radius: 16px;
+      border: 1px solid #3a3a5a;
+    }
+
+    .bitc-info h3 {
+      font-size: 24px;
+      color: var(--primary);
+      margin-bottom: 15px;
+      text-align: center;
+    }
+
+    .bitc-info p {
+      font-size: 14px;
+      line-height: 1.6;
+      margin-bottom: 15px;
+      color: #ddd;
+    }
+
+    .bitc-info .highlight {
+      background: linear-gradient(135deg, #2a2a4a, #1e1e3a);
+      padding: 15px;
+      border-radius: 12px;
+      font-size: 14px;
+      color: #ffffff;
+      margin-bottom: 15px;
+      border: 1px solid #3a3a5a;
+    }
+
+    /* Wallet Section */
+    .wallet-section {
+      background: #f6f6f7;
+      color: #111;
+      width: 100%;
+      min-height: calc(100vh - 80px);
+      margin: 0;
+      border-radius: 0;
+      padding: 20px;
+      box-sizing: border-box;
+      display: none;
+      overflow-y: auto;
+    }
+
+    .wallet-card {
+      background: #ffffff;
+      border-radius: 14px;
+      padding: 18px;
+      box-shadow: 0 6px 18px rgba(21,21,21,0.06);
+      border: 1px solid #e7e7ea;
+      max-width: 450px;
+      margin: 0 auto;
+    }
+
+    .top-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .network {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #9b9b9b;
+      font-weight: 600;
+    }
+
+    .network .dot {
+      width: 28px;
+      height: 28px;
+      background: linear-gradient(180deg, var(--primary), var(--primary-hover));
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: inset 0 -3px 6px rgba(0,0,0,0.06);
+    }
+
+    .network .down {
+      width: 10px;
+      height: 10px;
+      border-left: 2px solid rgba(0,0,0,0.15);
+      border-bottom: 2px solid rgba(0,0,0,0.15);
+      transform: rotate(-45deg);
+      margin-left: 8px;
+    }
+
+    .balance {
+      margin-top: 12px;
+    }
+
+    .amount {
+      font-size: 28px;
+      font-weight: 700;
+    }
+
+    .addr-row {
+      margin-top: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #9b9b9b;
+      font-size: 14px;
+    }
+
+    .copy-btn {
+      background: transparent;
+      border: none;
+      padding: 6px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .copy-btn:active { 
+      transform: translateY(1px); 
+      background: rgba(0,0,0,0.05);
+    }
+
+    .actions {
+      margin-top: 14px;
+      display: flex;
+      gap: 12px;
+    }
+
+    .btn {
+      flex: 1;
+      border-radius: 10px;
+      padding: 12px 10px;
+      border: 1px solid #e7e7ea;
+      background: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn:active {
+      background: rgba(240, 185, 11, 0.1);
+      border-color: var(--primary);
+      transform: translateY(1px);
+    }
+
+    .btn svg { opacity: 0.95; }
+
+    /* Tabs */
+    .tabs {
+      margin-top: 16px;
+      display: flex;
+      gap: 12px;
+      padding: 12px 6px 6px 6px;
+      background: transparent;
+      max-width: 450px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .tab {
+      font-weight: 700;
+      color: #9b9b9b;
+      position: relative;
+      padding-bottom: 10px;
+      cursor: pointer;
+      flex: 1;
+      text-align: center;
+    }
+
+    .tab.active {
+      color: #111;
+    }
+
+    .tab.active::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 3px;
+      width: 60%;
+      background: var(--primary);
+      border-radius: 4px;
+      margin: auto;
+    }
+
+    /* Token list area */
+    .tokens {
+      margin-top: 14px;
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 10px;
+      border: 1px solid #e7e7ea;
+      max-width: 450px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .token-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px;
+      border-radius: 10px;
+      background: transparent;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .token-item:active {
+      background: rgba(240, 185, 11, 0.05);
+    }
+
+    .token-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .token-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: linear-gradient(180deg, var(--primary), var(--primary-hover));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: inset 0 -3px 8px rgba(0,0,0,0.06);
+    }
+
+    .token-name {
+      font-weight: 700;
+    }
+
+    .token-right {
+      text-align: right;
+      color: #9b9b9b;
+    }
+
+    .token-right .value {
+      font-weight: 700;
+      color: #111;
+    }
+
+    .chev {
+      margin-left: 8px;
+      opacity: 0.45;
+    }
+
+    /* Make content under top area slightly spaced */
+    .main-gap { height: 18px; }
+
+    /* Profile Section */
+    .profile-section {
+      background: #21213e;
+      padding: 20px;
+      max-width: 800px;
+      margin: 20px auto;
+      border-radius: 16px;
+      display: none;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+      border: 1px solid #3a3a5a;
+    }
+
+    .profile-section h3 {
+      font-size: 24px;
+      color: var(--primary);
+      margin-bottom: 25px;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .profile-header {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 30px;
+      background: linear-gradient(135deg, #2a2a4a 0%, #1e1e3a 100%);
+      padding: 20px;
+      border-radius: 16px;
+      border: 1px solid #3a3a5a;
+    }
+
+    .profile-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      color: #1a1a2e;
+      flex-shrink: 0;
+      box-shadow: 0 4px 12px rgba(240, 185, 11, 0.3);
+    }
+
+    .profile-info h4 {
+      font-size: 20px;
+      margin-bottom: 5px;
+      color: #fff;
+    }
+
+    .profile-info p {
+      color: #aaa;
+      font-size: 14px;
+    }
+
+    .earnings-stats {
+      background: linear-gradient(135deg, #2a2a4a 0%, #1e1e3a 100%);
+      padding: 25px;
+      border-radius: 16px;
+      margin-bottom: 25px;
+      border: 1px solid #3a3a5a;
+    }
+
+    .earnings-stats h4 {
+      font-size: 18px;
+      color: var(--primary);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .stat-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 15px;
+      padding-bottom: 15px;
+      border-bottom: 1px dashed #3a3a5a;
+    }
+
+    .stat-item:last-child {
+      margin-bottom: 0;
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+
+    .stat-label {
+      color: #aaa;
+      font-size: 14px;
+    }
+
+    .stat-value {
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .total-earnings {
+      background: rgba(240, 185, 11, 0.1);
+      padding: 20px;
+      border-radius: 12px;
+      margin-top: 25px;
+      border: 1px solid rgba(240, 185, 11, 0.2);
+      text-align: center;
+    }
+
+    .total-earnings div:first-child {
+      font-size: 14px;
+      color: var(--primary);
+      margin-bottom: 10px;
+    }
+
+    .total-earnings div:last-child {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--primary);
+      text-shadow: 0 0 10px rgba(240, 185, 11, 0.3);
+    }
+
+    /* Account Management Section */
+    .account-management {
+      background: linear-gradient(135deg, #2a2a4a 0%, #1e1e3a 100%);
+      padding: 25px;
+      border-radius: 16px;
+      margin-top: 25px;
+      border: 1px solid #3a3a5a;
+    }
+
+    .account-management h4 {
+      font-size: 18px;
+      color: var(--primary);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .danger-zone {
+      background: rgba(220, 53, 69, 0.1);
+      border: 1px solid rgba(220, 53, 69, 0.3);
+      border-radius: 12px;
+      padding: 20px;
+      margin-top: 20px;
+    }
+
+    .danger-zone h5 {
+      color: var(--danger);
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .danger-zone p {
+      color: #aaa;
+      font-size: 14px;
+      margin-bottom: 15px;
+      line-height: 1.5;
+    }
+
+    .delete-btn {
+      background: var(--danger);
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .delete-btn:active {
+      background: var(--danger-hover);
+      transform: translateY(1px);
+    }
+
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 3000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: #21213e;
+      border-radius: 16px;
+      padding: 30px;
+      max-width: 500px;
+      width: 90%;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      border: 1px solid #3a3a5a;
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .modal-title {
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .close-modal {
+      background: none;
+      border: none;
+      color: #aaa;
+      font-size: 24px;
+      cursor: pointer;
+      transition: color 0.2s;
+      padding: 8px;
+      border-radius: 8px;
+    }
+
+    .close-modal:active {
+      color: #fff;
+      background: rgba(255,255,255,0.1);
+    }
+
+    .modal-body {
+      margin-bottom: 25px;
+    }
+
+    .modal-body p {
+      color: #ddd;
+      line-height: 1.6;
+      margin-bottom: 15px;
+    }
+
+    .modal-input {
+      width: 100%;
+      padding: 12px 15px;
+      border-radius: 8px;
+      border: 1px solid #3a3a5a;
+      background: #2a2a4a;
+      color: white;
+      font-size: 16px;
+      margin-bottom: 15px;
+    }
+
+    .modal-input:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 15px;
+    }
+
+    .modal-btn {
+      flex: 1;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: none;
+    }
+
+    .modal-btn.cancel {
+      background: #3a3a5a;
+      color: white;
+    }
+
+    .modal-btn.cancel:active {
+      background: #4a4a6a;
+      transform: translateY(1px);
+    }
+
+    .modal-btn.confirm {
+      background: var(--danger);
+      color: white;
+    }
+
+    .modal-btn.confirm:active {
+      background: var(--danger-hover);
+      transform: translateY(1px);
+    }
+
+    /* Social Media Section */
+    .social-section {
+      background: linear-gradient(135deg, #2a2a4a 0%, #1e1e3a 100%);
+      padding: 25px;
+      border-radius: 16px;
+      margin-top: 25px;
+      border: 1px solid #3a3a5a;
+    }
+
+    .social-section h4 {
+      font-size: 18px;
+      color: var(--primary);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .social-icons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 15px;
+    }
+
+    .social-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      color: white;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .social-icon:active {
+      transform: translateY(2px);
+    }
+
+    .instagram {
+      background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+    }
+
+    .twitter {
+      background: linear-gradient(135deg, #1da1f2, #1a91da);
+    }
+
+    .youtube {
+      background: linear-gradient(135deg, #ff0000, #cc0000);
+    }
+
+    .telegram {
+      background: linear-gradient(135deg, #0088cc, #34b7f1);
+    }
+
+    /* Referral Section */
+    .referral-section {
+      background: #21213e;
+      padding: 20px;
+      max-width: 800px;
+      margin: 20px auto;
+      border-radius: 16px;
+      display: none;
+      border: 1px solid #3a3a5a;
+    }
+
+    .referral-section h3 {
+      font-size: 24px;
+      color: var(--primary);
+      margin-bottom: 25px;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .referral-tabs {
+      display: flex;
+      margin-bottom: 20px;
+      border-bottom: 1px solid #3a3a5a;
+    }
+
+    .referral-tab {
+      flex: 1;
+      padding: 10px;
+      cursor: pointer;
+      transition: background 0.2s;
+      text-align: center;
+    }
+
+    .referral-tab.active {
+      border-bottom: 2px solid var(--primary);
+      color: var(--primary);
+    }
+
+    .referral-tab:active {
+      background: #3a3a5a;
+    }
+
+    .referral-tab-content {
+      display: none;
+      padding: 20px;
+      background: linear-gradient(135deg, #2a2a4a 0%, #1e1e3a 100%);
+      border-radius: 12px;
+      margin-top: 15px;
+      border: 1px solid #3a3a5a;
+    }
+
+    .referral-tab-content.active {
+      display: block;
+    }
+
+    .referral-code {
+      background: #3a3a5a;
+      padding: 15px;
+      border-radius: 8px;
+      font-size: 18px;
+      font-weight: bold;
+      margin: 15px 0;
+      word-break: break-all;
+      text-align: center;
+      color: var(--primary);
+    }
+
+    .referral-input {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: none;
+      background: #3a3a5a;
+      color: white;
+      margin-bottom: 15px;
+      font-size: 16px;
+    }
+
+    .referral-input:focus {
+      outline: none;
+      ring: 2px solid var(--primary);
+    }
+
+    .referral-button {
+      background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+      color: #1a1a2e;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.2s;
+      width: 100%;
+      margin-top: 10px;
+    }
+
+    .referral-button:active {
+      transform: translateY(1px);
+      box-shadow: 0 0 20px rgba(240, 185, 11, 0.3);
+    }
+
+    .referral-stats {
+      margin-top: 20px;
+      text-align: left;
+      color: #aaa;
+    }
+
+    .referral-stat {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    /* Migrate Section */
+    .migrate-section {
+      background: #21213e;
+      padding: 20px;
+      max-width: 800px;
+      margin: 20px auto;
+      border-radius: 16px;
+      display: none;
+      border: 1px solid #3a3a5a;
+    }
+
+    .migrate-section h3 {
+      font-size: 24px;
+      color: var(--primary);
+      margin-bottom: 25px;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .migrate-info {
+      background: linear-gradient(135deg, #2a2a4a 0%, #1e1e3a 100%);
+      padding: 25px;
+      border-radius: 16px;
+      border: 1px solid #3a3a5a;
+    }
+
+    .migration-steps {
+      margin-top: 20px;
+    }
+
+    .step {
+      display: flex;
+      align-items: flex-start;
+      gap: 15px;
+      margin-bottom: 15px;
+    }
+
+    .step-number {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: #1a1a2e;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      flex-shrink: 0;
+    }
+
+    .step-content h5 {
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 5px;
+    }
+
+    .step-content p {
+      color: #aaa;
+      font-size: 14px;
+    }
+
+    .migrate-button {
+      background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+      color: #1a1a2e;
+      border: none;
+      padding: 15px;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.2s;
+      width: 100%;
+      margin-top: 25px;
+    }
+
+    .migrate-button:active {
+      transform: translateY(1px);
+      box-shadow: 0 0 20px rgba(240, 185, 11, 0.3);
+    }
+
+    /* Footer */
+    .footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #21213e;
+      display: flex;
+      justify-content: space-around;
+      padding: 12px 0;
+      border-top: 1px solid #3a3a5a;
+      z-index: 1000;
+    }
+
+    .footer-item {
+      color: #ffffff;
+      font-size: 12px;
+      text-align: center;
+      cursor: pointer;
+      transition: color 0.2s;
+      position: relative;
+      padding: 8px;
+      border-radius: 8px;
+    }
+
+    .footer-item.active {
+      color: var(--primary);
+    }
+
+    .footer-item:active {
+      background: rgba(255,255,255,0.1);
+    }
+
+    .footer-item i {
+      display: block;
+      font-size: 22px;
+      margin-bottom: 4px;
+    }
+
+    .footer-item:hover .tooltip {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .tooltip {
+      visibility: hidden;
+      opacity: 0;
+      position: absolute;
+      bottom: 60px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #2a2a4a;
+      color: #ffffff;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      white-space: nowrap;
+      transition: opacity 0.2s, visibility 0.2s;
+      z-index: 10;
+    }
+
+    /* Notification */
+    .notification {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #2a2a4a;
+      color: white;
+      padding: 15px 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      max-width: 400px;
+      transform: translateX(120%);
+      transition: transform 0.3s ease;
+    }
+
+    .notification.show {
+      transform: translateX(0);
+    }
+
+    .notification.success {
+      border-left: 4px solid #4CAF50;
+    }
+
+    .notification.error {
+      border-left: 4px solid #f44336;
+    }
+
+    .notification.info {
+      border-left: 4px solid var(--primary);
+    }
+
+    .notification.warning {
+      border-left: 4px solid #FF9800;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .main {
+        min-height: 300px;
+        padding: 30px 20px;
+      }
+
+      .sidebar {
+        right: 10px;
+        top: 60px;
+      }
+
+      .sidebar div {
+        width: 50px;
+        font-size: 12px;
+      }
+
+      .bitc-info, .wallet-section, .profile-section, .referral-section, .migrate-section {
+        padding: 15px;
+        margin: 10px auto;
+      }
+
+      .profile-header {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .social-icons {
+        gap: 15px;
+      }
+
+      .social-icon {
+        width: 45px;
+        height: 45px;
+        font-size: 20px;
+      }
+
+      .modal-content {
+        padding: 20px;
+      }
+
+      .modal-actions {
+        flex-direction: column;
+      }
+    }
+
+    @media (max-width: 480px) {
+      header {
+        padding: 10px 15px;
+      }
+
+      .balance strong {
+        font-size: 20px;
+      }
+
+      .main h2 {
+        font-size: 24px;
+      }
+
+      .main p {
+        font-size: 14px;
+      }
+
+      .bitc-info h3, .wallet-section h3, .profile-section h3, .referral-section h3, .migrate-section h3 {
+        font-size: 20px;
+      }
+
+      .footer-item {
+        font-size: 10px;
+      }
+
+      .footer-item i {
+        font-size: 20px;
+      }
+
+      .sidebar .mining-counter {
+        font-size: 10px;
+      }
+
+      .balance-increment {
+        font-size: 12px;
+      }
+
+      .social-icons {
+        gap: 10px;
+      }
+
+      .social-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+      }
+      
+      .profile-avatar {
+        width: 60px;
+        height: 60px;
+        font-size: 24px;
+      }
+      
+      .profile-info h4 {
+        font-size: 18px;
+      }
+    }
+    
+    @media (max-height: 600px) {
+      .main {
+        min-height: 250px;
+        padding: 20px;
+      }
+      
+      .bitc-info, .profile-section, .referral-section, .migrate-section {
+        margin: 10px auto;
+      }
+    }
   </style>
 </head>
 <body class="font-inter bg-[#1a1a2e] text-white min-h-screen pb-20 overflow-x-hidden">
   <!-- Delete Account Modal -->
-  <div class="modal hidden fixed inset-0 bg-black bg-opacity-70 z-50 items-center justify-center" id="deleteAccountModal">
-    <div class="bg-[#21213e] rounded-custom p-8 max-w-md w-11/12 shadow-2xl border border-[#3a3a5a] premium-card">
-      <div class="flex items-center justify-between mb-5">
-        <div class="text-xl font-semibold text-primary flex items-center gap-2">
+  <div class="modal" id="deleteAccountModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title">
           <i class="fas fa-exclamation-triangle"></i>
           Delete Account
         </div>
-        <button class="close-modal text-gray-400 text-xl cursor-pointer p-2 rounded-lg hover:text-white hover:bg-white/10 transition-all" onclick="closeDeleteAccountModal()">
+        <button class="close-modal" onclick="closeDeleteAccountModal()">
           <i class="fas fa-times"></i>
         </button>
       </div>
-      <div class="mb-6">
-        <p class="mb-3"><strong>Warning:</strong> This action is permanent and cannot be undone!</p>
+      <div class="modal-body">
+        <p><strong>Warning:</strong> This action is permanent and cannot be undone!</p>
         <p>All your data including:</p>
-        <ul class="text-gray-400 ml-5 mb-4 list-disc">
+        <ul style="color: #aaa; margin-left: 20px; margin-bottom: 15px;">
           <li>Mining progress and earnings</li>
           <li>Wallet balance and transaction history</li>
           <li>Referral bonuses and statistics</li>
           <li>Profile information</li>
         </ul>
         <p>will be permanently deleted.</p>
-        <p class="mt-3">Please enter your password to confirm account deletion:</p>
-        <input type="password" class="modal-input w-full p-3 rounded-lg border border-[#3a3a5a] bg-[#2a2a4a] text-white mt-2 focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all" id="deletePassword" placeholder="Enter your password">
+        <p>Please enter your password to confirm account deletion:</p>
+        <input type="password" class="modal-input" id="deletePassword" placeholder="Enter your password">
       </div>
-      <div class="flex gap-4">
-        <button class="modal-btn cancel flex-1 py-3 px-5 rounded-lg font-semibold cursor-pointer bg-[#3a3a5a] text-white hover:bg-[#4a4a6a] active:scale-95 transition-all" onclick="closeDeleteAccountModal()">Cancel</button>
-        <button class="modal-btn confirm flex-1 py-3 px-5 rounded-lg font-semibold cursor-pointer bg-danger text-white hover:bg-danger-hover active:scale-95 transition-all" onclick="confirmDeleteAccount()">Delete Account</button>
+      <div class="modal-actions">
+        <button class="modal-btn cancel" onclick="closeDeleteAccountModal()">Cancel</button>
+        <button class="modal-btn confirm" onclick="confirmDeleteAccount()">Delete Account</button>
       </div>
     </div>
   </div>
 
   <!-- Side Menu -->
-  <div class="side-menu fixed top-0 left-[-300px] w-72 h-full bg-[#21213e] z-50 p-5 shadow-lg overflow-y-auto premium-card" id="side-menu">
-    <div class="side-menu-header flex justify-between items-center mb-8 pb-4 border-b border-[#3a3a5a]">
-      <div class="side-menu-title text-xl font-semibold text-primary flex items-center gap-2">
-        <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-primary-hover flex items-center justify-center">
+  <div class="side-menu" id="side-menu">
+    <div class="side-menu-header">
+      <div class="side-menu-title">
+        <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-primary-hover flex items-center justify-center mr-2">
           <i class="fas fa-coins text-[#1a1a2e] text-sm"></i>
         </div>
         BitC Network
       </div>
-      <div class="close-menu text-2xl cursor-pointer text-gray-400 p-2 rounded-lg hover:text-white hover:bg-white/10 transition-all" onclick="closeSideMenu()"><i class="fas fa-times"></i></div>
+      <div class="close-menu" onclick="closeSideMenu()"><i class="fas fa-times"></i></div>
     </div>
     
-    <div class="side-menu-item p-4 mb-3 rounded-lg cursor-pointer flex items-center gap-4 hover:bg-[#2a2a4a] active:bg-[#3a3a5a] transition-all" onclick="navigate('home')">
-      <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center">
-        <i class="fas fa-home text-primary text-sm"></i>
-      </div>
-      <span class="font-medium">Home</span>
+    <div class="side-menu-item" onclick="navigate('home')">
+      <i class="fas fa-home"></i>
+      <span>Home</span>
     </div>
     
-    <div class="side-menu-item p-4 mb-3 rounded-lg cursor-pointer flex items-center gap-4 hover:bg-[#2a2a4a] active:bg-[#3a3a5a] transition-all" onclick="navigate('wallet')">
-      <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center">
-        <i class="fas fa-wallet text-primary text-sm"></i>
-      </div>
-      <span class="font-medium">Wallet</span>
+    <div class="side-menu-item" onclick="navigate('wallet')">
+      <i class="fas fa-wallet"></i>
+      <span>Wallet</span>
     </div>
     
-    <div class="side-menu-item p-4 mb-3 rounded-lg cursor-pointer flex items-center gap-4 hover:bg-[#2a2a4a] active:bg-[#3a3a5a] transition-all" onclick="navigate('profile')">
-      <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center">
-        <i class="fas fa-user text-primary text-sm"></i>
-      </div>
-      <span class="font-medium">Profile</span>
+    <div class="side-menu-item" onclick="navigate('profile')">
+      <i class="fas fa-user"></i>
+      <span>Profile</span>
     </div>
     
-    <div class="side-menu-item p-4 mb-3 rounded-lg cursor-pointer flex items-center gap-4 hover:bg-[#2a2a4a] active:bg-[#3a3a5a] transition-all" onclick="navigate('referral')">
-      <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center">
-        <i class="fas fa-share text-primary text-sm"></i>
-      </div>
-      <span class="font-medium">Referrals</span>
+    <div class="side-menu-item" onclick="navigate('referral')">
+      <i class="fas fa-share"></i>
+      <span>Referrals</span>
     </div>
     
-    <div class="side-menu-item p-4 mb-3 rounded-lg cursor-pointer flex items-center gap-4 hover:bg-[#2a2a4a] active:bg-[#3a3a5a] transition-all" onclick="openWhitepaper()">
-      <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center">
-        <i class="fas fa-file-alt text-primary text-sm"></i>
-      </div>
-      <span class="font-medium">Whitepaper</span>
+    <div class="side-menu-item" onclick="navigate('migrate')">
+      <i class="fas fa-exchange-alt"></i>
+      <span>Migrate</span>
     </div>
     
-    <div class="side-menu-item p-4 mb-3 rounded-lg cursor-pointer flex items-center gap-4 hover:bg-[#2a2a4a] active:bg-[#3a3a5a] transition-all" onclick="openLegal()">
-      <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center">
-        <i class="fas fa-gavel text-primary text-sm"></i>
-      </div>
-      <span class="font-medium">Legal</span>
+    <div class="side-menu-item" onclick="openWhitepaper()">
+      <i class="fas fa-file-alt"></i>
+      <span>Whitepaper</span>
     </div>
     
-    <div class="side-menu-item p-4 mb-3 rounded-lg cursor-pointer flex items-center gap-4 hover:bg-[#2a2a4a] active:bg-[#3a3a5a] transition-all" onclick="navigate('migrate')">
-      <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center">
-        <i class="fas fa-exchange-alt text-primary text-sm"></i>
-      </div>
-      <span class="font-medium">Migrate</span>
+    <div class="side-menu-item" onclick="openLegal()">
+      <i class="fas fa-gavel"></i>
+      <span>Legal</span>
     </div>
     
-    <div class="side-menu-item p-4 mb-3 rounded-lg cursor-pointer flex items-center gap-4 hover:bg-[#2a2a4a] active:bg-[#3a3a5a] transition-all" onclick="openDeleteAccountModal()">
-      <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center">
-        <i class="fas fa-trash-alt text-primary text-sm"></i>
-      </div>
-      <span class="font-medium">Delete Account</span>
+    <div class="side-menu-item" onclick="openDeleteAccountModal()">
+      <i class="fas fa-trash-alt"></i>
+      <span>Delete Account</span>
     </div>
     
-    <div class="side-menu-item p-4 mb-3 rounded-lg cursor-pointer flex items-center gap-4 hover:bg-[#2a2a4a] active:bg-[#3a3a5a] transition-all" onclick="logout()">
-      <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center">
-        <i class="fas fa-sign-out-alt text-primary text-sm"></i>
-      </div>
-      <span class="font-medium">Logout</span>
+    <div class="side-menu-item" onclick="logout()">
+      <i class="fas fa-sign-out-alt"></i>
+      <span>Logout</span>
     </div>
   </div>
   
-  <div class="side-menu-overlay fixed inset-0 bg-black bg-opacity-50 z-40 hidden" id="side-menu-overlay" onclick="closeSideMenu()"></div>
+  <div class="side-menu-overlay" id="side-menu-overlay" onclick="closeSideMenu()"></div>
 
-  <header class="bg-[#21213e] py-3 px-5 flex items-center justify-between sticky top-0 z-40 shadow-md premium-card">
-    <div class="menu text-2xl cursor-pointer text-primary p-2 rounded-lg active:scale-95 transition-all" onclick="toggleSideMenu()"><i class="fas fa-bars"></i></div>
-    <div class="balance text-base font-medium relative">
-      <strong class="text-2xl text-primary" id="bitc-balance">0.</strong>000 BITC
-    </div>
-    <div class="user-menu flex items-center text-sm cursor-pointer relative p-2 rounded-lg hover:bg-white/5 transition-all" id="user-menu">
-      <div class="w-8 h-8 rounded-full bg-gradient-to-br from-primary to-primary-hover flex items-center justify-center mr-2">
-        <i class="fas fa-user text-[#1a1a2e] text-sm"></i>
-      </div>
-      <span id="current-user" class="font-medium">User</span>
-      <div class="user-options hidden absolute top-12 right-0 bg-[#2a2a4a] rounded-xl p-2 z-50 min-w-[180px] shadow-premium border border-[#3a3a5a]">
-        <div class="p-3 cursor-pointer hover:bg-[#3a3a5a] rounded-lg transition-all flex items-center gap-2" onclick="navigate('profile')">
-          <i class="fas fa-user text-primary w-5 text-center"></i>
-          <span>Profile</span>
-        </div>
-        <div class="p-3 cursor-pointer hover:bg-[#3a3a5a] rounded-lg transition-all flex items-center gap-2" onclick="navigate('referral')">
-          <i class="fas fa-share text-primary w-5 text-center"></i>
-          <span>Referrals</span>
-        </div>
-        <div class="p-3 cursor-pointer hover:bg-[#3a3a5a] rounded-lg transition-all flex items-center gap-2" onclick="logout()">
-          <i class="fas fa-sign-out-alt text-primary w-5 text-center"></i>
-          <span>Logout</span>
-        </div>
+  <header>
+    <div class="menu" onclick="toggleSideMenu()"><i class="fas fa-bars"></i></div>
+    <div class="balance"><strong id="bitc-balance">0.</strong>000 BITC</div>
+    <div class="user-menu" id="user-menu">
+      <i class="fas fa-user"></i> <span id="current-user">User</span>
+      <div class="user-options">
+        <div onclick="navigate('profile')"><i class="fas fa-user"></i> Profile</div>
+        <div onclick="navigate('referral')"><i class="fas fa-share"></i> Referrals</div>
+        <div onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</div>
       </div>
     </div>
   </header>
 
-  <!-- Empty Dashboard Section -->
-  <div class="main relative text-center py-12 px-5 text-white bg-cover bg-center min-h-[360px] flex flex-col justify-center border-b border-[#2a2a4a] overflow-hidden" 
-       style="background-image: linear-gradient(rgba(26, 26, 46, 0.85), rgba(26, 26, 46, 0.9)), url('https://bitcnetwork.com/1.jpeg')" 
-       id="main-content">
+  <div class="main" id="main-content">
+    <h2></h2>
+    <p>Start mining BITC tokens and join the cryptocurrency revolution!</p>
   </div>
 
-  <!-- Floating Sidebar without Background -->
-  <div class="sidebar fixed right-5 top-20 flex flex-col gap-3 z-30" id="sidebar">
-    <div class="p-3 rounded-xl text-center text-sm w-14 flex flex-col items-center justify-center cursor-pointer active:scale-95 transition-all" onclick="navigate('referral')">
-      <i class="fas fa-user-plus text-primary text-lg mb-1"></i>
-      <span class="text-xs text-white">Join</span>
+  <div class="sidebar" id="sidebar">
+    <div onclick="navigate('referral')"><i class="fas fa-user-plus"></i><span>Join</span></div>
+    <div id="mining-btn" onclick="startMining()">
+      <i class="fas fa-bolt"></i>
+      <span id="mining-rate-display">1 BITC/h</span>
+      <span class="mining-counter" id="mining-counter">00:00:00</span>
     </div>
-    <div class="p-3 rounded-xl text-center text-sm w-14 flex flex-col items-center justify-center cursor-pointer active:scale-95 transition-all" id="mining-btn" onclick="startMining()">
-      <i class="fas fa-bolt text-primary text-lg mb-1"></i>
-      <span class="text-xs text-white" id="mining-rate-display">1 BITC/h</span>
-      <span class="mining-counter text-xs text-primary mt-1" id="mining-counter">00:00:00</span>
-    </div>
-    <div class="p-3 rounded-xl text-center text-sm w-14 flex flex-col items-center justify-center cursor-pointer active:scale-95 transition-all" onclick="navigate('referral')">
-      <i class="fas fa-share text-primary text-lg mb-1"></i>
-      <span class="text-xs text-white">Invite</span>
-    </div>
+    <div onclick="navigate('referral')"><i class="fas fa-share"></i><span>Invite</span></div>
   </div>
 
   <!-- Consolidated BitC Information Section -->
-  <div class="bitc-info bg-[#21213e] p-5 max-w-4xl mx-auto my-5 rounded-xl premium-card border border-[#3a3a5a]" id="bitc-content">
+  <div class="bitc-info" id="bitc-content">
     <div class="flex gap-3 mb-4 justify-center">
       <button class="bg-gradient-to-r from-primary to-primary-hover text-[#1a1a2e] px-4 py-2 rounded-lg font-semibold hover:shadow-glow active:scale-95 text-sm h-10 transition-all" onclick="window.open('https://bitcnetwork.com', '_blank')">
         DISCOVER MORE
@@ -375,7 +1653,7 @@
       </button>
     </div>
     
-    <div class="highlight bg-gradient-to-br from-[#2a2a4a] to-[#1e1e3a] p-4 rounded-lg text-sm text-white mb-4 border border-[#3a3a5a]">
+    <div class="highlight">
       <div class="flex items-start gap-3">
         <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-primary-hover flex items-center justify-center flex-shrink-0 mt-1">
           <i class="fas fa-info text-[#1a1a2e] text-sm"></i>
@@ -386,54 +1664,54 @@
       </div>
     </div>
     
-    <div class="social-icons flex justify-center gap-5 mt-4">
+    <div class="social-icons">
       <!-- Instagram -->
-      <div class="social-icon instagram w-12 h-12 rounded-xl flex items-center justify-center text-xl text-white cursor-pointer active:scale-95 transition-all shadow-premium" onclick="window.open('https://instagram.com/bitcnetwork', '_blank')">
+      <div class="social-icon instagram" onclick="window.open('https://instagram.com/bitcnetwork', '_blank')">
         <i class="fab fa-instagram"></i>
       </div>
       
       <!-- Twitter -->
-      <div class="social-icon twitter w-12 h-12 rounded-xl flex items-center justify-center text-xl text-white cursor-pointer active:scale-95 transition-all shadow-premium" onclick="window.open('https://twitter.com/bitcnetwork', '_blank')">
+      <div class="social-icon twitter" onclick="window.open('https://twitter.com/bitcnetwork', '_blank')">
         <i class="fab fa-twitter"></i>
       </div>
       
       <!-- YouTube -->
-      <div class="social-icon youtube w-12 h-12 rounded-xl flex items-center justify-center text-xl text-white cursor-pointer active:scale-95 transition-all shadow-premium" onclick="window.open('https://youtube.com/@bitcnetwork', '_blank')">
+      <div class="social-icon youtube" onclick="window.open('https://youtube.com/@bitcnetwork', '_blank')">
         <i class="fab fa-youtube"></i>
       </div>
       
       <!-- Telegram -->
-      <div class="social-icon telegram w-12 h-12 rounded-xl flex items-center justify-center text-xl text-white cursor-pointer active:scale-95 transition-all shadow-premium" onclick="window.open('https://t.me/bitcnetwork', '_blank')">
+      <div class="social-icon telegram" onclick="window.open('https://t.me/bitcnetwork', '_blank')">
         <i class="fab fa-telegram"></i>
       </div>
     </div>
   </div>
 
   <!-- Wallet Section -->
-  <div class="wallet-section bg-gray-100 text-black w-full min-h-[calc(100vh-80px)] m-0 rounded-none p-5 box-border hidden overflow-y-auto" id="wallet-content">
-    <div class="wallet-card bg-white rounded-custom p-4 shadow-premium border border-gray-200 max-w-md mx-auto premium-card">
-      <div class="top-row flex items-center justify-between gap-3">
-        <div class="network flex items-center gap-2 text-gray-500 font-semibold" title="Selected network">
-          <div class="dot w-7 h-7 bg-gradient-to-b from-primary to-primary-hover rounded-lg inline-flex items-center justify-center shadow-inner">
+  <div class="wallet-section" id="wallet-content">
+    <div class="wallet-card">
+      <div class="top-row">
+        <div class="network" title="Selected network">
+          <div class="dot" aria-hidden="true">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M12 2L20 6.5V17.5L12 22L4 17.5V6.5L12 2Z" fill="white"/>
               <path d="M12 22V13" stroke="#00000020" stroke-width="1.2"/>
             </svg>
           </div>
-          <div class="text-sm" id="network-name">BITC Network</div>
-          <div class="down w-2.5 h-2.5 border-l-2 border-b-2 border-black/20 transform -rotate-45 ml-2"></div>
+          <div style="font-size:15px" id="network-name">BITC Network</div>
+          <div class="down" aria-hidden="true"></div>
         </div>
 
-        <div class="w-6 h-6"></div>
+        <div style="width:26px;height:26px"></div>
       </div>
 
-      <div class="balance mt-3">
-        <div class="amount text-2xl font-bold" id="wallet-balance">$ 0.00</div>
+      <div class="balance">
+        <div class="amount" id="wallet-balance">$ 0.00</div>
 
-        <div class="addr-row mt-2 flex items-center gap-2 justify-between">
-          <div class="flex items-center gap-2">
-            <div class="font-bold text-gray-500" id="wallet-address">Loading...</div>
-            <button class="copy-btn bg-transparent border-none p-1.5 rounded-lg cursor-pointer active:scale-95 transition-all hover:bg-gray-100" id="copyBtn" title="Copy address" aria-label="Copy address">
+        <div class="addr-row" style="justify-content:space-between;">
+          <div style="display:flex;align-items:center;gap:8px;">
+            <div style="font-weight:700;color:#9b9b9b" id="wallet-address">Loading...</div>
+            <button class="copy-btn" id="copyBtn" title="Copy address" aria-label="Copy address">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" >
                 <path d="M9 9H5a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-4" stroke="#6b6b6b" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
                 <rect x="9" y="3" width="11" height="11" rx="2" stroke="#6b6b6b" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
@@ -441,11 +1719,11 @@
             </button>
           </div>
 
-          <div class="text-right text-gray-400 text-xs">&nbsp;</div>
+          <div style="text-align:right;color:#b3b3b3;font-size:13px;">&nbsp;</div>
         </div>
 
-        <div class="actions mt-3.5 flex gap-3">
-          <button class="btn flex-1 rounded-lg py-3 px-2.5 border border-gray-200 bg-transparent flex items-center justify-center gap-2.5 font-semibold cursor-pointer hover:bg-primary/10 hover:border-primary active:scale-95 transition-all" id="receiveBtn" title="Receive" onclick="showNotification('Coming soon!', 'info')">
+        <div class="actions">
+          <button class="btn" id="receiveBtn" title="Receive" onclick="showNotification('Coming soon!', 'info')">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
               <path d="M21 12V6a2 2 0 0 0-2-2H5v12h14a2 2 0 0 0 2-2z" stroke="#222" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
               <path d="M16 8h.01" stroke="#222" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
@@ -453,7 +1731,7 @@
             Receive
           </button>
 
-          <button class="btn flex-1 rounded-lg py-3 px-2.5 border border-gray-200 bg-transparent flex items-center justify-center gap-2.5 font-semibold cursor-pointer hover:bg-primary/10 hover:border-primary active:scale-95 transition-all" id="sendBtn" title="Send" onclick="showNotification('Coming soon!', 'info')">
+          <button class="btn" id="sendBtn" title="Send" onclick="showNotification('Coming soon!', 'info')">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
               <path d="M22 2L11 13" stroke="#222" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
               <path d="M22 2L15 22l-4-9-9-4 20-7z" stroke="#222" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
@@ -464,17 +1742,17 @@
       </div>
     </div>
 
-    <div class="main-gap h-4"></div>
+    <div class="main-gap"></div>
 
     <div>
-      <div class="tabs mt-4 flex gap-3 p-3 pt-3 pb-1.5 bg-transparent max-w-md mx-auto" role="tablist" aria-label="Sections">
-        <div class="tab font-bold text-gray-500 relative pb-2.5 cursor-pointer flex-1 text-center active" id="tab-tokens" role="tab" aria-selected="true">Tokens</div>
+      <div class="tabs" role="tablist" aria-label="Sections">
+        <div class="tab active" id="tab-tokens" role="tab" aria-selected="true">Tokens</div>
       </div>
 
-      <div class="tokens mt-3.5 bg-white rounded-xl p-2.5 border border-gray-200 max-w-md mx-auto premium-card" id="tokensPanel" role="tabpanel" aria-labelledby="tab-tokens">
-        <div class="token-item flex items-center justify-between gap-3 p-3 rounded-lg bg-transparent cursor-pointer hover:bg-primary/5 active:bg-primary/10 transition-all token-glow" role="button" onclick="tokenClick()" aria-label="BITC token">
-          <div class="token-left flex items-center gap-3">
-            <div class="token-icon w-11 h-11 rounded-xl bg-gradient-to-b from-primary to-primary-hover flex items-center justify-center shadow-inner" aria-hidden="true">
+      <div class="tokens" id="tokensPanel" role="tabpanel" aria-labelledby="tab-tokens">
+        <div class="token-item" role="button" onclick="tokenClick()" aria-label="BITC token">
+          <div class="token-left">
+            <div class="token-icon" aria-hidden="true">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" >
                 <g fill="#ffffff">
                   <path d="M12 2L20 6.5V17.5L12 22L4 17.5V6.5L12 2Z" />
@@ -482,16 +1760,16 @@
               </svg>
             </div>
             <div>
-              <div class="token-name font-bold">BITC</div>
+              <div class="token-name">BITC</div>
             </div>
           </div>
 
-          <div class="token-right text-right text-gray-500">
-            <div class="value font-bold text-black" id="bitc-token-balance">0</div>
-            <div class="muted-small text-xs">$ 0.00</div>
+          <div class="token-right">
+            <div class="value" id="bitc-token-balance">0</div>
+            <div class="muted-small">$ 0.00</div>
           </div>
 
-          <div class="chev ml-2 opacity-45" aria-hidden="true">
+          <div class="chev" aria-hidden="true">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
               <path d="M9 18L15 12L9 6" stroke="#bdbdbd" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
@@ -501,68 +1779,82 @@
     </div>
   </div>
 
-  <div class="profile-section bg-[#21213e] p-5 max-w-4xl mx-auto my-5 rounded-custom hidden shadow-premium premium-card border border-[#3a3a5a]" id="profile-content">
-    <h3 class="text-2xl text-primary mb-6 text-center flex items-center justify-center gap-2.5"><i class="fas fa-user"></i> My Profile</h3>
+  <div class="profile-section" id="profile-content">
+    <h3><i class="fas fa-user"></i> My Profile</h3>
     
-    <div class="profile-header flex items-center gap-5 mb-8 bg-gradient-to-br from-[#2a2a4a] to-[#1e1e3a] p-5 rounded-custom border border-[#3a3a5a]">
-      <div class="profile-avatar w-20 h-20 rounded-full bg-gradient-to-br from-primary to-primary-hover flex items-center justify-center text-3xl text-[#1a1a2e] flex-shrink-0 shadow-lg">
+    <div class="profile-header">
+      <div class="profile-avatar">
         <i class="fas fa-user"></i>
       </div>
       <div class="profile-info">
-        <h4 class="text-xl mb-1 text-white" id="username">BitC Miner</h4>
-        <p class="text-gray-400 text-sm" id="member-since">Member since 2024</p>
+        <h4 id="username">BitC Miner</h4>
+        <p id="member-since">Member since 2024</p>
       </div>
     </div>
     
-    <div class="earnings-stats bg-gradient-to-br from-[#2a2a4a] to-[#1e1e3a] p-6 rounded-custom mb-6 border border-[#3a3a5a]">
-      <h4 class="text-lg text-primary mb-5 flex items-center gap-2.5"><i class="fas fa-chart-line"></i> Earnings Overview</h4>
+    <div class="earnings-stats">
+      <h4><i class="fas fa-chart-line"></i> Earnings Overview</h4>
       
-      <div class="stat-item flex justify-between mb-4 pb-4 border-b border-dashed border-[#3a3a5a]">
-        <span class="stat-label text-gray-400 text-sm">Total Earned</span>
-        <span class="stat-value font-semibold text-white" id="total-earned">0.00 BITC</span>
+      <div class="stat-item">
+        <span class="stat-label">Total Earned</span>
+        <span class="stat-value" id="total-earned">0.00 BITC</span>
       </div>
-      <div class="stat-item flex justify-between mb-4 pb-4 border-b border-dashed border-[#3a3a5a]">
-        <span class="stat-label text-gray-400 text-sm">Mining Rewards</span>
-        <span class="stat-value font-semibold text-white" id="mining-rewards">0.00 BITC</span>
+      <div class="stat-item">
+        <span class="stat-label">Mining Rewards</span>
+        <span class="stat-value" id="mining-rewards">0.00 BITC</span>
       </div>
-      <div class="stat-item flex justify-between mb-4 pb-4 border-b border-dashed border-[#3a3a5a]">
-        <span class="stat-label text-gray-400 text-sm">Referral Bonuses</span>
-        <span class="stat-value font-semibold text-white" id="referral-bonuses">0.00 BITC</span>
+      <div class="stat-item">
+        <span class="stat-label">Referral Bonuses</span>
+        <span class="stat-value" id="referral-bonuses">0.00 BITC</span>
       </div>
-      <div class="stat-item flex justify-between mb-4 pb-4 border-b border-dashed border-[#3a3a5a]">
-        <span class="stat-label text-gray-400 text-sm">Referrals Count</span>
-        <span class="stat-value font-semibold text-white" id="referrals-count">0</span>
+      <div class="stat-item">
+        <span class="stat-label">Referrals Count</span>
+        <span class="stat-value" id="referrals-count">0</span>
       </div>
       
-      <div class="total-earnings bg-primary/10 p-5 rounded-xl mt-6 border border-primary/20 text-center">
-        <div class="text-sm text-primary mb-2.5">Available Balance</div>
-        <div class="text-2xl font-bold text-primary" id="available-balance">0.00 BITC</div>
+      <div class="total-earnings">
+        <div>Available Balance</div>
+        <div id="available-balance">0.00 BITC</div>
+      </div>
+    </div>
+
+    <!-- Account Management Section -->
+    <div class="account-management">
+      <h4><i class="fas fa-cog"></i> Account Management</h4>
+      
+      <div class="danger-zone">
+        <h5><i class="fas fa-exclamation-triangle"></i> Danger Zone</h5>
+        <p>Once you delete your account, there is no going back. Please be certain.</p>
+        <button class="delete-btn" onclick="openDeleteAccountModal()">
+          <i class="fas fa-trash-alt"></i>
+          Delete Account
+        </button>
       </div>
     </div>
 
     <!-- Social Media Section -->
-    <div class="social-section bg-gradient-to-br from-[#2a2a4a] to-[#1e1e3a] p-6 rounded-custom mt-6 border border-[#3a3a5a]">
-      <h4 class="text-lg text-primary mb-5 flex items-center gap-2.5"><i class="fas fa-share-alt"></i> Join Our Community</h4>
-      <p class="text-center text-gray-400 mb-4">Stay updated with the latest news and announcements</p>
+    <div class="social-section">
+      <h4><i class="fas fa-share-alt"></i> Join Our Community</h4>
+      <p style="text-align: center; color: #aaa; margin-bottom: 15px;">Stay updated with the latest news and announcements</p>
       
-      <div class="social-icons flex justify-center gap-5 mt-4">
+      <div class="social-icons">
         <!-- Instagram -->
-        <div class="social-icon instagram w-12 h-12 rounded-xl flex items-center justify-center text-xl text-white cursor-pointer active:scale-95 transition-all shadow-premium" onclick="window.open('https://instagram.com/bitcnetwork', '_blank')">
+        <div class="social-icon instagram" onclick="window.open('https://instagram.com/bitcnetwork', '_blank')">
           <i class="fab fa-instagram"></i>
         </div>
         
         <!-- Twitter -->
-        <div class="social-icon twitter w-12 h-12 rounded-xl flex items-center justify-center text-xl text-white cursor-pointer active:scale-95 transition-all shadow-premium" onclick="window.open('https://twitter.com/bitcnetwork', '_blank')">
+        <div class="social-icon twitter" onclick="window.open('https://twitter.com/bitcnetwork', '_blank')">
           <i class="fab fa-twitter"></i>
         </div>
         
         <!-- YouTube -->
-        <div class="social-icon youtube w-12 h-12 rounded-xl flex items-center justify-center text-xl text-white cursor-pointer active:scale-95 transition-all shadow-premium" onclick="window.open('https://youtube.com/@bitcnetwork', '_blank')">
+        <div class="social-icon youtube" onclick="window.open('https://youtube.com/@bitcnetwork', '_blank')">
           <i class="fab fa-youtube"></i>
         </div>
         
         <!-- Telegram -->
-        <div class="social-icon telegram w-12 h-12 rounded-xl flex items-center justify-center text-xl text-white cursor-pointer active:scale-95 transition-all shadow-premium" onclick="window.open('https://t.me/bitcnetwork', '_blank')">
+        <div class="social-icon telegram" onclick="window.open('https://t.me/bitcnetwork', '_blank')">
           <i class="fab fa-telegram"></i>
         </div>
       </div>
@@ -570,118 +1862,106 @@
   </div>
 
   <!-- Referral Section -->
-  <div class="referral-section bg-[#21213e] p-5 max-w-4xl mx-auto my-5 rounded-custom hidden premium-card border border-[#3a3a5a]" id="referral-content">
-    <h3 class="text-2xl text-primary mb-6 text-center flex items-center justify-center gap-2.5"><i class="fas fa-share"></i> Referral Program</h3>
+  <div class="referral-section" id="referral-content">
+    <h3><i class="fas fa-share"></i> Referral Program</h3>
     
-    <div class="referral-tabs flex mb-5 border-b border-[#3a3a5a]">
-      <div class="referral-tab flex-1 p-2.5 cursor-pointer hover:bg-[#3a3a5a] active:bg-[#3a3a5a] text-center active transition-all" id="invite-tab-btn" onclick="switchReferralTab('invite')">Invite</div>
-      <div class="referral-tab flex-1 p-2.5 cursor-pointer hover:bg-[#3a3a5a] active:bg-[#3a3a5a] text-center transition-all" id="join-tab-btn" onclick="switchReferralTab('join')">Join</div>
+    <div class="referral-tabs">
+      <div class="referral-tab active" id="invite-tab-btn" onclick="switchReferralTab('invite')">Invite</div>
+      <div class="referral-tab" id="join-tab-btn" onclick="switchReferralTab('join')">Join</div>
     </div>
     
-    <div id="invite-tab" class="referral-tab-content p-5 bg-gradient-to-br from-[#2a2a4a] to-[#1e1e3a] rounded-xl mt-4 active border border-[#3a3a5a]">
-      <h4 class="text-lg mb-3 text-white">Invite Friends</h4>
-      <p class="mb-4 text-gray-300">Share your referral code and earn 1 BITC per referral plus a 0.1 BITC/h mining boost!</p>
+    <div id="invite-tab" class="referral-tab-content active">
+      <h4>Invite Friends</h4>
+      <p>Share your referral code and earn 1 BITC per referral plus a 0.1 BITC/h mining boost!</p>
       
-      <div class="referral-code bg-[#3a3a5a] p-4 rounded-lg text-lg font-bold my-4 break-all text-center text-primary" id="referral-code-display">Loading...</div>
+      <div class="referral-code" id="referral-code-display">Loading...</div>
       
-      <button class="referral-button bg-gradient-to-r from-primary to-primary-hover text-[#1a1a2e] border-none py-3 px-5 rounded-lg font-bold cursor-pointer hover:shadow-glow active:scale-95 w-full mt-2.5 transition-all" onclick="copyReferralCode()">
+      <button class="referral-button" onclick="copyReferralCode()">
         <i class="fas fa-copy"></i> Copy Code
       </button>
       
-      <div class="referral-stats mt-5 text-left text-gray-300">
-        <div class="referral-stat flex justify-between mb-2.5">
+      <div class="referral-stats">
+        <div class="referral-stat">
           <span>Total Referrals:</span>
           <span id="total-referrals">0</span>
         </div>
-        <div class="referral-stat flex justify-between mb-2.5">
+        <div class="referral-stat">
           <span>Earned from Referrals:</span>
           <span id="earned-from-referrals">0 BITC</span>
         </div>
       </div>
     </div>
     
-    <div id="join-tab" class="referral-tab-content p-5 bg-gradient-to-br from-[#2a2a4a] to-[#1e1e3a] rounded-xl mt-4 border border-[#3a3a5a]">
-      <h4 class="text-lg mb-3 text-white">Join with Referral</h4>
-      <p class="mb-4 text-gray-300">Enter a referral code to earn 1 BITC and support another user</p>
+    <div id="join-tab" class="referral-tab-content">
+      <h4>Join with Referral</h4>
+      <p>Enter a referral code to earn 1 BITC and support another user</p>
       
-      <input type="text" class="referral-input w-full p-3 rounded-lg border-none bg-[#3a3a5a] text-white mb-4 text-base focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all" id="referral-code-input" placeholder="Enter referral code">
+      <input type="text" class="referral-input" id="referral-code-input" placeholder="Enter referral code">
       
-      <button class="referral-button bg-gradient-to-r from-primary to-primary-hover text-[#1a1a2e] border-none py-3 px-5 rounded-lg font-bold cursor-pointer hover:shadow-glow active:scale-95 w-full transition-all" onclick="joinWithReferral()">
+      <button class="referral-button" onclick="joinWithReferral()">
         <i class="fas fa-user-plus"></i> Join
       </button>
       
-      <p class="mt-4 text-sm text-gray-400">
+      <p style="margin-top: 15px; font-size: 14px; color: #aaa;">
         You can only use a referral code once when you first join.
       </p>
     </div>
   </div>
 
   <!-- Migrate Section -->
-  <div class="migrate-section bg-[#21213e] p-5 max-w-4xl mx-auto my-5 rounded-custom hidden premium-card border border-[#3a3a5a]" id="migrate-content">
-    <h3 class="text-2xl text-primary mb-6 text-center flex items-center justify-center gap-2.5"><i class="fas fa-exchange-alt"></i> Migrate</h3>
+  <div class="migrate-section" id="migrate-content">
+    <h3><i class="fas fa-exchange-alt"></i> Migrate</h3>
     
-    <div class="migrate-info bg-gradient-to-br from-[#2a2a4a] to-[#1e1e3a] p-6 rounded-custom mb-6 border border-[#3a3a5a]">
-      <h4 class="text-lg text-primary mb-5 flex items-center gap-2.5"><i class="fas fa-info-circle"></i> Migration Information</h4>
+    <div class="migrate-info">
+      <h4><i class="fas fa-info-circle"></i> Migration Information</h4>
       
-      <p class="mb-4 text-gray-300">Migrate your BITC tokens to the latest version of our blockchain network to take advantage of improved features and enhanced security.</p>
+      <p class="mb-4">Migrate your BITC tokens to the latest version of our blockchain network to take advantage of improved features and enhanced security.</p>
       
-      <div class="migration-steps mt-6">
-        <div class="step flex items-start gap-4 mb-4">
-          <div class="step-number w-8 h-8 rounded-full bg-primary text-[#1a1a2e] flex items-center justify-center font-bold flex-shrink-0">1</div>
+      <div class="migration-steps">
+        <div class="step">
+          <div class="step-number">1</div>
           <div class="step-content">
-            <h5 class="font-semibold text-white">Connect Your Wallet</h5>
-            <p class="text-gray-400 text-sm">Ensure your wallet is connected to the BitC Network</p>
+            <h5>Connect Your Wallet</h5>
+            <p>Ensure your wallet is connected to the BitC Network</p>
           </div>
         </div>
         
-        <div class="step flex items-start gap-4 mb-4">
-          <div class="step-number w-8 h-8 rounded-full bg-primary text-[#1a1a2e] flex items-center justify-center font-bold flex-shrink-0">2</div>
+        <div class="step">
+          <div class="step-number">2</div>
           <div class="step-content">
-            <h5 class="font-semibold text-white">Select Migration Amount</h5>
-            <p class="text-gray-400 text-sm">Choose how many BITC tokens you want to migrate</p>
+            <h5>Select Migration Amount</h5>
+            <p>Choose how many BITC tokens you want to migrate</p>
           </div>
         </div>
         
-        <div class="step flex items-start gap-4 mb-4">
-          <div class="step-number w-8 h-8 rounded-full bg-primary text-[#1a1a2e] flex items-center justify-center font-bold flex-shrink-0">3</div>
+        <div class="step">
+          <div class="step-number">3</div>
           <div class="step-content">
-            <h5 class="font-semibold text-white">Confirm Transaction</h5>
-            <p class="text-gray-400 text-sm">Approve the migration transaction in your wallet</p>
+            <h5>Confirm Transaction</h5>
+            <p>Approve the migration transaction in your wallet</p>
           </div>
         </div>
       </div>
       
-      <div class="migration-action mt-8">
-        <button class="migrate-button bg-gradient-to-r from-primary to-primary-hover text-[#1a1a2e] border-none py-3 px-5 rounded-lg font-bold cursor-pointer hover:shadow-glow active:scale-95 w-full transition-all" onclick="showNotification('Migration feature coming soon!', 'info')">
-          <i class="fas fa-exchange-alt"></i> Start Migration
-        </button>
-      </div>
+      <button class="migrate-button" onclick="showNotification('Migration feature coming soon!', 'info')">
+        <i class="fas fa-exchange-alt"></i> Start Migration
+      </button>
     </div>
   </div>
 
   <!-- Notification -->
-  <div class="notification fixed top-5 right-5 bg-[#2a2a4a] text-white p-4 rounded-lg shadow-premium z-50 flex items-center gap-2.5 max-w-md premium-card border border-[#3a3a5a]" id="notification">
-    <i class="fas fa-info-circle text-primary"></i>
+  <div class="notification" id="notification">
+    <i class="fas fa-info-circle"></i>
     <span id="notification-message">This is a notification</span>
   </div>
 
-  <div class="footer fixed bottom-0 left-0 right-0 bg-[#21213e] flex justify-around py-3 border-t border-[#3a3a5a] z-40 premium-card">
-    <div class="footer-item text-white text-xs text-center cursor-pointer relative p-2 rounded-lg active:bg-white/10 active transition-all" onclick="navigate('home')">
-      <i class="fas fa-home block text-xl mb-1"></i>
-      <span>Home</span>
-    </div>
-    <div class="footer-item text-white text-xs text-center cursor-pointer relative p-2 rounded-lg active:bg-white/10 transition-all" onclick="navigate('wallet')">
-      <i class="fas fa-wallet block text-xl mb-1"></i>
-      <span>Wallet</span>
-    </div>
-    <div class="footer-item text-white text-xs text-center cursor-pointer relative p-2 rounded-lg active:bg-white/10 transition-all" onclick="navigate('profile')">
-      <i class="fas fa-user block text-xl mb-1"></i>
-      <span>Profile</span>
-    </div>
+  <div class="footer">
+    <div class="footer-item active" onclick="navigate('home')"><i class="fas fa-home"></i><span>Home</span></div>
+    <div class="footer-item" onclick="navigate('wallet')"><i class="fas fa-wallet"></i><span>Wallet</span></div>
+    <div class="footer-item" onclick="navigate('profile')"><i class="fas fa-user"></i><span>Profile</span></div>
   </div>
 
   <script>
-    // All JavaScript functionality remains exactly the same as in the original
     // Mining constants
     const BASE_MINING_RATE_BITC_PER_HOUR = 0.12;
     const MAX_MINING_HOURS = 24;
@@ -757,7 +2037,7 @@
     // Show notification
     function showNotification(message, type = 'info', duration = 3000) {
       notificationMessage.textContent = message;
-      notification.className = `notification fixed top-5 right-5 bg-[#2a2a4a] text-white p-4 rounded-lg shadow-premium z-50 flex items-center gap-2.5 max-w-md premium-card border border-[#3a3a5a] ${type} show`;
+      notification.className = `notification ${type} show`;
       
       setTimeout(() => {
         notification.classList.remove('show');
@@ -766,15 +2046,13 @@
 
     // Side Menu Functions
     function toggleSideMenu() {
-      sideMenu.classList.toggle('left-0');
-      sideMenu.classList.toggle('left-[-300px]');
-      sideMenuOverlay.classList.toggle('hidden');
+      sideMenu.classList.toggle('active');
+      sideMenuOverlay.classList.toggle('active');
     }
 
     function closeSideMenu() {
-      sideMenu.classList.remove('left-0');
-      sideMenu.classList.add('left-[-300px]');
-      sideMenuOverlay.classList.add('hidden');
+      sideMenu.classList.remove('active');
+      sideMenuOverlay.classList.remove('active');
     }
 
     function openWhitepaper() {
@@ -789,15 +2067,12 @@
 
     // Account Deletion Functions
     function openDeleteAccountModal() {
-      deleteAccountModal.classList.remove('hidden');
-      deleteAccountModal.classList.add('flex');
+      deleteAccountModal.classList.add('active');
       deletePasswordInput.value = '';
-      closeSideMenu();
     }
 
     function closeDeleteAccountModal() {
-      deleteAccountModal.classList.remove('flex');
-      deleteAccountModal.classList.add('hidden');
+      deleteAccountModal.classList.remove('active');
     }
 
     async function confirmDeleteAccount() {
@@ -1041,7 +2316,7 @@
       if (!userData.isMining || !userData.lastStartTime) return;
       
       userData.isMining = true;
-      miningBtn.classList.add('mining-active');
+      miningBtn.classList.add('active');
       
       // Start the mining interval
       miningInterval = setInterval(updateMining, 1000);
@@ -1060,7 +2335,7 @@
       }
 
       userData.isMining = true;
-      miningBtn.classList.add('mining-active');
+      miningBtn.classList.add('active');
       
       if (!userData.lastStartTime) {
         userData.lastStartTime = Date.now();
@@ -1119,7 +2394,7 @@
     function stopMining() {
       userData.isMining = false;
       clearInterval(miningInterval);
-      miningBtn.classList.remove('mining-active');
+      miningBtn.classList.remove('active');
       miningCounter.textContent = '00:00:00';
     }
 
@@ -1146,14 +2421,14 @@
     // Navigation
     function navigate(page) {
       closeSideMenu();
-      document.querySelectorAll('.footer-item').forEach(item => item.classList.remove('text-primary', 'active'));
+      document.querySelectorAll('.footer-item').forEach(item => item.classList.remove('active'));
       
       if (page === 'home') {
-        document.querySelector('.footer-item:nth-child(1)').classList.add('text-primary', 'active');
+        document.querySelector('.footer-item:nth-child(1)').classList.add('active');
       } else if (page === 'wallet') {
-        document.querySelector('.footer-item:nth-child(2)').classList.add('text-primary', 'active');
+        document.querySelector('.footer-item:nth-child(2)').classList.add('active');
       } else if (page === 'profile') {
-        document.querySelector('.footer-item:nth-child(3)').classList.add('text-primary', 'active');
+        document.querySelector('.footer-item:nth-child(3)').classList.add('active');
       }
 
       document.getElementById('main-content').style.display = 'none';
@@ -1316,7 +2591,7 @@
 
     // Wallet button event listeners
     document.addEventListener('click', (e) => {
-      if (e.target.id === 'copyBtn') {
+      if (e.target.id === 'copyBtn' || e.target.closest('#copyBtn')) {
         const address = userData.walletAddress;
         try {
           navigator.clipboard.writeText(address);
