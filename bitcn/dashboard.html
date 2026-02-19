@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   
   <!-- Firebase SDK -->
   <script type="module">
@@ -79,22 +80,22 @@
     :root {
       --primary: #f0b90b;
       --primary-hover: #d4a017;
-      --secondary: #333333;
-      --tertiary: #666666;
-      --light: #f8fafc;
-      --card: #ffffff;
-      --border: #e0e0e0;
-      --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-      --radius: 16px;
-      --radius-sm: 10px;
+      --bg-dark: #0f0f1a;
+      --bg-card: #1a1a2e;
+      --bg-card-light: #21213e;
+      --bg-sidebar: #16213e;
+      --text-primary: #ffffff;
+      --text-secondary: #b8b8b8;
+      --text-muted: #7a7a9a;
+      --border-color: #2a2a4a;
       --danger: #dc3545;
-      --danger-hover: #c82333;
+      --success: #10b981;
     }
 
     body {
-      font-family: 'Inter', sans-serif;
-      background: #1a1a2e;
-      color: #ffffff;
+      font-family: 'Space Grotesk', 'Inter', sans-serif;
+      background: var(--bg-dark);
+      color: var(--text-primary);
       min-height: 100vh;
       padding-bottom: 80px;
       overflow-x: hidden;
@@ -102,63 +103,99 @@
 
     /* Header */
     header {
-      background: #21213e;
-      padding: 12px 20px;
+      background: var(--bg-card);
+      padding: 16px 20px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       position: sticky;
       top: 0;
       z-index: 1000;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      border-bottom: 1px solid var(--border-color);
     }
 
     .menu {
-      font-size: 24px;
+      font-size: 22px;
       cursor: pointer;
       color: var(--primary);
       padding: 8px;
+      background: rgba(240, 185, 11, 0.1);
+      border-radius: 12px;
+      width: 42px;
+      height: 42px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .balance {
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 500;
+      background: rgba(255,255,255,0.05);
+      padding: 8px 16px;
+      border-radius: 100px;
+      border: 1px solid var(--border-color);
     }
 
     .balance strong {
-      font-size: 24px;
+      font-size: 22px;
       color: var(--primary);
+      font-family: 'Space Grotesk', monospace;
+      margin-right: 4px;
     }
 
     .user-menu {
       display: flex;
       align-items: center;
+      gap: 8px;
       font-size: 14px;
       cursor: pointer;
       position: relative;
-      padding: 8px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+      padding: 6px 12px 6px 6px;
+      border-radius: 100px;
+      color: var(--bg-dark);
+      font-weight: 600;
     }
 
     .user-menu i {
-      margin-right: 8px;
-      color: var(--primary);
+      background: rgba(0,0,0,0.2);
+      padding: 8px;
+      border-radius: 50%;
+      font-size: 14px;
     }
 
     .user-options {
       display: none;
       position: absolute;
-      top: 40px;
+      top: 50px;
       right: 0;
-      background: #2a2a4a;
-      border-radius: 8px;
-      padding: 10px;
+      background: var(--bg-card-light);
+      border-radius: 16px;
+      padding: 8px;
       z-index: 100;
-      min-width: 150px;
+      min-width: 180px;
+      border: 1px solid var(--border-color);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
     }
 
     .user-options div {
-      padding: 8px;
+      padding: 12px 16px;
       cursor: pointer;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--text-primary);
+    }
+
+    .user-options div i {
+      width: 20px;
+      color: var(--primary);
+    }
+
+    .user-options div:hover {
+      background: rgba(255,255,255,0.1);
     }
 
     .user-menu:hover .user-options {
@@ -172,12 +209,12 @@
       left: -300px;
       width: 280px;
       height: 100%;
-      background: #21213e;
+      background: var(--bg-card);
       z-index: 2000;
       transition: left 0.3s ease;
       padding: 20px;
-      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
-      overflow-y: auto;
+      box-shadow: 2px 0 20px rgba(0, 0, 0, 0.5);
+      border-right: 1px solid var(--border-color);
     }
 
     .side-menu.active {
@@ -189,35 +226,51 @@
       justify-content: space-between;
       align-items: center;
       margin-bottom: 30px;
-      padding-bottom: 15px;
-      border-bottom: 1px solid #3a3a5a;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border-color);
     }
 
     .side-menu-title {
       font-size: 20px;
-      font-weight: 600;
+      font-weight: 700;
       color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
 
     .close-menu {
-      font-size: 24px;
+      font-size: 22px;
       cursor: pointer;
-      color: #aaa;
-      padding: 8px;
+      color: var(--text-muted);
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+    }
+
+    .close-menu:hover {
+      background: rgba(255,255,255,0.1);
+      color: white;
     }
 
     .side-menu-item {
-      padding: 15px;
-      margin-bottom: 10px;
-      border-radius: 8px;
+      padding: 14px 16px;
+      margin-bottom: 8px;
+      border-radius: 14px;
       cursor: pointer;
       display: flex;
       align-items: center;
       gap: 15px;
+      color: var(--text-secondary);
+      transition: all 0.2s;
     }
 
     .side-menu-item:hover {
-      background: #2a2a4a;
+      background: var(--bg-card-light);
+      color: var(--text-primary);
     }
 
     .side-menu-item i {
@@ -232,7 +285,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.5);
+      background: rgba(0, 0, 0, 0.7);
       z-index: 1999;
       display: none;
     }
@@ -241,32 +294,15 @@
       display: block;
     }
 
-    /* Main Section */
+    /* Main Section - Clean */
     .main {
-      position: relative;
-      text-align: center;
-      padding: 50px 20px;
-      color: #ffffff;
-      background: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?fit=crop&w=1500&q=80') no-repeat center center;
-      background-size: cover;
-      min-height: 360px;
+      min-height: 200px;
       display: flex;
-      flex-direction: column;
+      align-items: center;
       justify-content: center;
-      border-bottom: 1px solid #2a2a4a;
     }
 
-    .main p {
-      font-size: 16px;
-      background: rgba(0, 0, 0, 0.7);
-      display: inline-block;
-      padding: 10px 15px;
-      border-radius: 8px;
-      max-width: 600px;
-      margin: 0 auto;
-    }
-
-    /* Sidebar */
+    /* Sidebar Mining */
     .sidebar {
       position: fixed;
       right: 20px;
@@ -278,301 +314,475 @@
     }
 
     .sidebar div {
-      background: #2a2a4a;
-      padding: 12px;
-      border-radius: 12px;
+      background: var(--bg-card-light);
+      padding: 14px 8px;
+      border-radius: 16px;
       text-align: center;
-      font-size: 14px;
-      width: 60px;
+      font-size: 12px;
+      width: 70px;
       display: flex;
       flex-direction: column;
       align-items: center;
       cursor: pointer;
+      border: 1px solid var(--border-color);
+      backdrop-filter: blur(10px);
+      font-weight: 500;
     }
 
     .sidebar div i {
-      font-size: 18px;
+      font-size: 22px;
       margin-bottom: 6px;
       color: var(--primary);
     }
 
     .sidebar .mining-counter {
-      font-size: 12px;
-      margin-top: 4px;
+      font-size: 11px;
+      margin-top: 6px;
       color: var(--primary);
+      font-family: monospace;
+      background: rgba(240,185,11,0.1);
+      padding: 4px 6px;
+      border-radius: 20px;
+      width: 100%;
     }
 
     .sidebar div.mining-active {
-      background: #3a3a5a;
-      box-shadow: 0 0 10px rgba(240, 185, 11, 0.5);
+      background: var(--bg-card);
+      border-color: var(--primary);
+      box-shadow: 0 0 20px rgba(240, 185, 11, 0.2);
     }
 
-    /* BitC Mining */
+    /* BitC Info - Clean minimal */
     .bitc-mining {
-      background: #21213e;
-      padding: 20px;
       max-width: 800px;
       margin: 20px auto;
-      border-radius: 12px;
+      padding: 0 20px;
     }
 
     .bitc-mining h3 {
-      font-size: 24px;
-      color: var(--primary);
-      margin-bottom: 15px;
-      text-align: center;
-    }
-
-    .bitc-mining .highlight {
-      background: #2a2a4a;
-      padding: 15px;
-      border-radius: 8px;
-      margin-bottom: 15px;
-    }
-
-    /* Wallet Section */
-    .wallet-section {
-      background: #f6f6f7;
-      color: #111;
-      width: 100%;
-      min-height: calc(100vh - 80px);
-      padding: 20px;
-      display: none;
-      overflow-y: auto;
-    }
-
-    .wallet-card {
-      background: #ffffff;
-      border-radius: 14px;
-      padding: 18px;
-      border: 1px solid #e7e7ea;
-      max-width: 450px;
-      margin: 0 auto;
-    }
-
-    .network .dot {
-      width: 28px;
-      height: 28px;
-      background: linear-gradient(180deg, var(--primary), var(--primary-hover));
-      border-radius: 8px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .amount {
       font-size: 28px;
       font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 20px;
+      letter-spacing: -0.5px;
     }
 
-    .addr-row {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      color: #9b9b9b;
+    .highlight {
+      background: var(--bg-card);
+      padding: 24px;
+      border-radius: 24px;
+      border: 1px solid var(--border-color);
+      line-height: 1.6;
+      color: var(--text-secondary);
+      font-size: 15px;
+    }
+
+    .highlight strong {
+      color: var(--primary);
+      display: block;
+      margin-bottom: 10px;
+      font-size: 18px;
+    }
+
+    /* Wallet Section - Redesigned */
+    .wallet-section {
+      background: var(--bg-dark);
+      color: var(--text-primary);
+      width: 100%;
+      min-height: calc(100vh - 80px);
+      padding: 24px 20px;
+      display: none;
+    }
+
+    .wallet-header {
+      margin-bottom: 24px;
+    }
+
+    .wallet-header h2 {
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      background: linear-gradient(135deg, #fff, var(--primary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 8px;
+    }
+
+    .wallet-header p {
+      color: var(--text-muted);
       font-size: 14px;
     }
 
-    .copy-btn {
-      background: transparent;
-      border: none;
-      padding: 6px;
-      cursor: pointer;
+    .wallet-card {
+      background: var(--bg-card);
+      border-radius: 30px;
+      padding: 24px;
+      border: 1px solid var(--border-color);
+      max-width: 450px;
+      margin: 0 auto 24px;
     }
 
-    .actions {
+    .wallet-balance-label {
+      color: var(--text-muted);
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+
+    .wallet-balance-amount {
+      font-size: 42px;
+      font-weight: 700;
+      color: var(--primary);
+      font-family: 'Space Grotesk', monospace;
+      margin-bottom: 20px;
+      line-height: 1;
+    }
+
+    .wallet-balance-amount span {
+      font-size: 18px;
+      color: var(--text-muted);
+      font-weight: 400;
+      margin-left: 8px;
+    }
+
+    .wallet-address-container {
+      background: rgba(255,255,255,0.03);
+      border-radius: 20px;
+      padding: 16px;
+      margin-bottom: 24px;
+      border: 1px solid var(--border-color);
+    }
+
+    .wallet-address-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-muted);
+      font-size: 13px;
+      margin-bottom: 12px;
+    }
+
+    .wallet-address-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .wallet-address {
+      font-family: 'Space Grotesk', monospace;
+      font-size: 16px;
+      color: var(--text-primary);
+      letter-spacing: 0.5px;
+    }
+
+    .copy-btn {
+      background: rgba(240,185,11,0.1);
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--primary);
+    }
+
+    .wallet-actions {
       display: flex;
       gap: 12px;
-      margin-top: 14px;
     }
 
-    .btn {
+    .wallet-action-btn {
       flex: 1;
-      padding: 12px;
-      border: 1px solid #e7e7ea;
-      background: transparent;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border-color);
+      padding: 16px;
+      border-radius: 20px;
+      color: var(--text-primary);
+      font-weight: 600;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 10px;
       cursor: pointer;
+      transition: all 0.2s;
     }
 
-    .tokens {
-      background: #ffffff;
-      border-radius: 12px;
-      padding: 10px;
+    .wallet-action-btn i {
+      color: var(--primary);
+      font-size: 18px;
+    }
+
+    .wallet-action-btn:hover {
+      background: rgba(240,185,11,0.1);
+      border-color: var(--primary);
+    }
+
+    .tokens-section {
       max-width: 450px;
       margin: 0 auto;
     }
 
-    .token-item {
+    .tokens-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .tokens-header h3 {
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .token-card {
+      background: var(--bg-card);
+      border-radius: 20px;
+      padding: 20px;
+      border: 1px solid var(--border-color);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 12px;
       cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .token-card:hover {
+      border-color: var(--primary);
+      background: var(--bg-card-light);
+    }
+
+    .token-info {
+      display: flex;
+      align-items: center;
+      gap: 15px;
     }
 
     .token-icon {
-      width: 44px;
-      height: 44px;
-      border-radius: 12px;
-      background: linear-gradient(180deg, var(--primary), var(--primary-hover));
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+      border-radius: 16px;
       display: flex;
       align-items: center;
       justify-content: center;
     }
 
-    /* Profile Section */
+    .token-details h4 {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .token-details p {
+      color: var(--text-muted);
+      font-size: 13px;
+    }
+
+    .token-balance {
+      text-align: right;
+    }
+
+    .token-balance .value {
+      font-size: 20px;
+      font-weight: 700;
+      font-family: 'Space Grotesk', monospace;
+      margin-bottom: 4px;
+    }
+
+    .token-balance .usd {
+      color: var(--text-muted);
+      font-size: 13px;
+    }
+
+    /* Profile Section - Redesigned */
     .profile-section {
-      background: #21213e;
-      padding: 20px;
       max-width: 800px;
       margin: 20px auto;
-      border-radius: 16px;
+      padding: 0 20px;
       display: none;
     }
 
-    .profile-header {
+    .profile-header-large {
+      background: var(--bg-card);
+      border-radius: 30px;
+      padding: 30px;
+      border: 1px solid var(--border-color);
+      margin-bottom: 20px;
       display: flex;
       align-items: center;
-      gap: 20px;
-      margin-bottom: 30px;
-      background: #2a2a4a;
-      padding: 20px;
-      border-radius: 16px;
+      gap: 24px;
     }
 
-    .profile-avatar {
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
+    .profile-avatar-large {
+      width: 90px;
+      height: 90px;
       background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+      border-radius: 30px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 32px;
-      color: #1a1a2e;
+      font-size: 40px;
+      color: var(--bg-dark);
+      font-weight: 600;
     }
 
-    .earnings-stats {
-      background: #2a2a4a;
-      padding: 25px;
-      border-radius: 16px;
+    .profile-info-large h2 {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 6px;
+      letter-spacing: -0.5px;
     }
 
-    .stat-item {
+    .profile-info-large .username-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(240,185,11,0.1);
+      padding: 6px 12px;
+      border-radius: 30px;
+      color: var(--primary);
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .stats-grid {
+      background: var(--bg-card);
+      border-radius: 30px;
+      padding: 30px;
+      border: 1px solid var(--border-color);
+      margin-bottom: 20px;
+    }
+
+    .stats-grid h3 {
+      font-size: 20px;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--primary);
+    }
+
+    .stat-row {
       display: flex;
       justify-content: space-between;
-      margin-bottom: 15px;
-      padding-bottom: 15px;
-      border-bottom: 1px dashed #3a3a5a;
+      align-items: center;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border-color);
     }
 
-    .total-earnings {
-      background: rgba(240, 185, 11, 0.1);
-      padding: 20px;
-      border-radius: 12px;
-      margin-top: 25px;
+    .stat-row:last-child {
+      border-bottom: none;
+    }
+
+    .stat-label {
+      color: var(--text-muted);
+      font-size: 15px;
+    }
+
+    .stat-value-large {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--primary);
+      font-family: 'Space Grotesk', monospace;
+    }
+
+    .balance-showcase {
+      background: linear-gradient(135deg, rgba(240,185,11,0.1), rgba(240,185,11,0.05));
+      border-radius: 24px;
+      padding: 24px;
+      margin-top: 24px;
       text-align: center;
+      border: 1px solid rgba(240,185,11,0.2);
+    }
+
+    .balance-showcase .label {
+      color: var(--text-muted);
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+
+    .balance-showcase .amount {
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--primary);
+      font-family: 'Space Grotesk', monospace;
     }
 
     /* Referral Section */
     .referral-section {
-      background: #21213e;
-      padding: 20px;
       max-width: 800px;
       margin: 20px auto;
-      border-radius: 16px;
+      padding: 0 20px;
       display: none;
+    }
+
+    .referral-card {
+      background: var(--bg-card);
+      border-radius: 30px;
+      padding: 30px;
+      border: 1px solid var(--border-color);
     }
 
     .referral-tabs {
       display: flex;
-      margin-bottom: 20px;
-      border-bottom: 1px solid #3a3a5a;
+      gap: 10px;
+      margin-bottom: 30px;
+      background: rgba(255,255,255,0.03);
+      padding: 6px;
+      border-radius: 16px;
     }
 
     .referral-tab {
       flex: 1;
-      padding: 10px;
-      cursor: pointer;
+      padding: 12px;
       text-align: center;
+      cursor: pointer;
+      border-radius: 12px;
+      font-weight: 600;
+      transition: all 0.2s;
     }
 
     .referral-tab.active {
-      border-bottom: 2px solid var(--primary);
-      color: var(--primary);
+      background: var(--primary);
+      color: var(--bg-dark);
     }
 
-    .referral-tab-content {
-      display: none;
+    .referral-code-box {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
       padding: 20px;
-      background: #2a2a4a;
-      border-radius: 12px;
-    }
-
-    .referral-tab-content.active {
-      display: block;
+      text-align: center;
+      margin: 20px 0;
     }
 
     .referral-code {
-      background: #3a3a5a;
-      padding: 15px;
-      border-radius: 8px;
-      font-size: 18px;
-      font-weight: bold;
-      margin: 15px 0;
-      text-align: center;
+      font-size: 32px;
+      font-weight: 700;
       color: var(--primary);
+      font-family: 'Space Grotesk', monospace;
+      letter-spacing: 2px;
+      margin: 10px 0;
     }
 
-    .referral-input {
-      width: 100%;
-      padding: 12px;
-      border-radius: 8px;
-      border: none;
-      background: #3a3a5a;
-      color: white;
-      margin-bottom: 15px;
-    }
-
-    .referral-button {
+    .copy-btn-large {
       background: var(--primary);
-      color: #1a1a2e;
+      color: var(--bg-dark);
       border: none;
-      padding: 12px 20px;
-      border-radius: 8px;
-      font-weight: bold;
+      padding: 16px;
+      border-radius: 16px;
+      font-weight: 600;
+      font-size: 16px;
       cursor: pointer;
       width: 100%;
-    }
-
-    /* Social Icons */
-    .social-icons {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      margin-top: 20px;
-    }
-
-    .social-icon {
-      width: 50px;
-      height: 50px;
-      border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 24px;
-      color: white;
-      cursor: pointer;
+      gap: 10px;
     }
-
-    .instagram { background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
-    .twitter { background: linear-gradient(135deg, #1da1f2, #1a91da); }
-    .youtube { background: linear-gradient(135deg, #ff0000, #cc0000); }
-    .telegram { background: linear-gradient(135deg, #0088cc, #34b7f1); }
 
     /* Footer */
     .footer {
@@ -580,29 +790,34 @@
       bottom: 0;
       left: 0;
       right: 0;
-      background: #21213e;
+      background: var(--bg-card);
       display: flex;
       justify-content: space-around;
-      padding: 12px 0;
-      border-top: 1px solid #3a3a5a;
+      padding: 12px 20px;
+      border-top: 1px solid var(--border-color);
       z-index: 1000;
+      backdrop-filter: blur(10px);
     }
 
     .footer-item {
-      color: #ffffff;
+      color: var(--text-muted);
       font-size: 12px;
       text-align: center;
       cursor: pointer;
-      padding: 8px;
+      padding: 8px 16px;
+      border-radius: 30px;
+      transition: all 0.2s;
+      font-weight: 500;
     }
 
     .footer-item.active {
       color: var(--primary);
+      background: rgba(240,185,11,0.1);
     }
 
     .footer-item i {
       display: block;
-      font-size: 22px;
+      font-size: 20px;
       margin-bottom: 4px;
     }
 
@@ -611,43 +826,124 @@
       position: fixed;
       top: 20px;
       right: 20px;
-      background: #2a2a4a;
+      background: var(--bg-card-light);
       color: white;
-      padding: 15px 20px;
-      border-radius: 8px;
+      padding: 16px 24px;
+      border-radius: 20px;
       z-index: 2000;
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
       transform: translateX(120%);
       transition: transform 0.3s ease;
+      border: 1px solid var(--border-color);
+      backdrop-filter: blur(10px);
+      font-weight: 500;
     }
 
     .notification.show {
       transform: translateX(0);
     }
 
+    .notification i {
+      color: var(--primary);
+      font-size: 20px;
+    }
+
     .hidden {
       display: none !important;
+    }
+
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.8);
+      z-index: 3000;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(5px);
+    }
+
+    .modal-content {
+      background: var(--bg-card);
+      padding: 30px;
+      max-width: 450px;
+      width: 90%;
+      border-radius: 30px;
+      border: 1px solid var(--border-color);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .modal-header h3 {
+      color: var(--danger);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .modal-input {
+      width: 100%;
+      padding: 16px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      color: white;
+      margin: 20px 0;
+      font-size: 16px;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 12px;
+    }
+
+    .modal-btn {
+      flex: 1;
+      padding: 16px;
+      border: none;
+      border-radius: 16px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .modal-btn.cancel {
+      background: rgba(255,255,255,0.1);
+      color: white;
+    }
+
+    .modal-btn.confirm {
+      background: var(--danger);
+      color: white;
     }
   </style>
 </head>
 <body>
   <!-- Delete Account Modal -->
-  <div class="modal" id="deleteAccountModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 3000; align-items: center; justify-content: center;">
-    <div style="background: #21213e; padding: 30px; max-width: 500px; width: 90%; border-radius: 16px;">
-      <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
-        <h3 style="color: var(--primary);"><i class="fas fa-exclamation-triangle"></i> Delete Account</h3>
-        <button onclick="closeDeleteAccountModal()" style="background: none; border: none; color: #aaa; font-size: 24px;">×</button>
+  <div class="modal" id="deleteAccountModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3><i class="fas fa-exclamation-triangle"></i> Delete Account</h3>
+        <button class="close-menu" onclick="closeDeleteAccountModal()"><i class="fas fa-times"></i></button>
       </div>
-      <div style="color: #ddd; margin-bottom: 20px;">
+      <div style="color: var(--text-secondary);">
         <p><strong>Warning:</strong> This action is permanent!</p>
         <p>All your data will be permanently deleted.</p>
-        <input type="password" id="deletePassword" style="width: 100%; padding: 12px; margin-top: 15px; background: #2a2a4a; border: 1px solid #3a3a5a; color: white; border-radius: 8px;" placeholder="Enter your password">
+        <input type="password" id="deletePassword" class="modal-input" placeholder="Enter your password">
       </div>
-      <div style="display: flex; gap: 15px;">
-        <button onclick="closeDeleteAccountModal()" style="flex: 1; padding: 12px; background: #3a3a5a; color: white; border: none; border-radius: 8px;">Cancel</button>
-        <button onclick="confirmDeleteAccount()" style="flex: 1; padding: 12px; background: var(--danger); color: white; border: none; border-radius: 8px;">Delete</button>
+      <div class="modal-actions">
+        <button class="modal-btn cancel" onclick="closeDeleteAccountModal()">Cancel</button>
+        <button class="modal-btn confirm" onclick="confirmDeleteAccount()">Delete Account</button>
       </div>
     </div>
   </div>
@@ -655,7 +951,9 @@
   <!-- Side Menu -->
   <div class="side-menu" id="side-menu">
     <div class="side-menu-header">
-      <div class="side-menu-title">BitC Network</div>
+      <div class="side-menu-title">
+        <i class="fas fa-coins"></i> BitC Network
+      </div>
       <div class="close-menu" onclick="closeSideMenu()"><i class="fas fa-times"></i></div>
     </div>
     <div class="side-menu-item" onclick="navigate('home')"><i class="fas fa-home"></i><span>Home</span></div>
@@ -672,7 +970,7 @@
 
   <header>
     <div class="menu" onclick="toggleSideMenu()"><i class="fas fa-bars"></i></div>
-    <div class="balance"><strong id="bitc-balance">0.</strong>000 BITC</div>
+    <div class="balance"><strong id="bitc-balance">0.000</strong> BITC</div>
     <div class="user-menu" id="user-menu">
       <i class="fas fa-user"></i> <span id="current-user">User</span>
       <div class="user-options">
@@ -683,96 +981,160 @@
     </div>
   </header>
 
-  <div class="main" id="main-content">
-    <p>Start mining BITC tokens and join the cryptocurrency revolution!</p>
-  </div>
+  <div class="main" id="main-content"></div>
 
   <div class="sidebar" id="sidebar">
     <div onclick="navigate('referral')"><i class="fas fa-user-plus"></i><span>Join</span></div>
     <div id="mining-btn" onclick="startMining()">
       <i class="fas fa-bolt"></i>
-      <span id="mining-rate-display">1 BITC/h</span>
+      <span id="mining-rate-display">1/h</span>
       <span class="mining-counter" id="mining-counter">00:00:00</span>
     </div>
     <div onclick="navigate('referral')"><i class="fas fa-share"></i><span>Invite</span></div>
   </div>
 
   <div class="bitc-mining" id="bitc-content">
-    <h3>BitC Network: Mobile Mining Revolution</h3>
+    <h3>BitC Network</h3>
     <div class="highlight">
-      <strong>What is BitC Network?</strong> BitC represents Blockchain & Internet Technology Coin - a revolutionary approach to mobile cryptocurrency mining.
-    </div>
-    <div class="social-icons">
-      <div class="social-icon instagram" onclick="window.open('https://instagram.com/bitcnetwork', '_blank')"><i class="fab fa-instagram"></i></div>
-      <div class="social-icon twitter" onclick="window.open('https://twitter.com/bitcnetwork', '_blank')"><i class="fab fa-twitter"></i></div>
-      <div class="social-icon youtube" onclick="window.open('https://youtube.com/@bitcnetwork', '_blank')"><i class="fab fa-youtube"></i></div>
-      <div class="social-icon telegram" onclick="window.open('https://t.me/bitcnetwork', '_blank')"><i class="fab fa-telegram"></i></div>
+      <strong>What is BitC?</strong>
+      BitC (Blockchain & Internet Technology Coin) is a revolutionary mobile cryptocurrency mining platform. Mine BITC tokens efficiently and securely from any device.
     </div>
   </div>
 
-  <!-- Wallet Section -->
+  <!-- Wallet Section - Redesigned -->
   <div class="wallet-section" id="wallet-content">
+    <div class="wallet-header">
+      <h2>Your Wallet</h2>
+      <p>Manage your BITC assets</p>
+    </div>
+    
     <div class="wallet-card">
-      <div class="balance">
-        <div class="amount" id="wallet-balance">$ 0.00</div>
-        <div class="addr-row">
-          <div style="font-weight:700;color:#9b9b9b" id="wallet-address">Loading...</div>
-          <button class="copy-btn" id="copyBtn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 9H5a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-4" stroke="#6b6b6b" stroke-width="1.6"/><rect x="9" y="3" width="11" height="11" rx="2" stroke="#6b6b6b" stroke-width="1.6"/></svg></button>
+      <div class="wallet-balance-label">Total Balance</div>
+      <div class="wallet-balance-amount" id="wallet-balance">$0.00 <span>USD</span></div>
+      
+      <div class="wallet-address-container">
+        <div class="wallet-address-label">
+          <i class="fas fa-qrcode"></i> Your Wallet Address
+        </div>
+        <div class="wallet-address-row">
+          <span class="wallet-address" id="wallet-address">Loading...</span>
+          <button class="copy-btn" id="copyBtn"><i class="far fa-copy"></i></button>
         </div>
       </div>
+      
+      <div class="wallet-actions">
+        <button class="wallet-action-btn" onclick="showNotification('Coming soon!', 'info')">
+          <i class="fas fa-arrow-down"></i> Receive
+        </button>
+        <button class="wallet-action-btn" onclick="showNotification('Coming soon!', 'info')">
+          <i class="fas fa-arrow-up"></i> Send
+        </button>
+      </div>
     </div>
-    <div class="tokens">
-      <div class="token-item" onclick="tokenClick()">
-        <div class="token-left">
-          <div class="token-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 2L20 6.5V17.5L12 22L4 17.5V6.5L12 2Z" fill="white"/></svg></div>
-          <div class="token-name">BITC</div>
+
+    <div class="tokens-section">
+      <div class="tokens-header">
+        <h3>Your Assets</h3>
+        <span style="color: var(--text-muted); font-size: 13px;">1 BITC = $0.12</span>
+      </div>
+      
+      <div class="token-card" onclick="tokenClick()">
+        <div class="token-info">
+          <div class="token-icon">
+            <i class="fas fa-coins" style="color: var(--bg-dark); font-size: 24px;"></i>
+          </div>
+          <div class="token-details">
+            <h4>BITC</h4>
+            <p>BitC Network</p>
+          </div>
         </div>
-        <div class="token-right">
-          <div class="value" id="bitc-token-balance">0</div>
-          <div>$ 0.00</div>
+        <div class="token-balance">
+          <div class="value" id="bitc-token-balance">0.00</div>
+          <div class="usd">$0.00</div>
         </div>
       </div>
     </div>
   </div>
 
+  <!-- Profile Section - Redesigned with Username -->
   <div class="profile-section" id="profile-content">
-    <h3><i class="fas fa-user"></i> My Profile</h3>
-    <div class="profile-header">
-      <div class="profile-avatar"><i class="fas fa-user"></i></div>
-      <div class="profile-info">
-        <h4 id="username">BitC Miner</h4>
-        <p id="member-since">Member since 2024</p>
+    <div class="profile-header-large">
+      <div class="profile-avatar-large">
+        <span id="profile-initial">B</span>
+      </div>
+      <div class="profile-info-large">
+        <h2 id="profile-username">BitC User</h2>
+        <div class="username-badge">
+          <i class="fas fa-user"></i> <span id="profile-username-tag">@bitcuser</span>
+        </div>
       </div>
     </div>
-    <div class="earnings-stats">
-      <div class="stat-item"><span class="stat-label">Total Earned</span><span class="stat-value" id="total-earned">0.00 BITC</span></div>
-      <div class="stat-item"><span class="stat-label">Mining Rewards</span><span class="stat-value" id="mining-rewards">0.00 BITC</span></div>
-      <div class="stat-item"><span class="stat-label">Referral Bonuses</span><span class="stat-value" id="referral-bonuses">0.00 BITC</span></div>
-      <div class="stat-item"><span class="stat-label">Referrals Count</span><span class="stat-value" id="referrals-count">0</span></div>
-      <div class="total-earnings"><div>Available Balance</div><div id="available-balance">0.00 BITC</div></div>
+    
+    <div class="stats-grid">
+      <h3><i class="fas fa-chart-line"></i> Mining Statistics</h3>
+      
+      <div class="stat-row">
+        <span class="stat-label">Total Earned</span>
+        <span class="stat-value-large" id="total-earned">0.00 BITC</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-label">Mining Rewards</span>
+        <span class="stat-value-large" id="mining-rewards">0.00 BITC</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-label">Referral Bonuses</span>
+        <span class="stat-value-large" id="referral-bonuses">0.00 BITC</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-label">Referrals</span>
+        <span class="stat-value-large" id="referrals-count">0</span>
+      </div>
+      
+      <div class="balance-showcase">
+        <div class="label">Available Balance</div>
+        <div class="amount" id="available-balance">0.00 BITC</div>
+      </div>
     </div>
   </div>
 
   <!-- Referral Section -->
   <div class="referral-section" id="referral-content">
-    <h3><i class="fas fa-share"></i> Referral Program</h3>
-    <div class="referral-tabs">
-      <div class="referral-tab active" id="invite-tab-btn" onclick="switchReferralTab('invite')">Invite</div>
-      <div class="referral-tab" id="join-tab-btn" onclick="switchReferralTab('join')">Join</div>
-    </div>
-    <div id="invite-tab" class="referral-tab-content active">
-      <p>Share your referral code and earn 1 BITC per referral!</p>
-      <div class="referral-code" id="referral-code-display">Loading...</div>
-      <button class="referral-button" onclick="copyReferralCode()"><i class="fas fa-copy"></i> Copy Code</button>
-      <div class="referral-stats">
-        <div class="referral-stat"><span>Total Referrals:</span><span id="total-referrals">0</span></div>
-        <div class="referral-stat"><span>Earned from Referrals:</span><span id="earned-from-referrals">0 BITC</span></div>
+    <div class="referral-card">
+      <h3 style="font-size: 24px; margin-bottom: 20px;"><i class="fas fa-share"></i> Referral Program</h3>
+      
+      <div class="referral-tabs">
+        <div class="referral-tab active" id="invite-tab-btn" onclick="switchReferralTab('invite')">Invite</div>
+        <div class="referral-tab" id="join-tab-btn" onclick="switchReferralTab('join')">Join</div>
       </div>
-    </div>
-    <div id="join-tab" class="referral-tab-content">
-      <p>Enter a referral code to earn 1 BITC</p>
-      <input type="text" class="referral-input" id="referral-code-input" placeholder="Enter referral code">
-      <button class="referral-button" onclick="joinWithReferral()"><i class="fas fa-user-plus"></i> Join</button>
+      
+      <div id="invite-tab" class="referral-tab-content active">
+        <p style="color: var(--text-secondary); margin-bottom: 15px;">Share your code and earn 1 BITC per referral!</p>
+        <div class="referral-code-box">
+          <div style="color: var(--text-muted); font-size: 12px; margin-bottom: 5px;">YOUR REFERRAL CODE</div>
+          <div class="referral-code" id="referral-code-display">Loading...</div>
+        </div>
+        <button class="copy-btn-large" onclick="copyReferralCode()">
+          <i class="fas fa-copy"></i> Copy Code
+        </button>
+        <div style="margin-top: 30px;">
+          <div class="stat-row">
+            <span>Total Referrals</span>
+            <span class="stat-value-large" id="total-referrals">0</span>
+          </div>
+          <div class="stat-row">
+            <span>Earned from Referrals</span>
+            <span class="stat-value-large" id="earned-from-referrals">0 BITC</span>
+          </div>
+        </div>
+      </div>
+      
+      <div id="join-tab" class="referral-tab-content">
+        <p style="color: var(--text-secondary); margin-bottom: 20px;">Enter a referral code to earn 1 BITC</p>
+        <input type="text" class="modal-input" id="referral-code-input" placeholder="Enter referral code" style="margin-bottom: 15px;">
+        <button class="copy-btn-large" onclick="joinWithReferral()" style="background: var(--primary);">
+          <i class="fas fa-user-plus"></i> Join with Code
+        </button>
+      </div>
     </div>
   </div>
 
@@ -799,7 +1161,7 @@
     // Global variables
     let userData = {
       uid: null,
-      username: 'BitC Miner',
+      username: 'BitC User',
       email: '',
       createdAt: new Date().toISOString(),
       minedBitc: 0,
@@ -832,9 +1194,10 @@
     const referralBonusesElement = document.getElementById('referral-bonuses');
     const referralsCountElement = document.getElementById('referrals-count');
     const availableBalanceElement = document.getElementById('available-balance');
-    const usernameElement = document.getElementById('username');
-    const memberSinceElement = document.getElementById('member-since');
     const currentUserElement = document.getElementById('current-user');
+    const profileUsername = document.getElementById('profile-username');
+    const profileUsernameTag = document.getElementById('profile-username-tag');
+    const profileInitial = document.getElementById('profile-initial');
     const referralCodeDisplay = document.getElementById('referral-code-display');
     const referralCodeInput = document.getElementById('referral-code-input');
     const totalReferralsElement = document.getElementById('total-referrals');
@@ -845,6 +1208,7 @@
     const sideMenuOverlay = document.getElementById('side-menu-overlay');
     const deleteAccountModal = document.getElementById('deleteAccountModal');
     const deletePasswordInput = document.getElementById('deletePassword');
+    const userMenu = document.getElementById('user-menu');
 
     // Generate BSC-style wallet address
     function generateWalletAddress() {
@@ -890,6 +1254,7 @@
     function openDeleteAccountModal() {
       deleteAccountModal.style.display = 'flex';
       deletePasswordInput.value = '';
+      closeSideMenu();
     }
 
     function closeDeleteAccountModal() {
@@ -965,11 +1330,16 @@
       userData.referralBonuses = data.miningData?.referralBonuses || 0;
       userData.referralsCount = data.miningData?.referralsCount || 0;
       userData.miningRateBitcPerHour = data.miningData?.miningRateBitcPerHour || BASE_MINING_RATE_BITC_PER_HOUR;
-      userData.referralCode = data.miningData?.referralCode || userData.username;
+      userData.referralCode = data.miningData?.referralCode || userData.username.toUpperCase().substring(0, 8);
       userData.usedReferralCode = data.miningData?.usedReferralCode || null;
       userData.isMining = data.miningData?.isMining || false;
       userData.walletAddress = data.miningData?.walletAddress || generateWalletAddress();
+      
+      // Update username displays
       currentUserElement.textContent = userData.username;
+      profileUsername.textContent = userData.username;
+      profileUsernameTag.textContent = '@' + userData.username.toLowerCase().replace(/\s+/g, '');
+      profileInitial.textContent = userData.username.charAt(0).toUpperCase();
     }
 
     async function createUserProfile() {
@@ -988,7 +1358,7 @@
             referralBonuses: 0,
             referralsCount: 0,
             miningRateBitcPerHour: BASE_MINING_RATE_BITC_PER_HOUR,
-            referralCode: username,
+            referralCode: username.toUpperCase().substring(0, 8),
             usedReferralCode: null,
             walletAddress: walletAddress,
             isMining: false
@@ -1022,21 +1392,25 @@
     function updateUI() {
       const totalBitc = (userData.minedBitc || 0) + miningSessionBitc;
       bitcBalanceElement.textContent = totalBitc.toFixed(3);
-      miningRateDisplay.textContent = (userData.miningRateBitcPerHour || BASE_MINING_RATE_BITC_PER_HOUR).toFixed(2) + ' BITC/h';
-      walletBalanceElement.textContent = '$ ' + (userData.walletBalance || 0).toFixed(2);
+      miningRateDisplay.textContent = (userData.miningRateBitcPerHour || BASE_MINING_RATE_BITC_PER_HOUR).toFixed(2) + '/h';
+      
+      // Wallet updates
+      const usdValue = (userData.walletBalance || 0) * 0.12;
+      walletBalanceElement.textContent = '$' + usdValue.toFixed(2);
       bitcTokenBalanceElement.textContent = (userData.walletBalance || 0).toFixed(2);
       
       const address = userData.walletAddress || 'Loading...';
       walletAddressElement.textContent = address.length > 14 ? `${address.substring(0, 6)}...${address.substring(address.length - 4)}` : address;
       
+      // Profile updates
       totalEarnedElement.textContent = ((userData.miningRewards || 0) + (userData.referralBonuses || 0) + miningSessionBitc).toFixed(2) + ' BITC';
       miningRewardsElement.textContent = ((userData.miningRewards || 0) + miningSessionBitc).toFixed(2) + ' BITC';
       referralBonusesElement.textContent = (userData.referralBonuses || 0).toFixed(2) + ' BITC';
       referralsCountElement.textContent = userData.referralsCount || 0;
       availableBalanceElement.textContent = (userData.walletBalance || 0).toFixed(2) + ' BITC';
-      usernameElement.textContent = userData.username || 'BitC Miner';
-      memberSinceElement.textContent = `Member since ${new Date(userData.createdAt).toLocaleString('default', { month: 'long', year: 'numeric' })}`;
-      referralCodeDisplay.textContent = userData.referralCode || 'Generating...';
+      
+      // Referral updates
+      referralCodeDisplay.textContent = userData.referralCode || '----';
       totalReferralsElement.textContent = userData.referralsCount || 0;
       earnedFromReferralsElement.textContent = (userData.referralBonuses || 0).toFixed(2) + ' BITC';
     }
@@ -1047,7 +1421,6 @@
       miningBtn.classList.add('mining-active');
       miningInterval = setInterval(updateMining, 1000);
       updateMining();
-      showNotification('Mining resumed!', 'success');
     }
 
     async function startMining() {
@@ -1155,7 +1528,7 @@
     }
 
     async function joinWithReferral() {
-      const referralCode = referralCodeInput.value.trim();
+      const referralCode = referralCodeInput.value.trim().toUpperCase();
       if (!referralCode) {
         showNotification('Please enter a referral code', 'error');
         return;
@@ -1185,7 +1558,7 @@
     }
 
     function tokenClick() {
-      showNotification(`BITC balance: ${userData.walletBalance.toFixed(3)}`, 'info');
+      showNotification(`BITC balance: ${(userData.walletBalance || 0).toFixed(3)} BITC`, 'info');
     }
 
     function logout() {
@@ -1207,13 +1580,14 @@
 
     userMenu.addEventListener('click', function(e) {
       e.stopPropagation();
-      this.querySelector('.user-options').classList.toggle('hidden');
+      const options = this.querySelector('.user-options');
+      options.classList.toggle('hidden');
     });
 
     document.addEventListener('click', function() {
-      const userOptions = document.querySelector('.user-options');
-      if (userOptions && !userOptions.classList.contains('hidden')) {
-        userOptions.classList.add('hidden');
+      const options = document.querySelector('.user-options');
+      if (options && !options.classList.contains('hidden')) {
+        options.classList.add('hidden');
       }
     });
   </script>
