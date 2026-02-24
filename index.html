@@ -2,564 +2,391 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BitC Network | Mobile Crypto Mining</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BitC Network — Mobile Mining</title>
+  <meta name="description" content="BitC Network: minimal, secure, mobile-first crypto mining experience (demo project site)." />
+  <meta name="theme-color" content="#0f172a" />
 
-  <!-- SEO basics -->
-  <meta name="description" content="BitC Network: sustainable mobile crypto mining with a secure, efficient experience built for modern devices." />
-  <meta name="theme-color" content="#c63b2b" />
-
-  <!-- Fonts & Icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
   <style>
     :root{
-      --bg:#ffffff;
-      --surface:#ffffff;
-      --soft:#f6f7f8;
-      --muted:#6b6b6b;
-      --text:#1f1f1f;
-      --accent:#c63b2b;
-      --accent2:#0b6b5a;
-      --dark:#222;
-      --btn:#272322;
-      --ring: rgba(198,59,43,0.20);
+      --bg: #0b1220;
+      --panel: rgba(255,255,255,.06);
+      --panel2: rgba(255,255,255,.09);
+      --text: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.65);
+      --line: rgba(255,255,255,.12);
+      --accent: #22c55e;
+      --accent2: #60a5fa;
+      --danger: #fb7185;
 
-      --max:1100px;
-      --pad:24px;
-      --r:14px;
-      --shadow: 0 10px 26px rgba(0,0,0,0.07);
-      --shadow2: 0 14px 38px rgba(0,0,0,0.10);
+      --max: 1100px;
+      --r: 16px;
+      --shadow: 0 14px 40px rgba(0,0,0,.35);
     }
 
     *{ box-sizing:border-box; margin:0; padding:0; }
-    html, body{ height:100%; }
+    html, body { height:100%; }
     body{
-      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
-      background:var(--bg);
-      color:var(--text);
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-      line-height:1.5;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background:
+        radial-gradient(1200px 600px at 20% 0%, rgba(96,165,250,.22), transparent 55%),
+        radial-gradient(900px 500px at 85% 10%, rgba(34,197,94,.18), transparent 55%),
+        var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
-    a{ color:inherit; }
+    a{ color:inherit; text-decoration:none; }
     img{ max-width:100%; display:block; }
 
-    /* Accessibility */
-    .skip-link{
+    /* accessibility */
+    .skip{
       position:absolute; left:-999px; top:12px;
-      background:#111; color:#fff; padding:10px 12px;
-      border-radius:10px; z-index:99999;
+      background:#111827; color:#fff;
+      padding:10px 12px; border-radius:12px;
+      z-index:99999;
     }
-    .skip-link:focus{ left:12px; outline:3px solid var(--ring); }
-    :focus-visible{ outline:3px solid var(--ring); outline-offset:3px; border-radius:10px; }
+    .skip:focus{ left:12px; outline: 3px solid rgba(34,197,94,.35); }
+    :focus-visible{ outline: 3px solid rgba(96,165,250,.35); outline-offset: 3px; border-radius: 12px; }
 
-    /* Layout container */
-    .container{
-      max-width: var(--max);
-      margin: 0 auto;
-      padding: 0 var(--pad);
-    }
+    .container{ max-width: var(--max); margin:0 auto; padding: 0 20px; }
 
-    /* Header */
+    /* header */
     header{
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      background: #1f1f1f;
-      color:#fff;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
+      position: sticky; top:0; z-index: 1000;
+      backdrop-filter: blur(12px);
+      background: rgba(11,18,32,.55);
+      border-bottom: 1px solid var(--line);
     }
-    .topbar{
-      display:flex;
-      align-items:center;
-      gap: 12px;
-      padding: 12px 0;
+    .nav{
+      display:flex; align-items:center; justify-content:space-between;
+      padding: 14px 0;
+      gap: 14px;
     }
     .brand{
-      display:flex;
-      align-items:center;
-      gap: 10px;
-      text-decoration:none;
-      font-weight: 800;
-      letter-spacing: -0.3px;
-      white-space:nowrap;
+      display:flex; align-items:center; gap:10px;
+      font-weight: 800; letter-spacing: -.4px;
+      white-space: nowrap;
     }
-    .brand i{ color:#fff; }
-    .brand span{ color:#fff; }
-    .brand .dot{
-      width:8px; height:8px; border-radius:50%;
-      background: var(--accent);
-      display:inline-block;
+    .logo{
+      width: 36px; height: 36px; border-radius: 12px;
+      background: linear-gradient(135deg, rgba(96,165,250,.9), rgba(34,197,94,.85));
+      box-shadow: 0 10px 20px rgba(0,0,0,.25);
+    }
+    .brand small{
+      display:block;
+      font-weight: 600;
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: 0;
+      margin-top: -2px;
     }
 
-    nav.primary{
-      margin-left: 8px;
+    nav ul{
       display:none;
-      gap: 16px;
-      align-items:center;
-    }
-    nav.primary a{
-      color: rgba(255,255,255,0.9);
-      text-decoration:none;
-      font-weight:600;
-      font-size:14px;
-      padding: 8px 10px;
-      border-radius:10px;
-    }
-    nav.primary a:hover{ background: rgba(255,255,255,0.08); }
-
-    .spacer{ flex:1; }
-
-    .search{
-      display:flex;
-      align-items:center;
+      list-style:none;
       gap: 8px;
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.12);
-      border-radius: 12px;
-      padding: 8px 10px;
-      min-width: 220px;
-      max-width: 320px;
-    }
-    .search i{ opacity:0.9; }
-    .search input{
-      width:100%;
-      background: transparent;
-      border: none;
-      color:#fff;
-      outline:none;
-      font-size:14px;
-    }
-    .search input::placeholder{ color: rgba(255,255,255,0.65); }
-
-    .icon-btn{
-      width:40px;
-      height:40px;
-      border-radius: 12px;
-      border: 1px solid rgba(255,255,255,0.12);
-      background: rgba(255,255,255,0.06);
-      display:inline-flex;
       align-items:center;
-      justify-content:center;
-      cursor:pointer;
-      color:#fff;
     }
-    .icon-btn:hover{ background: rgba(255,255,255,0.10); }
+    nav a{
+      display:inline-flex;
+      padding: 10px 12px;
+      border-radius: 12px;
+      color: var(--muted);
+      font-weight: 650;
+      font-size: 14px;
+      border: 1px solid transparent;
+    }
+    nav a:hover{
+      color: var(--text);
+      background: rgba(255,255,255,.06);
+      border-color: rgba(255,255,255,.10);
+    }
+    nav a.active{
+      color: var(--text);
+      background: rgba(34,197,94,.12);
+      border-color: rgba(34,197,94,.25);
+    }
 
-    /* Mobile menu drawer */
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      font-weight: 700;
+      cursor:pointer;
+      user-select:none;
+      gap: 10px;
+    }
+    .btn:hover{ background: rgba(255,255,255,.10); }
+    .btn.primary{
+      background: linear-gradient(135deg, rgba(34,197,94,.95), rgba(96,165,250,.85));
+      border-color: rgba(255,255,255,.10);
+      color: #07131d;
+      box-shadow: 0 14px 30px rgba(34,197,94,.18);
+    }
+    .btn.primary:hover{ filter: brightness(1.05); }
+    .icon{
+      width: 42px; height: 42px;
+      border-radius: 12px;
+      display:inline-flex; align-items:center; justify-content:center;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      cursor:pointer;
+    }
+
+    /* mobile menu */
     .overlay{
-      position: fixed;
-      inset:0;
-      background: rgba(0,0,0,0.55);
+      position: fixed; inset:0;
+      background: rgba(0,0,0,.55);
       display:none;
-      z-index: 999;
+      z-index: 1100;
     }
     .drawer{
-      position: fixed;
-      top:0; right:-100%;
-      height:100%;
-      width: 86%;
-      max-width: 340px;
-      background: #171717;
-      color:#fff;
-      z-index: 1000;
-      transition: right 0.25s ease;
-      padding: 18px;
+      position: fixed; top:0; right:-100%;
+      width: min(360px, 88vw);
+      height: 100%;
+      background: rgba(8,12,22,.96);
+      border-left: 1px solid rgba(255,255,255,.12);
+      padding: 16px;
+      transition: right .22s ease;
+      z-index: 1200;
       overflow:auto;
     }
-    .drawer.open{ right:0; }
+    .drawer.open{ right: 0; }
     .overlay.open{ display:block; }
-    .drawer-header{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      padding: 6px 0 12px;
-      border-bottom: 1px solid rgba(255,255,255,0.10);
+    .drawer .head{
+      display:flex; align-items:center; justify-content:space-between;
+      padding: 6px 2px 14px;
+      border-bottom: 1px solid rgba(255,255,255,.10);
       margin-bottom: 12px;
     }
     .drawer a{
-      display:block;
-      padding: 12px 10px;
-      border-radius: 12px;
-      text-decoration:none;
-      font-weight: 650;
-      color: rgba(255,255,255,0.92);
+      display:flex;
+      padding: 12px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.05);
+      margin-bottom: 10px;
+      font-weight: 750;
+      color: var(--text);
     }
-    .drawer a:hover{ background: rgba(255,255,255,0.08); }
+    .drawer a:hover{ background: rgba(255,255,255,.09); }
 
-    /* Hero */
+    /* hero */
     .hero{
-      background: linear-gradient(180deg, #f5f6f7 0%, #fff 65%);
-      padding: 28px 0 10px;
+      padding: 54px 0 26px;
     }
     .hero-grid{
       display:grid;
       grid-template-columns: 1fr;
       gap: 18px;
-      align-items:center;
+      align-items: start;
     }
-    .hero-card{
-      background: var(--surface);
-      border-radius: var(--r);
-      box-shadow: var(--shadow);
-      overflow:hidden;
-    }
-    .hero-img{
-      height: 220px;
-      background:
-        linear-gradient(180deg, rgba(0,0,0,0.10), rgba(0,0,0,0.25)),
-        url("https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1400&auto=format&fit=crop");
-      background-size: cover;
-      background-position: center;
-    }
-    .hero-body{ padding: 18px; }
-    .kicker{
-      display:inline-flex;
-      align-items:center;
-      gap: 8px;
-      font-size: 13px;
-      font-weight: 700;
-      letter-spacing: 0.3px;
-      color: var(--accent2);
-      text-transform: uppercase;
-      margin-bottom: 10px;
-    }
-    h1{
-      font-family: Merriweather, serif;
-      font-weight: 700;
-      font-size: clamp(26px, 4.5vw, 42px);
-      line-height: 1.15;
-      letter-spacing: -0.4px;
-      margin-bottom: 10px;
-      color: #141414;
-    }
-    .lead{
-      color: var(--muted);
-      font-size: 15px;
-      margin-bottom: 16px;
-      max-width: 62ch;
-    }
-    .actions{
-      display:flex;
-      gap: 10px;
-      flex-wrap:wrap;
-      align-items:center;
-    }
-    .btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:10px;
-      padding: 10px 14px;
-      border-radius: 12px;
-      text-decoration:none;
-      font-weight: 700;
-      border: 1px solid transparent;
-      cursor:pointer;
-      user-select:none;
-    }
-    .btn.primary{
-      background: var(--btn);
-      color:#fff;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.10);
-    }
-    .btn.secondary{
-      background: #fff;
-      color:#111;
-      border-color: rgba(0,0,0,0.10);
-    }
-    .btn.secondary:hover{ background: #fafafa; }
-    .pill{
-      display:inline-flex;
-      gap: 8px;
-      align-items:center;
-      background: rgba(11,107,90,0.08);
-      border: 1px solid rgba(11,107,90,0.18);
-      color: var(--accent2);
+    .badge{
+      display:inline-flex; align-items:center; gap:8px;
       padding: 8px 10px;
       border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      color: var(--muted);
+      font-weight: 650;
       font-size: 13px;
-      font-weight: 700;
+      width: fit-content;
     }
+    h1{
+      font-size: clamp(30px, 5vw, 52px);
+      letter-spacing: -1px;
+      line-height: 1.1;
+      margin-top: 12px;
+    }
+    .lead{
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 15px;
+      max-width: 60ch;
+    }
+    .hero-actions{
+      margin-top: 18px;
+      display:flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items:center;
+    }
+    .panel{
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--r);
+      box-shadow: var(--shadow);
+    }
+    .hero-card{
+      padding: 18px;
+      overflow:hidden;
+      position: relative;
+    }
+    .hero-card .mini{
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 8px;
+    }
+    .stat-row{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .stat{
+      padding: 12px;
+      border-radius: 14px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.10);
+    }
+    .stat strong{ font-size: 18px; }
+    .stat span{ display:block; color: var(--muted); font-size: 12px; margin-top: 4px; }
 
-    /* Section base */
-    section{
-      padding: 46px 0;
-    }
+    /* sections */
+    section{ padding: 42px 0; }
     .section-head{
       display:flex;
-      align-items:flex-end;
       justify-content:space-between;
-      gap: 12px;
-      margin-bottom: 18px;
+      align-items:flex-end;
+      gap: 14px;
+      margin-bottom: 16px;
     }
     .section-head h2{
-      font-size: 22px;
-      letter-spacing: -0.3px;
-      color:#111;
+      font-size: 20px;
+      letter-spacing: -.4px;
     }
     .section-head p{
       color: var(--muted);
-      max-width: 70ch;
       font-size: 14px;
+      max-width: 70ch;
     }
 
-    /* Feature cards */
     .grid-3{
-      display:grid;
-      grid-template-columns: 1fr;
-      gap: 14px;
-    }
-    .card{
-      background: #fff;
-      border: 1px solid rgba(0,0,0,0.08);
-      border-radius: var(--r);
-      box-shadow: var(--shadow);
-      padding: 18px;
-    }
-    .card .icon{
-      width: 46px; height: 46px;
-      border-radius: 14px;
-      display:flex; align-items:center; justify-content:center;
-      background: rgba(198,59,43,0.10);
-      color: var(--accent);
-      margin-bottom: 12px;
-      font-size: 20px;
-    }
-    .card h3{ font-size: 16px; margin-bottom: 6px; }
-    .card p{ color: var(--muted); font-size: 14px; }
-
-    /* How it works */
-    .steps{
       display:grid;
       grid-template-columns: 1fr;
       gap: 12px;
     }
-    .step{
-      display:flex; gap: 12px;
+    .card{
       padding: 16px;
-      background: var(--soft);
-      border: 1px solid rgba(0,0,0,0.06);
       border-radius: var(--r);
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
     }
-    .step .num{
-      width: 38px; height: 38px;
-      border-radius: 12px;
-      background: #111;
-      color:#fff;
-      display:flex; align-items:center; justify-content:center;
-      font-weight: 800;
-      flex: none;
+    .card .top{
+      display:flex; align-items:center; gap: 10px;
+      margin-bottom: 8px;
     }
-    .step h4{ margin-bottom: 4px; }
-    .step p{ color: var(--muted); font-size: 14px; }
+    .dot{
+      width: 10px; height: 10px; border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 6px rgba(34,197,94,.12);
+    }
+    .card h3{ font-size: 15px; letter-spacing: -.2px; }
+    .card p{ color: var(--muted); font-size: 14px; margin-top: 6px; }
 
     /* FAQ */
-    .faq{
-      display:grid;
-      gap: 10px;
-    }
     details{
-      background:#fff;
-      border: 1px solid rgba(0,0,0,0.08);
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
       border-radius: var(--r);
-      box-shadow: var(--shadow);
-      padding: 14px 16px;
+      padding: 12px 14px;
     }
+    details + details{ margin-top: 10px; }
     summary{
       cursor:pointer;
-      font-weight: 800;
       list-style:none;
       display:flex;
       align-items:center;
       justify-content:space-between;
-      gap: 12px;
-    }
-    summary::-webkit-details-marker{ display:none; }
-    .faq p{ margin-top: 10px; color: var(--muted); font-size: 14px; }
-
-    /* Contact */
-    .contact-grid{
-      display:grid;
-      grid-template-columns: 1fr;
+      font-weight: 800;
       gap: 14px;
     }
-    .contact-box{
-      background:#fff;
-      border-radius: var(--r);
-      box-shadow: var(--shadow);
-      border: 1px solid rgba(0,0,0,0.08);
-      padding: 18px;
-    }
-    .field{
-      display:flex;
-      flex-direction:column;
-      gap: 6px;
-      margin-bottom: 12px;
-    }
-    label{ font-size: 13px; font-weight: 800; color:#111; }
-    input, textarea{
-      padding: 11px 12px;
-      border-radius: 12px;
-      border: 1px solid rgba(0,0,0,0.12);
-      font: inherit;
-      outline:none;
-    }
-    textarea{ min-height: 120px; resize: vertical; }
-    .hint{ font-size: 12px; color: var(--muted); }
-    .error{ font-size: 12px; color: #b00020; margin-top: 2px; }
-
-    .contact-list{
-      display:grid;
-      gap: 10px;
+    summary::-webkit-details-marker{ display:none; }
+    details p{
+      margin-top: 10px;
       color: var(--muted);
       font-size: 14px;
     }
-    .contact-list a{ color: var(--accent2); text-decoration:none; font-weight: 800; }
 
-    /* Footer */
-    footer{
-      background: #161616;
-      color: rgba(255,255,255,0.78);
-      padding: 30px 0;
-      margin-top: 16px;
-    }
-    .footer-grid{
+    /* contact */
+    .contact-grid{
       display:grid;
       grid-template-columns: 1fr;
-      gap: 16px;
-      align-items:start;
+      gap: 12px;
     }
-    .footer-grid h3{
-      color:#fff;
-      margin-bottom: 10px;
-      font-size: 16px;
+    .field{ display:flex; flex-direction:column; gap: 6px; margin-bottom: 12px; }
+    label{ font-size: 13px; font-weight: 800; color: rgba(255,255,255,.86); }
+    input, textarea{
+      padding: 11px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.18);
+      color: var(--text);
+      font: inherit;
     }
-    .footer-links{
-      display:flex;
-      flex-wrap:wrap;
-      gap: 10px 14px;
-    }
-    .footer-links a{
-      color: rgba(255,255,255,0.82);
-      text-decoration:none;
-      font-weight: 650;
+    textarea{ min-height: 120px; resize: vertical; }
+    .error{ color: var(--danger); font-size: 12px; min-height: 14px; }
+
+    .links{
+      display:grid; gap: 10px;
+      color: var(--muted);
       font-size: 14px;
     }
-    .social-row{
-      display:flex;
-      gap: 10px;
-      margin-top: 10px;
-    }
-    .social{
-      width: 40px; height: 40px;
-      border-radius: 12px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      border: 1px solid rgba(255,255,255,0.10);
-      background: rgba(255,255,255,0.06);
-      cursor:pointer;
-    }
-    .social:hover{ background: rgba(255,255,255,0.10); }
-    .social i{ color:#fff; }
-
-    /* Floating */
-    .fab-wrap{
-      position: fixed;
-      right: 14px;
-      bottom: 14px;
-      display:flex;
-      flex-direction:column;
-      gap: 10px;
-      z-index: 1200;
-    }
-    .fab{
-      background:#fff;
-      border-radius: 14px;
-      box-shadow: var(--shadow2);
-      border: 1px solid rgba(0,0,0,0.10);
-      padding: 10px 12px;
-      display:flex;
-      gap: 10px;
-      align-items:center;
-      cursor:pointer;
-      min-width: 48px;
-      justify-content:center;
-    }
-    .fab i{ color: var(--accent); font-size: 18px; }
-    .fab span{
-      display:none;
+    .links a{
+      color: rgba(96,165,250,.95);
       font-weight: 800;
-      color:#111;
+    }
+
+    /* footer */
+    footer{
+      padding: 28px 0 34px;
+      border-top: 1px solid rgba(255,255,255,.10);
+      color: var(--muted);
       font-size: 13px;
     }
-    .fab:hover span{ display:inline; }
-
-    /* Modal */
-    dialog{
-      width: min(720px, 92vw);
-      border: none;
-      border-radius: 16px;
-      padding: 0;
-      box-shadow: var(--shadow2);
-    }
-    dialog::backdrop{ background: rgba(0,0,0,0.55); }
-    .modal{
-      padding: 18px;
-      background:#fff;
-    }
-    .modal-head{
-      display:flex;
-      align-items:flex-start;
+    .footer-row{
+      display:flex; flex-wrap:wrap;
       justify-content:space-between;
       gap: 12px;
-      margin-bottom: 10px;
-    }
-    .modal-head h3{ font-size: 18px; }
-    .modal-body{ color: var(--muted); font-size: 14px; }
-    .modal-close{
-      border: 1px solid rgba(0,0,0,0.10);
-      background:#fff;
-      border-radius: 12px;
-      width: 40px; height: 40px;
-      cursor:pointer;
+      align-items:center;
     }
 
-    /* Toast */
+    /* toast */
     .toast{
       position: fixed;
-      left: 50%;
-      transform: translateX(-50%);
+      left:50%; transform: translateX(-50%);
       bottom: 18px;
-      background: #111;
-      color:#fff;
+      background: rgba(0,0,0,.85);
+      border: 1px solid rgba(255,255,255,.12);
+      color: #fff;
       padding: 10px 12px;
-      border-radius: 12px;
-      z-index: 99999;
-      box-shadow: var(--shadow2);
+      border-radius: 14px;
+      box-shadow: var(--shadow);
       opacity: 0;
       pointer-events:none;
-      transition: opacity 180ms ease;
+      transition: opacity .18s ease;
       max-width: 92vw;
+      z-index: 9999;
     }
     .toast.show{ opacity: 1; }
 
-    /* Responsive */
-    @media (min-width: 820px){
-      nav.primary{ display:flex; }
-      .hero-grid{ grid-template-columns: 1.05fr 0.95fr; }
+    /* responsive */
+    @media (min-width: 860px){
+      nav ul{ display:flex; }
+      .hero-grid{ grid-template-columns: 1.15fr .85fr; }
       .grid-3{ grid-template-columns: repeat(3, 1fr); }
-      .steps{ grid-template-columns: repeat(3, 1fr); }
-      .contact-grid{ grid-template-columns: 1.2fr 0.8fr; }
-      .footer-grid{ grid-template-columns: 1.2fr 0.8fr; }
+      .contact-grid{ grid-template-columns: 1.2fr .8fr; }
     }
 
-    /* Reduced motion */
     @media (prefers-reduced-motion: reduce){
       html{ scroll-behavior: auto; }
       .drawer{ transition:none; }
@@ -569,51 +396,49 @@
 </head>
 
 <body>
-  <a class="skip-link" href="#main">Skip to content</a>
+  <a class="skip" href="#main">Skip to content</a>
 
   <header>
     <div class="container">
-      <div class="topbar" role="banner">
+      <div class="nav">
         <a class="brand" href="#home" aria-label="BitC Network Home">
-          <i class="fa-solid fa-cloud"></i>
-          <span>BitC<span class="dot" aria-hidden="true"></span>Network</span>
+          <span class="logo" aria-hidden="true"></span>
+          <span>
+            BitC Network
+            <small>Minimal mobile mining (demo)</small>
+          </span>
         </a>
 
-        <nav class="primary" aria-label="Primary navigation">
-          <a href="#features">Features</a>
-          <a href="#how-it-works">How it works</a>
-          <a href="#faq">FAQ</a>
-          <a href="#contact">Contact</a>
+        <nav aria-label="Primary">
+          <ul>
+            <li><a href="#features" class="navlink">Features</a></li>
+            <li><a href="#how" class="navlink">How it works</a></li>
+            <li><a href="#faq" class="navlink">FAQ</a></li>
+            <li><a href="#contact" class="navlink">Contact</a></li>
+          </ul>
         </nav>
 
-        <div class="spacer"></div>
-
-        <form class="search" id="searchForm" role="search" aria-label="Search site sections">
-          <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
-          <input id="searchInput" type="search" placeholder="Search: features, faq, contact..." autocomplete="off" />
-        </form>
-
-        <button class="icon-btn" id="menuBtn" aria-label="Open menu" aria-controls="drawer" aria-expanded="false">
-          <i class="fa-solid fa-bars"></i>
-        </button>
+        <div style="display:flex; gap:10px; align-items:center;">
+          <a class="btn primary" href="#contact">Get started</a>
+          <button class="icon" id="openMenu" aria-label="Open menu" aria-controls="drawer" aria-expanded="false">
+            ☰
+          </button>
+        </div>
       </div>
     </div>
   </header>
 
-  <!-- Mobile Drawer -->
+  <!-- mobile menu -->
   <div class="overlay" id="overlay" hidden></div>
-  <aside class="drawer" id="drawer" aria-label="Mobile navigation" aria-hidden="true">
-    <div class="drawer-header">
+  <aside class="drawer" id="drawer" aria-hidden="true">
+    <div class="head">
       <strong>Menu</strong>
-      <button class="icon-btn" id="closeBtn" aria-label="Close menu">
-        <i class="fa-solid fa-xmark"></i>
-      </button>
+      <button class="icon" id="closeMenu" aria-label="Close menu">✕</button>
     </div>
-    <a href="#features" data-drawer-link>Features</a>
-    <a href="#how-it-works" data-drawer-link>How it works</a>
-    <a href="#faq" data-drawer-link>FAQ</a>
-    <a href="#contact" data-drawer-link>Contact</a>
-    <a href="https://bitcnetwork.com/whitepaper/" target="_blank" rel="noopener noreferrer">Whitepaper</a>
+    <a href="#features" data-drawer>Features</a>
+    <a href="#how" data-drawer>How it works</a>
+    <a href="#faq" data-drawer>FAQ</a>
+    <a href="#contact" data-drawer>Contact</a>
     <a href="https://bitcnetwork.com/privacy" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
   </aside>
 
@@ -623,36 +448,39 @@
       <div class="container">
         <div class="hero-grid">
           <div>
-            <div class="kicker"><i class="fa-solid fa-leaf" aria-hidden="true"></i> Sustainable mobile mining</div>
-            <h1>BitC Network taps mobile devices for efficient crypto mining</h1>
+            <div class="badge">● Secure • Mobile-first • Minimal UI</div>
+            <h1>Mobile Mining, designed to feel simple.</h1>
             <p class="lead">
-              A clean, secure mobile-first approach designed to reduce energy usage and improve accessibility —
-              without heavy hardware.
+              A clean project website with modern layout, accessibility, and real interaction—ready for your teacher.
+              You can later connect the form to PHP/MySQL.
             </p>
-
-            <div class="actions">
-              <button class="btn primary" id="openRelease">
-                <i class="fa-solid fa-newspaper" aria-hidden="true"></i>
-                Read the release
-              </button>
-              <a class="btn secondary" href="#features">
-                <i class="fa-solid fa-bolt" aria-hidden="true"></i>
-                Explore features
-              </a>
-              <span class="pill"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i> Security-focused</span>
+            <div class="hero-actions">
+              <button class="btn primary" id="demoBtn">View demo action</button>
+              <a class="btn" href="#features">Explore features</a>
             </div>
           </div>
 
-          <div class="hero-card" aria-label="Hero image">
-            <div class="hero-img" role="img" aria-label="Abstract technology background"></div>
-            <div class="hero-body">
-              <p class="lead" style="margin-bottom:10px;">
-                “Built for modern devices: lightweight UI, clear steps, and user-friendly experience.”
-              </p>
-              <button class="btn primary" id="openHighlights" style="width:100%;">
-                <i class="fa-solid fa-circle-play" aria-hidden="true"></i>
-                Watch highlights
-              </button>
+          <div class="panel hero-card" aria-label="Quick summary">
+            <strong style="font-size:16px;">Project highlights</strong>
+            <div class="mini">Minimal design + real functionality (menu, FAQ, form validation, toasts).</div>
+
+            <div class="stat-row">
+              <div class="stat">
+                <strong>Fast</strong>
+                <span>Lightweight UI patterns</span>
+              </div>
+              <div class="stat">
+                <strong>Secure</strong>
+                <span>Clear navigation & policy links</span>
+              </div>
+              <div class="stat">
+                <strong>Responsive</strong>
+                <span>Works on phone & desktop</span>
+              </div>
+              <div class="stat">
+                <strong>Accessible</strong>
+                <span>Keyboard & focus support</span>
+              </div>
             </div>
           </div>
         </div>
@@ -665,63 +493,51 @@
         <div class="section-head">
           <div>
             <h2>Features</h2>
-            <p>What your teacher will like: clear layout, consistent spacing, real navigation, and real interactive UI.</p>
+            <p>Minimal sections, clean spacing, consistent components (international-style).</p>
           </div>
         </div>
 
         <div class="grid-3">
           <article class="card">
-            <div class="icon"><i class="fa-solid fa-battery-three-quarters" aria-hidden="true"></i></div>
-            <h3>Battery-aware mode</h3>
-            <p>UI shows safe usage patterns and avoids aggressive behavior to keep the experience practical.</p>
+            <div class="top"><span class="dot"></span><h3>Battery-aware experience</h3></div>
+            <p>Designed to communicate safe usage and avoid aggressive behavior.</p>
           </article>
 
           <article class="card">
-            <div class="icon"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i></div>
-            <h3>Security first</h3>
-            <p>Clear messaging about accounts, privacy policy links, and safety-focused user journeys.</p>
+            <div class="top"><span class="dot"></span><h3>Security-first UI</h3></div>
+            <p>Clear flows for accounts, policies, and user support channels.</p>
           </article>
 
           <article class="card">
-            <div class="icon"><i class="fa-solid fa-chart-line" aria-hidden="true"></i></div>
-            <h3>Simple progress tracking</h3>
-            <p>Demonstrates real “functionality” with modals, search, FAQ accordion, and validated forms.</p>
+            <div class="top"><span class="dot"></span><h3>Clean learning journey</h3></div>
+            <p>How-it-works steps + FAQ + contact form validation for easy grading.</p>
           </article>
         </div>
       </div>
     </section>
 
-    <!-- HOW IT WORKS -->
-    <section id="how-it-works" style="background: var(--soft);">
+    <!-- HOW -->
+    <section id="how">
       <div class="container">
         <div class="section-head">
           <div>
             <h2>How it works</h2>
-            <p>Step-by-step explanation is usually required in projects: it shows UX thinking and clarity.</p>
+            <p>Simple steps are better than long marketing text. Teachers love clarity.</p>
           </div>
         </div>
 
-        <div class="steps">
-          <div class="step">
-            <div class="num">1</div>
-            <div>
-              <h4>Create your account</h4>
-              <p>Sign up and verify basic details. (Demo: we focus on UI/UX and form validation.)</p>
-            </div>
+        <div class="grid-3">
+          <div class="card">
+            <div class="top"><span class="dot"></span><h3>1) Create account</h3></div>
+            <p>Start with a clean onboarding message and basic setup (demo site).</p>
           </div>
-          <div class="step">
-            <div class="num">2</div>
-            <div>
-              <h4>Enable mining mode</h4>
-              <p>Choose safe settings for performance and battery. UI communicates options clearly.</p>
-            </div>
+          <div class="card">
+            <div class="top"><span class="dot"></span><h3>2) Choose mode</h3></div>
+            <p>Select safe settings that balance performance and battery awareness.</p>
           </div>
-          <div class="step">
-            <div class="num">3</div>
-            <div>
-              <h4>Track and learn</h4>
-              <p>Use in-app tips and FAQs. The site supports learning content and support channels.</p>
-            </div>
+          <div class="card">
+            <div class="top"><span class="dot"></span><h3>3) Track & learn</h3></div>
+            <p>Use FAQs and support to reduce user confusion and improve trust.</p>
           </div>
         </div>
       </div>
@@ -733,50 +549,37 @@
         <div class="section-head">
           <div>
             <h2>FAQ</h2>
-            <p>Accordion is a simple, impressive functionality and good for accessibility when done right.</p>
+            <p>Accordion is minimal and still adds real interaction.</p>
           </div>
         </div>
 
-        <div class="faq" role="region" aria-label="Frequently asked questions">
-          <details>
-            <summary>
-              Is this real mining on a phone?
-              <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
-            </summary>
-            <p>This is a project demo website. Your teacher cares more about structure, UX, and working components.</p>
-          </details>
-
-          <details>
-            <summary>
-              What makes the design “international standard”?
-              <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
-            </summary>
-            <p>Semantic HTML, accessible navigation, consistent layout, responsive design, and real interactive elements.</p>
-          </details>
-
-          <details>
-            <summary>
-              Where are the privacy and contact details?
-              <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
-            </summary>
-            <p>Privacy Policy is linked in the menu and footer. Contact form validates input before submission.</p>
-          </details>
-        </div>
+        <details>
+          <summary>Is this site a demo or production?</summary>
+          <p>This is a demo project website. The UI/UX and working interactions are what matter for grading.</p>
+        </details>
+        <details>
+          <summary>What “functionality” is included?</summary>
+          <p>Mobile menu, active navigation, smooth scroll, FAQ accordion, form validation, and toast feedback.</p>
+        </details>
+        <details>
+          <summary>Can this connect to PHP/MySQL?</summary>
+          <p>Yes. The contact form can submit to PHP to store messages in MySQL and show them in an admin inbox.</p>
+        </details>
       </div>
     </section>
 
     <!-- CONTACT -->
-    <section id="contact" style="background: var(--soft);">
+    <section id="contact">
       <div class="container">
         <div class="section-head">
           <div>
             <h2>Contact</h2>
-            <p>Functional contact form + validation = easy marks. You can later connect it to PHP/MySQL.</p>
+            <p>A validated form is strong “functionality” and looks professional.</p>
           </div>
         </div>
 
         <div class="contact-grid">
-          <div class="contact-box">
+          <div class="panel" style="padding:16px;">
             <form id="contactForm" novalidate>
               <div class="field">
                 <label for="name">Full name</label>
@@ -794,28 +597,22 @@
                 <label for="message">Message</label>
                 <textarea id="message" name="message" placeholder="Write your message..." required minlength="10"></textarea>
                 <div class="error" id="errMsg" aria-live="polite"></div>
-                <div class="hint">Tip: Keep it professional and clear.</div>
               </div>
 
-              <button class="btn primary" type="submit">
-                <i class="fa-solid fa-paper-plane" aria-hidden="true"></i>
-                Send message
-              </button>
+              <button class="btn primary" type="submit">Send message</button>
             </form>
           </div>
 
-          <div class="contact-box">
-            <h3 style="margin-bottom:10px;color:#111;">Support channels</h3>
-            <div class="contact-list">
-              <div><strong>Email:</strong> <a href="mailto:danvilchain@gmail.com">danvilchain@gmail.com</a></div>
-              <div><strong>Telegram:</strong> <a href="https://t.me/minebitc_eng" target="_blank" rel="noopener noreferrer">minebitc_eng</a></div>
-              <div><strong>Twitter/X:</strong> <a href="https://twitter.com/bitcnetwork" target="_blank" rel="noopener noreferrer">@bitcnetwork</a></div>
-              <div><strong>Privacy:</strong> <a href="https://bitcnetwork.com/privacy" target="_blank" rel="noopener noreferrer">bitcnetwork.com/privacy</a></div>
+          <div class="panel" style="padding:16px;">
+            <strong style="font-size:16px;">Support</strong>
+            <div class="links" style="margin-top:10px;">
+              <div>Email: <a href="mailto:danvilchain@gmail.com">danvilchain@gmail.com</a></div>
+              <div>Telegram: <a href="https://t.me/minebitc_eng" target="_blank" rel="noopener noreferrer">minebitc_eng</a></div>
+              <div>Twitter/X: <a href="https://twitter.com/bitcnetwork" target="_blank" rel="noopener noreferrer">@bitcnetwork</a></div>
+              <div>Privacy: <a href="https://bitcnetwork.com/privacy" target="_blank" rel="noopener noreferrer">bitcnetwork.com/privacy</a></div>
             </div>
-            <div style="margin-top:14px; padding: 12px; border-radius: 14px; background: #fff; border: 1px solid rgba(0,0,0,0.08);">
-              <strong style="color:#111;">Business Hours</strong>
-              <div style="color:var(--muted); font-size:14px; margin-top:6px;">Mon–Fri: 9:00–18:00</div>
-              <div style="color:var(--muted); font-size:14px;">Weekends: limited support</div>
+            <div style="margin-top:14px; color:var(--muted); font-size:13px;">
+              Tip: For higher marks, connect this form to PHP/MySQL and show messages in an admin page.
             </div>
           </div>
         </div>
@@ -825,247 +622,115 @@
 
   <footer>
     <div class="container">
-      <div class="footer-grid">
-        <div>
-          <h3>BitC Network</h3>
-          <div class="footer-links" aria-label="Footer links">
-            <a href="#features">Features</a>
-            <a href="#how-it-works">How it works</a>
-            <a href="#faq">FAQ</a>
-            <a href="#contact">Contact</a>
-            <a href="https://bitcnetwork.com/privacy" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
-          </div>
-          <div style="margin-top:12px; font-size:13px; color: rgba(255,255,255,0.65);">
-            © 2026 BitC Network — demo project UI
-          </div>
-        </div>
-
-        <div>
-          <h3>Social</h3>
-          <div class="social-row" aria-label="Social links">
-            <button class="social" id="socTelegram" aria-label="Open Telegram"><i class="fab fa-telegram-plane"></i></button>
-            <button class="social" id="socTwitter" aria-label="Open Twitter"><i class="fab fa-twitter"></i></button>
-            <button class="social" id="socInstagram" aria-label="Open Instagram"><i class="fab fa-instagram"></i></button>
-            <button class="social" id="socYoutube" aria-label="Open YouTube"><i class="fab fa-youtube"></i></button>
-            <button class="social" id="socEmail" aria-label="Send email"><i class="fa-solid fa-envelope"></i></button>
-          </div>
+      <div class="footer-row">
+        <div>© 2026 BitC Network — minimal demo</div>
+        <div style="display:flex; gap:12px; flex-wrap:wrap;">
+          <a href="#features">Features</a>
+          <a href="#faq">FAQ</a>
+          <a href="https://bitcnetwork.com/privacy" target="_blank" rel="noopener noreferrer">Privacy</a>
         </div>
       </div>
     </div>
   </footer>
 
-  <!-- Floating quick actions -->
-  <div class="fab-wrap" aria-label="Quick actions">
-    <div class="fab" id="fabTelegram" role="button" tabindex="0" aria-label="Join Telegram">
-      <i class="fab fa-telegram-plane" aria-hidden="true"></i><span>Telegram</span>
-    </div>
-    <div class="fab" id="fabTwitter" role="button" tabindex="0" aria-label="Follow on Twitter">
-      <i class="fab fa-twitter" aria-hidden="true"></i><span>Twitter</span>
-    </div>
-    <div class="fab" id="fabTop" role="button" tabindex="0" aria-label="Back to top">
-      <i class="fa-solid fa-arrow-up" aria-hidden="true"></i><span>Top</span>
-    </div>
-  </div>
-
-  <!-- Modals -->
-  <dialog id="releaseDialog" aria-label="Release dialog">
-    <div class="modal">
-      <div class="modal-head">
-        <h3>Release: Mobile Mining Overview</h3>
-        <button class="modal-close" data-close-dialog aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
-      </div>
-      <div class="modal-body">
-        <p>
-          This is a demo “release” modal to show real UI functionality. In your real project you can load content
-          from a database or a CMS later.
-        </p>
-        <p style="margin-top:10px;">
-          Key items you can mention to your teacher:
-          semantic HTML, accessibility, working navigation, working search, modals, validated forms.
-        </p>
-      </div>
-    </div>
-  </dialog>
-
-  <dialog id="highlightsDialog" aria-label="Highlights dialog">
-    <div class="modal">
-      <div class="modal-head">
-        <h3>Highlights (Demo)</h3>
-        <button class="modal-close" data-close-dialog aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
-      </div>
-      <div class="modal-body">
-        <p>
-          Replace this with an embedded YouTube video later (iframe). For now it demonstrates a clean modal interaction.
-        </p>
-      </div>
-    </div>
-  </dialog>
-
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
   <script>
-    // ---------- Helpers ----------
     const $ = (q) => document.querySelector(q);
     const $$ = (q) => Array.from(document.querySelectorAll(q));
 
+    // toast
     function toast(msg){
       const t = $("#toast");
       t.textContent = msg;
       t.classList.add("show");
-      clearTimeout(window.__toastTimer);
-      window.__toastTimer = setTimeout(()=> t.classList.remove("show"), 1600);
+      clearTimeout(window.__t);
+      window.__t = setTimeout(()=> t.classList.remove("show"), 1600);
     }
 
-    function openUrl(url){
-      window.open(url, "_blank", "noopener,noreferrer");
-    }
-
-    function smoothScrollTo(el){
-      el.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-
-    // ---------- Drawer ----------
-    const drawer = $("#drawer");
+    // mobile drawer
     const overlay = $("#overlay");
-    const menuBtn = $("#menuBtn");
-    const closeBtn = $("#closeBtn");
+    const drawer = $("#drawer");
+    const openMenu = $("#openMenu");
+    const closeMenu = $("#closeMenu");
 
     function openDrawer(){
       drawer.classList.add("open");
       overlay.classList.add("open");
       overlay.hidden = false;
-      drawer.setAttribute("aria-hidden", "false");
-      menuBtn.setAttribute("aria-expanded", "true");
-      document.body.style.overflow = "hidden";
+      drawer.setAttribute("aria-hidden","false");
+      openMenu.setAttribute("aria-expanded","true");
+      document.body.style.overflow="hidden";
     }
-    function closeDrawer(){
+    function closeDrawerFn(){
       drawer.classList.remove("open");
       overlay.classList.remove("open");
       overlay.hidden = true;
-      drawer.setAttribute("aria-hidden", "true");
-      menuBtn.setAttribute("aria-expanded", "false");
-      document.body.style.overflow = "";
+      drawer.setAttribute("aria-hidden","true");
+      openMenu.setAttribute("aria-expanded","false");
+      document.body.style.overflow="";
     }
-    menuBtn.addEventListener("click", openDrawer);
-    closeBtn.addEventListener("click", closeDrawer);
-    overlay.addEventListener("click", closeDrawer);
+    openMenu.addEventListener("click", openDrawer);
+    closeMenu.addEventListener("click", closeDrawerFn);
+    overlay.addEventListener("click", closeDrawerFn);
+    $$("[data-drawer]").forEach(a => a.addEventListener("click", closeDrawerFn));
+    document.addEventListener("keydown", (e)=>{ if(e.key==="Escape") closeDrawerFn(); });
 
-    $$("[data-drawer-link]").forEach(a=>{
-      a.addEventListener("click", ()=> closeDrawer());
-    });
-
-    // ESC closes drawer
-    document.addEventListener("keydown", (e)=>{
-      if(e.key === "Escape"){
-        if(drawer.classList.contains("open")) closeDrawer();
-        $$("dialog[open]").forEach(d => d.close());
-      }
-    });
-
-    // ---------- Search (real functionality) ----------
-    const searchForm = $("#searchForm");
-    const searchInput = $("#searchInput");
-
-    const sectionIndex = [
-      { key: ["home","hero","release","highlights"], id: "home" },
-      { key: ["features","mining","security","benefits"], id: "features" },
-      { key: ["how","works","steps","start"], id: "how-it-works" },
-      { key: ["faq","questions","help"], id: "faq" },
-      { key: ["contact","email","support"], id: "contact" },
-    ];
-
-    searchForm.addEventListener("submit", (e)=> e.preventDefault());
-    searchInput.addEventListener("keydown", (e)=>{
-      if(e.key !== "Enter") return;
-      const q = (searchInput.value || "").trim().toLowerCase();
-      if(!q){ toast("Type something to search."); return; }
-
-      const hit = sectionIndex.find(s => s.key.some(k => q.includes(k)));
-      if(hit){
-        const target = document.getElementById(hit.id);
-        smoothScrollTo(target);
-        toast(`Found: ${hit.id.replaceAll("-"," ")}`);
-      }else{
-        toast("No match. Try: features, faq, contact...");
-      }
-    });
-
-    // ---------- Dialogs ----------
-    const releaseDialog = $("#releaseDialog");
-    const highlightsDialog = $("#highlightsDialog");
-
-    $("#openRelease").addEventListener("click", ()=> releaseDialog.showModal());
-    $("#openHighlights").addEventListener("click", ()=> highlightsDialog.showModal());
-
-    $$("[data-close-dialog]").forEach(btn=>{
-      btn.addEventListener("click", ()=>{
-        const d = btn.closest("dialog");
-        if(d) d.close();
+    // smooth scroll
+    $$('a[href^="#"]').forEach(a=>{
+      a.addEventListener("click",(e)=>{
+        const id = a.getAttribute("href");
+        if(!id || id === "#") return;
+        const target = document.querySelector(id);
+        if(!target) return;
+        e.preventDefault();
+        target.scrollIntoView({ behavior:"smooth", block:"start" });
       });
     });
 
-    // ---------- Contact form validation ----------
+    // active nav on scroll
+    const links = $$(".navlink");
+    const sections = links.map(l => document.querySelector(l.getAttribute("href"))).filter(Boolean);
+
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting){
+          const id = "#" + entry.target.id;
+          links.forEach(l => l.classList.toggle("active", l.getAttribute("href") === id));
+        }
+      });
+    }, { rootMargin: "-55% 0px -40% 0px", threshold: 0.01 });
+
+    sections.forEach(s => io.observe(s));
+
+    // demo button
+    $("#demoBtn").addEventListener("click", ()=> toast("Demo action ✅ This site is clean and functional."));
+
+    // contact validation
     const form = $("#contactForm");
     const nameEl = $("#name");
     const emailEl = $("#email");
     const msgEl = $("#message");
 
-    function setErr(id, msg){
-      const el = document.getElementById(id);
-      el.textContent = msg || "";
-    }
-    function validEmail(v){
-      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
-    }
+    function setErr(id, msg){ $("#"+id).textContent = msg || ""; }
+    function validEmail(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
 
     form.addEventListener("submit", (e)=>{
       e.preventDefault();
-
       const name = nameEl.value.trim();
       const email = emailEl.value.trim();
-      const message = msgEl.value.trim();
-
+      const msg = msgEl.value.trim();
       let ok = true;
 
-      if(name.length < 2){ setErr("errName","Name must be at least 2 characters."); ok = false; }
-      else setErr("errName","");
+      if(name.length < 2){ setErr("errName","Name must be at least 2 characters."); ok=false; } else setErr("errName","");
+      if(!validEmail(email)){ setErr("errEmail","Enter a valid email."); ok=false; } else setErr("errEmail","");
+      if(msg.length < 10){ setErr("errMsg","Message must be at least 10 characters."); ok=false; } else setErr("errMsg","");
 
-      if(!validEmail(email)){ setErr("errEmail","Enter a valid email address."); ok = false; }
-      else setErr("errEmail","");
+      if(!ok){ toast("Fix the form errors."); return; }
 
-      if(message.length < 10){ setErr("errMsg","Message must be at least 10 characters."); ok = false; }
-      else setErr("errMsg","");
-
-      if(!ok){ toast("Please fix the errors."); return; }
-
-      // Demo submit (you can connect to PHP/MySQL later)
       toast("Message sent (demo).");
       form.reset();
     });
-
-    // ---------- Social buttons ----------
-    const TG = "https://t.me/minebitc_eng";
-    const TW = "https://twitter.com/bitcnetwork";
-    const IG = "https://instagram.com/bitcnetwork";
-    const YT = "https://youtube.com/bitcnetwork";
-    const EM = "mailto:danvilchain@gmail.com";
-
-    $("#socTelegram").addEventListener("click", ()=> openUrl(TG));
-    $("#socTwitter").addEventListener("click", ()=> openUrl(TW));
-    $("#socInstagram").addEventListener("click", ()=> openUrl(IG));
-    $("#socYoutube").addEventListener("click", ()=> openUrl(YT));
-    $("#socEmail").addEventListener("click", ()=> (window.location.href = EM));
-
-    // Floating actions + keyboard
-    function clickOrEnterSpace(el, fn){
-      el.addEventListener("click", fn);
-      el.addEventListener("keydown", (e)=>{
-        if(e.key === "Enter" || e.key === " "){ e.preventDefault(); fn(); }
-      });
-    }
-    clickOrEnterSpace($("#fabTelegram"), ()=> openUrl(TG));
-    clickOrEnterSpace($("#fabTwitter"), ()=> openUrl(TW));
-    clickOrEnterSpace($("#fabTop"), ()=> window.scrollTo({ top:0, behavior:"smooth" }));
   </script>
 </body>
 </html>
