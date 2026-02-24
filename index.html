@@ -1,394 +1,393 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>BitC Network — Mobile Mining</title>
-  <meta name="description" content="BitC Network: minimal, secure, mobile-first crypto mining experience (demo project site)." />
-  <meta name="theme-color" content="#0f172a" />
+  <title>BitC Network — Mine on Mobile. Easy. Secure.</title>
+  <meta name="description" content="BitC Network is a mobile-first crypto mining platform designed for accessibility, security, and a lightweight experience." />
+  <meta name="theme-color" content="#ffffff" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 
   <style>
     :root{
-      --bg: #0b1220;
-      --panel: rgba(255,255,255,.06);
-      --panel2: rgba(255,255,255,.09);
-      --text: rgba(255,255,255,.92);
-      --muted: rgba(255,255,255,.65);
-      --line: rgba(255,255,255,.12);
-      --accent: #22c55e;
-      --accent2: #60a5fa;
-      --danger: #fb7185;
+      --bg:#ffffff;
+      --text:#0f172a;
+      --muted:#475569;
+      --line:#e2e8f0;
+      --soft:#f8fafc;
+      --soft2:#f1f5f9;
+      --accent:#2563eb;
+      --accent2:#16a34a;
 
-      --max: 1100px;
-      --r: 16px;
-      --shadow: 0 14px 40px rgba(0,0,0,.35);
+      --max:1120px;
+      --r:14px;
+      --shadow: 0 16px 40px rgba(15,23,42,.10);
+      --ring: rgba(37,99,235,.25);
     }
-
     *{ box-sizing:border-box; margin:0; padding:0; }
-    html, body { height:100%; }
+    html,body{ height:100%; }
     body{
       font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      background:
-        radial-gradient(1200px 600px at 20% 0%, rgba(96,165,250,.22), transparent 55%),
-        radial-gradient(900px 500px at 85% 10%, rgba(34,197,94,.18), transparent 55%),
-        var(--bg);
-      color: var(--text);
-      line-height: 1.55;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.55;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
     }
     a{ color:inherit; text-decoration:none; }
     img{ max-width:100%; display:block; }
+    .container{ max-width:var(--max); margin:0 auto; padding:0 20px; }
 
-    /* accessibility */
+    /* a11y */
     .skip{
       position:absolute; left:-999px; top:12px;
-      background:#111827; color:#fff;
-      padding:10px 12px; border-radius:12px;
-      z-index:99999;
+      background:#0f172a; color:#fff; padding:10px 12px;
+      border-radius:12px; z-index:99999;
     }
-    .skip:focus{ left:12px; outline: 3px solid rgba(34,197,94,.35); }
-    :focus-visible{ outline: 3px solid rgba(96,165,250,.35); outline-offset: 3px; border-radius: 12px; }
-
-    .container{ max-width: var(--max); margin:0 auto; padding: 0 20px; }
+    .skip:focus{ left:12px; outline:3px solid var(--ring); }
+    :focus-visible{ outline:3px solid var(--ring); outline-offset:3px; border-radius:12px; }
 
     /* header */
     header{
-      position: sticky; top:0; z-index: 1000;
-      backdrop-filter: blur(12px);
-      background: rgba(11,18,32,.55);
-      border-bottom: 1px solid var(--line);
+      position:sticky; top:0; z-index:1000;
+      background: rgba(255,255,255,.92);
+      backdrop-filter: blur(10px);
+      border-bottom:1px solid var(--line);
     }
-    .nav{
+    .topbar{
       display:flex; align-items:center; justify-content:space-between;
-      padding: 14px 0;
-      gap: 14px;
+      gap:14px;
+      padding:14px 0;
     }
     .brand{
       display:flex; align-items:center; gap:10px;
-      font-weight: 800; letter-spacing: -.4px;
-      white-space: nowrap;
+      font-weight:800;
+      letter-spacing:-.4px;
+      white-space:nowrap;
     }
-    .logo{
-      width: 36px; height: 36px; border-radius: 12px;
-      background: linear-gradient(135deg, rgba(96,165,250,.9), rgba(34,197,94,.85));
-      box-shadow: 0 10px 20px rgba(0,0,0,.25);
-    }
-    .brand small{
-      display:block;
-      font-weight: 600;
-      color: var(--muted);
-      font-size: 12px;
-      letter-spacing: 0;
-      margin-top: -2px;
+    .mark{
+      width:34px; height:34px;
+      border-radius:12px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      box-shadow: 0 10px 20px rgba(37,99,235,.18);
     }
 
     nav ul{
       display:none;
       list-style:none;
-      gap: 8px;
+      gap:8px;
       align-items:center;
     }
     nav a{
       display:inline-flex;
-      padding: 10px 12px;
-      border-radius: 12px;
-      color: var(--muted);
-      font-weight: 650;
-      font-size: 14px;
-      border: 1px solid transparent;
+      padding:10px 12px;
+      border-radius:12px;
+      color:var(--muted);
+      font-weight:700;
+      font-size:14px;
     }
-    nav a:hover{
-      color: var(--text);
-      background: rgba(255,255,255,.06);
-      border-color: rgba(255,255,255,.10);
-    }
-    nav a.active{
-      color: var(--text);
-      background: rgba(34,197,94,.12);
-      border-color: rgba(34,197,94,.25);
-    }
+    nav a:hover{ background:var(--soft); color:var(--text); }
+    nav a.active{ background:rgba(37,99,235,.08); color:var(--accent); }
 
+    .actions{
+      display:flex; gap:10px; align-items:center;
+    }
     .btn{
       display:inline-flex; align-items:center; justify-content:center;
-      padding: 10px 12px;
-      border-radius: 12px;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.06);
-      color: var(--text);
-      font-weight: 700;
+      gap:10px;
+      padding:10px 12px;
+      border-radius:12px;
+      font-weight:800;
+      font-size:14px;
+      border:1px solid var(--line);
+      background:var(--bg);
       cursor:pointer;
       user-select:none;
-      gap: 10px;
     }
-    .btn:hover{ background: rgba(255,255,255,.10); }
+    .btn:hover{ background:var(--soft); }
     .btn.primary{
-      background: linear-gradient(135deg, rgba(34,197,94,.95), rgba(96,165,250,.85));
-      border-color: rgba(255,255,255,.10);
-      color: #07131d;
-      box-shadow: 0 14px 30px rgba(34,197,94,.18);
+      background:var(--accent);
+      border-color:var(--accent);
+      color:#fff;
+      box-shadow: 0 14px 24px rgba(37,99,235,.20);
     }
-    .btn.primary:hover{ filter: brightness(1.05); }
-    .icon{
-      width: 42px; height: 42px;
-      border-radius: 12px;
-      display:inline-flex; align-items:center; justify-content:center;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.06);
+    .btn.primary:hover{ filter:brightness(1.03); }
+    .iconbtn{
+      width:42px; height:42px;
+      border-radius:12px;
+      border:1px solid var(--line);
+      background:var(--bg);
       cursor:pointer;
     }
 
-    /* mobile menu */
+    /* mobile drawer */
     .overlay{
-      position: fixed; inset:0;
-      background: rgba(0,0,0,.55);
-      display:none;
-      z-index: 1100;
+      position:fixed; inset:0;
+      background: rgba(15,23,42,.45);
+      display:none; z-index:1100;
     }
     .drawer{
-      position: fixed; top:0; right:-100%;
-      width: min(360px, 88vw);
-      height: 100%;
-      background: rgba(8,12,22,.96);
-      border-left: 1px solid rgba(255,255,255,.12);
-      padding: 16px;
-      transition: right .22s ease;
-      z-index: 1200;
+      position:fixed; top:0; right:-100%;
+      width:min(360px, 90vw);
+      height:100%;
+      background:#fff;
+      border-left:1px solid var(--line);
+      z-index:1200;
+      transition:right .22s ease;
+      padding:16px;
       overflow:auto;
     }
-    .drawer.open{ right: 0; }
+    .drawer.open{ right:0; }
     .overlay.open{ display:block; }
-    .drawer .head{
+    .drawerhead{
       display:flex; align-items:center; justify-content:space-between;
-      padding: 6px 2px 14px;
-      border-bottom: 1px solid rgba(255,255,255,.10);
-      margin-bottom: 12px;
+      padding:6px 0 12px;
+      border-bottom:1px solid var(--line);
+      margin-bottom:12px;
     }
     .drawer a{
-      display:flex;
-      padding: 12px 12px;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.05);
-      margin-bottom: 10px;
-      font-weight: 750;
-      color: var(--text);
+      display:block;
+      padding:12px 12px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background:var(--soft);
+      margin-bottom:10px;
+      font-weight:800;
+      color:var(--text);
     }
-    .drawer a:hover{ background: rgba(255,255,255,.09); }
+    .drawer a:hover{ background:var(--soft2); }
 
     /* hero */
     .hero{
-      padding: 54px 0 26px;
+      padding: 54px 0 30px;
     }
-    .hero-grid{
+    .heroGrid{
       display:grid;
       grid-template-columns: 1fr;
       gap: 18px;
-      align-items: start;
+      align-items:start;
     }
     .badge{
       display:inline-flex; align-items:center; gap:8px;
-      padding: 8px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.06);
-      color: var(--muted);
-      font-weight: 650;
-      font-size: 13px;
-      width: fit-content;
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:var(--soft);
+      color:var(--muted);
+      font-weight:800;
+      font-size:12px;
+      width:fit-content;
     }
     h1{
-      font-size: clamp(30px, 5vw, 52px);
-      letter-spacing: -1px;
-      line-height: 1.1;
-      margin-top: 12px;
+      font-size: clamp(30px, 4.6vw, 52px);
+      line-height:1.08;
+      letter-spacing:-1px;
+      margin-top:12px;
     }
     .lead{
-      margin-top: 12px;
-      color: var(--muted);
-      font-size: 15px;
-      max-width: 60ch;
+      margin-top:12px;
+      color:var(--muted);
+      font-size:15px;
+      max-width: 62ch;
     }
-    .hero-actions{
-      margin-top: 18px;
-      display:flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      align-items:center;
+    .heroBtns{
+      margin-top:18px;
+      display:flex; gap:10px; flex-wrap:wrap; align-items:center;
     }
+    .subnote{
+      margin-top:10px;
+      font-size:12px;
+      color:var(--muted);
+    }
+
     .panel{
-      background: var(--panel);
-      border: 1px solid var(--line);
+      border:1px solid var(--line);
+      background:var(--bg);
       border-radius: var(--r);
       box-shadow: var(--shadow);
-    }
-    .hero-card{
-      padding: 18px;
       overflow:hidden;
-      position: relative;
     }
-    .hero-card .mini{
-      color: var(--muted);
-      font-size: 13px;
-      margin-top: 8px;
+    .panelInner{ padding:16px; }
+    .panelTitle{ font-weight:900; letter-spacing:-.3px; }
+    .mini{
+      margin-top:8px; color:var(--muted); font-size:13px;
     }
-    .stat-row{
+    .stats{
+      margin-top:14px;
       display:grid;
       grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-top: 14px;
+      gap:10px;
     }
     .stat{
-      padding: 12px;
-      border-radius: 14px;
-      background: rgba(255,255,255,.06);
-      border: 1px solid rgba(255,255,255,.10);
+      padding:12px;
+      border-radius:14px;
+      background:var(--soft);
+      border:1px solid var(--line);
     }
-    .stat strong{ font-size: 18px; }
-    .stat span{ display:block; color: var(--muted); font-size: 12px; margin-top: 4px; }
+    .stat strong{ font-size:16px; }
+    .stat span{ display:block; margin-top:4px; font-size:12px; color:var(--muted); }
 
     /* sections */
-    section{ padding: 42px 0; }
-    .section-head{
-      display:flex;
-      justify-content:space-between;
-      align-items:flex-end;
-      gap: 14px;
-      margin-bottom: 16px;
+    section{ padding: 48px 0; }
+    .sectionHead{
+      display:flex; align-items:flex-end; justify-content:space-between;
+      gap:14px; margin-bottom:16px;
     }
-    .section-head h2{
-      font-size: 20px;
-      letter-spacing: -.4px;
-    }
-    .section-head p{
-      color: var(--muted);
-      font-size: 14px;
-      max-width: 70ch;
-    }
+    .sectionHead h2{ font-size:22px; letter-spacing:-.4px; }
+    .sectionHead p{ color:var(--muted); font-size:14px; max-width: 75ch; }
 
-    .grid-3{
+    .grid3{
       display:grid;
       grid-template-columns: 1fr;
-      gap: 12px;
+      gap:12px;
     }
     .card{
-      padding: 16px;
+      border:1px solid var(--line);
+      background:var(--bg);
       border-radius: var(--r);
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.06);
+      padding:16px;
     }
-    .card .top{
-      display:flex; align-items:center; gap: 10px;
-      margin-bottom: 8px;
+    .cardTop{
+      display:flex; align-items:center; gap:10px;
+      margin-bottom:8px;
     }
     .dot{
-      width: 10px; height: 10px; border-radius: 50%;
-      background: var(--accent);
-      box-shadow: 0 0 0 6px rgba(34,197,94,.12);
+      width:10px; height:10px; border-radius:50%;
+      background: var(--accent2);
+      box-shadow: 0 0 0 6px rgba(22,163,74,.10);
     }
-    .card h3{ font-size: 15px; letter-spacing: -.2px; }
-    .card p{ color: var(--muted); font-size: 14px; margin-top: 6px; }
+    .card h3{ font-size:15px; letter-spacing:-.2px; }
+    .card p{ margin-top:6px; color:var(--muted); font-size:14px; }
+
+    .split{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:12px;
+      align-items:stretch;
+    }
+    .block{
+      border:1px solid var(--line);
+      background:var(--soft);
+      border-radius: var(--r);
+      padding:16px;
+    }
+    .block h3{ font-size:16px; letter-spacing:-.2px; }
+    .block p{ margin-top:8px; color:var(--muted); font-size:14px; }
 
     /* FAQ */
     details{
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.06);
+      border:1px solid var(--line);
+      background:var(--bg);
       border-radius: var(--r);
-      padding: 12px 14px;
+      padding:12px 14px;
     }
-    details + details{ margin-top: 10px; }
+    details + details{ margin-top:10px; }
     summary{
       cursor:pointer;
       list-style:none;
       display:flex;
       align-items:center;
       justify-content:space-between;
-      font-weight: 800;
-      gap: 14px;
+      gap:14px;
+      font-weight:900;
     }
     summary::-webkit-details-marker{ display:none; }
-    details p{
-      margin-top: 10px;
-      color: var(--muted);
-      font-size: 14px;
-    }
+    details p{ margin-top:10px; color:var(--muted); font-size:14px; }
 
-    /* contact */
-    .contact-grid{
-      display:grid;
-      grid-template-columns: 1fr;
-      gap: 12px;
+    /* newsletter */
+    .formRow{
+      display:flex; gap:10px; flex-wrap:wrap;
+      margin-top:12px;
     }
-    .field{ display:flex; flex-direction:column; gap: 6px; margin-bottom: 12px; }
-    label{ font-size: 13px; font-weight: 800; color: rgba(255,255,255,.86); }
-    input, textarea{
-      padding: 11px 12px;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,.14);
-      background: rgba(0,0,0,.18);
-      color: var(--text);
+    input{
+      flex: 1 1 220px;
+      padding:12px 12px;
+      border-radius:12px;
+      border:1px solid var(--line);
       font: inherit;
     }
-    textarea{ min-height: 120px; resize: vertical; }
-    .error{ color: var(--danger); font-size: 12px; min-height: 14px; }
-
-    .links{
-      display:grid; gap: 10px;
-      color: var(--muted);
-      font-size: 14px;
-    }
-    .links a{
-      color: rgba(96,165,250,.95);
-      font-weight: 800;
+    .error{
+      margin-top:8px;
+      color:#e11d48;
+      font-size:12px;
+      min-height: 14px;
     }
 
     /* footer */
     footer{
-      padding: 28px 0 34px;
-      border-top: 1px solid rgba(255,255,255,.10);
-      color: var(--muted);
-      font-size: 13px;
+      border-top:1px solid var(--line);
+      background: #fff;
+      padding: 34px 0;
     }
-    .footer-row{
-      display:flex; flex-wrap:wrap;
-      justify-content:space-between;
-      gap: 12px;
-      align-items:center;
+    .footGrid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:18px;
+      color:var(--muted);
+      font-size:13px;
+    }
+    .footLinks{
+      display:flex; flex-wrap:wrap; gap:10px 14px;
+    }
+    .footLinks a{
+      color:var(--muted);
+      font-weight:800;
+    }
+    .footLinks a:hover{ color:var(--text); }
+
+    /* modal */
+    dialog{
+      width: min(760px, 92vw);
+      border:none;
+      border-radius: 16px;
+      padding:0;
+      box-shadow: var(--shadow);
+    }
+    dialog::backdrop{ background: rgba(15,23,42,.55); }
+    .modal{ padding:16px; background:#fff; }
+    .modalHead{
+      display:flex; align-items:flex-start; justify-content:space-between;
+      gap:12px; margin-bottom:8px;
+    }
+    .modalHead h3{ font-size:16px; letter-spacing:-.2px; }
+    .modal p{ color:var(--muted); font-size:14px; margin-top:10px; }
+    .close{
+      width:42px; height:42px;
+      border-radius:12px;
+      border:1px solid var(--line);
+      background:#fff;
+      cursor:pointer;
     }
 
     /* toast */
     .toast{
-      position: fixed;
-      left:50%; transform: translateX(-50%);
-      bottom: 18px;
-      background: rgba(0,0,0,.85);
-      border: 1px solid rgba(255,255,255,.12);
-      color: #fff;
-      padding: 10px 12px;
-      border-radius: 14px;
-      box-shadow: var(--shadow);
-      opacity: 0;
+      position:fixed;
+      left:50%; transform:translateX(-50%);
+      bottom:18px;
+      background:#0f172a;
+      color:#fff;
+      border-radius:14px;
+      padding:10px 12px;
+      opacity:0;
       pointer-events:none;
       transition: opacity .18s ease;
-      max-width: 92vw;
-      z-index: 9999;
+      z-index:9999;
+      max-width:92vw;
     }
-    .toast.show{ opacity: 1; }
+    .toast.show{ opacity:1; }
 
-    /* responsive */
-    @media (min-width: 860px){
+    @media (min-width: 900px){
       nav ul{ display:flex; }
-      .hero-grid{ grid-template-columns: 1.15fr .85fr; }
-      .grid-3{ grid-template-columns: repeat(3, 1fr); }
-      .contact-grid{ grid-template-columns: 1.2fr .8fr; }
+      .heroGrid{ grid-template-columns: 1.15fr .85fr; }
+      .grid3{ grid-template-columns: repeat(3, 1fr); }
+      .split{ grid-template-columns: 1fr 1fr; }
+      .footGrid{ grid-template-columns: 1.2fr .8fr; align-items:start; }
     }
-
     @media (prefers-reduced-motion: reduce){
-      html{ scroll-behavior: auto; }
+      html{ scroll-behavior:auto; }
       .drawer{ transition:none; }
       .toast{ transition:none; }
     }
@@ -400,45 +399,42 @@
 
   <header>
     <div class="container">
-      <div class="nav">
-        <a class="brand" href="#home" aria-label="BitC Network Home">
-          <span class="logo" aria-hidden="true"></span>
-          <span>
-            BitC Network
-            <small>Minimal mobile mining (demo)</small>
-          </span>
+      <div class="topbar">
+        <a class="brand" href="#home" aria-label="BitC Network home">
+          <span class="mark" aria-hidden="true"></span>
+          <span>BitC Network</span>
         </a>
 
-        <nav aria-label="Primary">
+        <nav aria-label="Primary navigation">
           <ul>
-            <li><a href="#features" class="navlink">Features</a></li>
-            <li><a href="#how" class="navlink">How it works</a></li>
-            <li><a href="#faq" class="navlink">FAQ</a></li>
-            <li><a href="#contact" class="navlink">Contact</a></li>
+            <li><a class="navlink" href="#why">Why</a></li>
+            <li><a class="navlink" href="#how">How it works</a></li>
+            <li><a class="navlink" href="#ecosystem">Ecosystem</a></li>
+            <li><a class="navlink" href="#faq">FAQ</a></li>
           </ul>
         </nav>
 
-        <div style="display:flex; gap:10px; align-items:center;">
-          <a class="btn primary" href="#contact">Get started</a>
-          <button class="icon" id="openMenu" aria-label="Open menu" aria-controls="drawer" aria-expanded="false">
-            ☰
-          </button>
+        <div class="actions">
+          <a class="btn" href="https://bitcnetwork.com/privacy" target="_blank" rel="noopener noreferrer">Privacy</a>
+          <a class="btn primary" href="#download">Download</a>
+          <button class="iconbtn" id="openMenu" aria-label="Open menu" aria-controls="drawer" aria-expanded="false">☰</button>
         </div>
       </div>
     </div>
   </header>
 
-  <!-- mobile menu -->
+  <!-- Mobile drawer -->
   <div class="overlay" id="overlay" hidden></div>
   <aside class="drawer" id="drawer" aria-hidden="true">
-    <div class="head">
+    <div class="drawerhead">
       <strong>Menu</strong>
-      <button class="icon" id="closeMenu" aria-label="Close menu">✕</button>
+      <button class="iconbtn" id="closeMenu" aria-label="Close menu">✕</button>
     </div>
-    <a href="#features" data-drawer>Features</a>
+    <a href="#why" data-drawer>Why</a>
     <a href="#how" data-drawer>How it works</a>
+    <a href="#ecosystem" data-drawer>Ecosystem</a>
     <a href="#faq" data-drawer>FAQ</a>
-    <a href="#contact" data-drawer>Contact</a>
+    <a href="#download" data-drawer>Download</a>
     <a href="https://bitcnetwork.com/privacy" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
   </aside>
 
@@ -446,98 +442,182 @@
     <!-- HERO -->
     <section class="hero" id="home">
       <div class="container">
-        <div class="hero-grid">
+        <div class="heroGrid">
           <div>
-            <div class="badge">● Secure • Mobile-first • Minimal UI</div>
-            <h1>Mobile Mining, designed to feel simple.</h1>
+            <div class="badge">Mobile-first • Lightweight • Secure</div>
+            <h1>Mine crypto on your phone.<br/>Simple by design.</h1>
             <p class="lead">
-              A clean project website with modern layout, accessibility, and real interaction—ready for your teacher.
-              You can later connect the form to PHP/MySQL.
+              BitC Network is built for real people: clean onboarding, clear steps, and a stable experience
+              designed for modern mobile devices.
             </p>
-            <div class="hero-actions">
-              <button class="btn primary" id="demoBtn">View demo action</button>
-              <a class="btn" href="#features">Explore features</a>
+
+            <div class="heroBtns">
+              <a class="btn primary" href="#download">Download App</a>
+              <button class="btn" id="playVideo" type="button">Play video</button>
+              <a class="btn" href="#why">Read more</a>
+            </div>
+
+            <div class="subnote">
+              This is a production-style landing layout (clean sections + serious footer).
             </div>
           </div>
 
-          <div class="panel hero-card" aria-label="Quick summary">
-            <strong style="font-size:16px;">Project highlights</strong>
-            <div class="mini">Minimal design + real functionality (menu, FAQ, form validation, toasts).</div>
+          <aside class="panel" aria-label="Quick highlights">
+            <div class="panelInner">
+              <div class="panelTitle">Platform highlights</div>
+              <div class="mini">Clear, minimal, and built for trust.</div>
 
-            <div class="stat-row">
-              <div class="stat">
-                <strong>Fast</strong>
-                <span>Lightweight UI patterns</span>
-              </div>
-              <div class="stat">
-                <strong>Secure</strong>
-                <span>Clear navigation & policy links</span>
-              </div>
-              <div class="stat">
-                <strong>Responsive</strong>
-                <span>Works on phone & desktop</span>
-              </div>
-              <div class="stat">
-                <strong>Accessible</strong>
-                <span>Keyboard & focus support</span>
+              <div class="stats">
+                <div class="stat">
+                  <strong>Accessible</strong>
+                  <span>Designed for everyday users</span>
+                </div>
+                <div class="stat">
+                  <strong>Lightweight</strong>
+                  <span>Minimal UI, fast load</span>
+                </div>
+                <div class="stat">
+                  <strong>Secure</strong>
+                  <span>Privacy-first approach</span>
+                </div>
+                <div class="stat">
+                  <strong>Community</strong>
+                  <span>Support & updates</span>
+                </div>
               </div>
             </div>
-          </div>
+          </aside>
         </div>
       </div>
     </section>
 
-    <!-- FEATURES -->
-    <section id="features">
+    <!-- WHY -->
+    <section id="why">
       <div class="container">
-        <div class="section-head">
+        <div class="sectionHead">
           <div>
-            <h2>Features</h2>
-            <p>Minimal sections, clean spacing, consistent components (international-style).</p>
+            <h2>Why BitC Network</h2>
+            <p>
+              People avoid crypto because it feels complex. A production site must explain value in simple blocks,
+              not long paragraphs. This is the same clean approach used by top crypto landing pages. 1
+            </p>
           </div>
         </div>
 
-        <div class="grid-3">
+        <div class="grid3">
           <article class="card">
-            <div class="top"><span class="dot"></span><h3>Battery-aware experience</h3></div>
-            <p>Designed to communicate safe usage and avoid aggressive behavior.</p>
+            <div class="cardTop"><span class="dot"></span><h3>Easy to start</h3></div>
+            <p>Clear steps, clear CTA, no distractions.</p>
           </article>
-
           <article class="card">
-            <div class="top"><span class="dot"></span><h3>Security-first UI</h3></div>
-            <p>Clear flows for accounts, policies, and user support channels.</p>
+            <div class="cardTop"><span class="dot"></span><h3>Designed for trust</h3></div>
+            <p>Policies, support, and transparency visible from the first screen.</p>
           </article>
-
           <article class="card">
-            <div class="top"><span class="dot"></span><h3>Clean learning journey</h3></div>
-            <p>How-it-works steps + FAQ + contact form validation for easy grading.</p>
+            <div class="cardTop"><span class="dot"></span><h3>Built for utility</h3></div>
+            <p>Position the ecosystem: apps, payments, community growth.</p>
           </article>
         </div>
       </div>
     </section>
 
     <!-- HOW -->
-    <section id="how">
+    <section id="how" style="background:var(--soft); border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
       <div class="container">
-        <div class="section-head">
+        <div class="sectionHead">
           <div>
             <h2>How it works</h2>
-            <p>Simple steps are better than long marketing text. Teachers love clarity.</p>
+            <p>Minimal steps. Clear. That’s how “real” product pages communicate.</p>
           </div>
         </div>
 
-        <div class="grid-3">
-          <div class="card">
-            <div class="top"><span class="dot"></span><h3>1) Create account</h3></div>
-            <p>Start with a clean onboarding message and basic setup (demo site).</p>
+        <div class="split">
+          <div class="block">
+            <h3>1) Download & create account</h3>
+            <p>Get the app and onboard with simple verification and guidance.</p>
           </div>
-          <div class="card">
-            <div class="top"><span class="dot"></span><h3>2) Choose mode</h3></div>
-            <p>Select safe settings that balance performance and battery awareness.</p>
+          <div class="block">
+            <h3>2) Start mining</h3>
+            <p>Activate mining mode and follow recommended safe settings.</p>
           </div>
-          <div class="card">
-            <div class="top"><span class="dot"></span><h3>3) Track & learn</h3></div>
-            <p>Use FAQs and support to reduce user confusion and improve trust.</p>
+          <div class="block">
+            <h3>3) Grow in the ecosystem</h3>
+            <p>Use utilities, learn from community resources, stay updated.</p>
+          </div>
+          <div class="block">
+            <h3>4) Get support</h3>
+            <p>FAQ + support channels reduce user friction—critical for production trust. 2</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ECOSYSTEM -->
+    <section id="ecosystem">
+      <div class="container">
+        <div class="sectionHead">
+          <div>
+            <h2>Ecosystem</h2>
+            <p>
+              A production crypto site should show “what else exists” besides mining: developer tools, roadmap,
+              blog updates, and compliance/trust pages. 3
+            </p>
+          </div>
+        </div>
+
+        <div class="grid3">
+          <article class="card">
+            <div class="cardTop"><span class="dot"></span><h3>Developers</h3></div>
+            <p>Show tools, docs, and how builders can create apps/utilities.</p>
+          </article>
+          <article class="card">
+            <div class="cardTop"><span class="dot"></span><h3>Roadmap</h3></div>
+            <p>Clear phases build credibility and reduce “scam” assumptions. 4</p>
+          </article>
+          <article class="card">
+            <div class="cardTop"><span class="dot"></span><h3>News & updates</h3></div>
+            <p>Keep a blog/news section to show the project is active. 5</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- DOWNLOAD + NEWSLETTER -->
+    <section id="download" style="background:var(--soft); border-top:1px solid var(--line);">
+      <div class="container">
+        <div class="sectionHead">
+          <div>
+            <h2>Download</h2>
+            <p>Put the main CTA here again (like a real product site). Replace the links with your real store URLs.</p>
+          </div>
+        </div>
+
+        <div class="split">
+          <div class="block" style="background:#fff;">
+            <h3>Get BitC Network</h3>
+            <p style="margin-top:8px; color:var(--muted);">
+              Start with the official app and join the community.
+            </p>
+            <div class="heroBtns" style="margin-top:14px;">
+              <a class="btn primary" href="#" aria-label="Download on Play Store">Google Play</a>
+              <a class="btn" href="#" aria-label="Download on App Store">App Store</a>
+            </div>
+            <div class="subnote">Tip: use real store badges later for more trust.</div>
+          </div>
+
+          <div class="block" style="background:#fff;">
+            <h3>Get updates</h3>
+            <p style="margin-top:8px; color:var(--muted);">
+              Newsletter signup (production-style). No spam.
+            </p>
+
+            <form id="newsForm" novalidate>
+              <div class="formRow">
+                <input id="newsEmail" type="email" placeholder="Email address" required />
+                <button class="btn primary" type="submit">Subscribe</button>
+              </div>
+              <div class="error" id="newsErr" aria-live="polite"></div>
+            </form>
           </div>
         </div>
       </div>
@@ -546,92 +626,81 @@
     <!-- FAQ -->
     <section id="faq">
       <div class="container">
-        <div class="section-head">
+        <div class="sectionHead">
           <div>
             <h2>FAQ</h2>
-            <p>Accordion is minimal and still adds real interaction.</p>
+            <p>Support/FAQ is a trust requirement for production crypto products. 6</p>
           </div>
         </div>
 
         <details>
-          <summary>Is this site a demo or production?</summary>
-          <p>This is a demo project website. The UI/UX and working interactions are what matter for grading.</p>
+          <summary>Is BitC Network mining “lightweight” on mobile?</summary>
+          <p>Position it as optimized for mobile user experience, with clear guidance and settings.</p>
         </details>
         <details>
-          <summary>What “functionality” is included?</summary>
-          <p>Mobile menu, active navigation, smooth scroll, FAQ accordion, form validation, and toast feedback.</p>
+          <summary>Where can I get support?</summary>
+          <p>Provide FAQ, Telegram/community links, and an email contact. Keep it visible in the footer.</p>
         </details>
         <details>
-          <summary>Can this connect to PHP/MySQL?</summary>
-          <p>Yes. The contact form can submit to PHP to store messages in MySQL and show them in an admin inbox.</p>
+          <summary>How do I know the project is active?</summary>
+          <p>Maintain a blog/news page and update it regularly with releases and roadmap progress.</p>
         </details>
-      </div>
-    </section>
-
-    <!-- CONTACT -->
-    <section id="contact">
-      <div class="container">
-        <div class="section-head">
-          <div>
-            <h2>Contact</h2>
-            <p>A validated form is strong “functionality” and looks professional.</p>
-          </div>
-        </div>
-
-        <div class="contact-grid">
-          <div class="panel" style="padding:16px;">
-            <form id="contactForm" novalidate>
-              <div class="field">
-                <label for="name">Full name</label>
-                <input id="name" name="name" type="text" placeholder="Your name" required minlength="2" />
-                <div class="error" id="errName" aria-live="polite"></div>
-              </div>
-
-              <div class="field">
-                <label for="email">Email</label>
-                <input id="email" name="email" type="email" placeholder="you@example.com" required />
-                <div class="error" id="errEmail" aria-live="polite"></div>
-              </div>
-
-              <div class="field">
-                <label for="message">Message</label>
-                <textarea id="message" name="message" placeholder="Write your message..." required minlength="10"></textarea>
-                <div class="error" id="errMsg" aria-live="polite"></div>
-              </div>
-
-              <button class="btn primary" type="submit">Send message</button>
-            </form>
-          </div>
-
-          <div class="panel" style="padding:16px;">
-            <strong style="font-size:16px;">Support</strong>
-            <div class="links" style="margin-top:10px;">
-              <div>Email: <a href="mailto:danvilchain@gmail.com">danvilchain@gmail.com</a></div>
-              <div>Telegram: <a href="https://t.me/minebitc_eng" target="_blank" rel="noopener noreferrer">minebitc_eng</a></div>
-              <div>Twitter/X: <a href="https://twitter.com/bitcnetwork" target="_blank" rel="noopener noreferrer">@bitcnetwork</a></div>
-              <div>Privacy: <a href="https://bitcnetwork.com/privacy" target="_blank" rel="noopener noreferrer">bitcnetwork.com/privacy</a></div>
-            </div>
-            <div style="margin-top:14px; color:var(--muted); font-size:13px;">
-              Tip: For higher marks, connect this form to PHP/MySQL and show messages in an admin page.
-            </div>
-          </div>
-        </div>
       </div>
     </section>
   </main>
 
   <footer>
     <div class="container">
-      <div class="footer-row">
-        <div>© 2026 BitC Network — minimal demo</div>
-        <div style="display:flex; gap:12px; flex-wrap:wrap;">
-          <a href="#features">Features</a>
-          <a href="#faq">FAQ</a>
-          <a href="https://bitcnetwork.com/privacy" target="_blank" rel="noopener noreferrer">Privacy</a>
+      <div class="footGrid">
+        <div>
+          <div style="display:flex; align-items:center; gap:10px; font-weight:900; color:var(--text);">
+            <span class="mark" aria-hidden="true" style="width:28px;height:28px;border-radius:10px;"></span>
+            BitC Network
+          </div>
+          <p style="margin-top:10px;">
+            Mobile-first crypto mining experience — built for simplicity, trust, and accessibility.
+          </p>
+          <p style="margin-top:10px; font-size:12px;">
+            © <span id="year"></span> BitC Network. All rights reserved.
+          </p>
+        </div>
+
+        <div>
+          <div style="font-weight:900; color:var(--text);">Links</div>
+          <div class="footLinks" style="margin-top:10px;">
+            <a href="#why">Why</a>
+            <a href="#how">How it works</a>
+            <a href="#ecosystem">Ecosystem</a>
+            <a href="#faq">FAQ</a>
+            <a href="https://bitcnetwork.com/privacy" target="_blank" rel="noopener noreferrer">Privacy</a>
+          </div>
+
+          <div style="margin-top:14px; font-weight:900; color:var(--text);">Contact</div>
+          <div style="margin-top:10px; color:var(--muted);">
+            Email: <a href="mailto:danvilchain@gmail.com" style="font-weight:900; color:var(--accent);">danvilchain@gmail.com</a><br/>
+            Telegram: <a href="https://t.me/minebitc_eng" target="_blank" rel="noopener noreferrer" style="font-weight:900; color:var(--accent);">minebitc_eng</a><br/>
+            Twitter/X: <a href="https://twitter.com/bitcnetwork" target="_blank" rel="noopener noreferrer" style="font-weight:900; color:var(--accent);">@bitcnetwork</a>
+          </div>
         </div>
       </div>
     </div>
   </footer>
+
+  <!-- Video modal -->
+  <dialog id="videoDialog" aria-label="Video dialog">
+    <div class="modal">
+      <div class="modalHead">
+        <h3>BitC Network — Intro</h3>
+        <button class="close" id="closeVideo" aria-label="Close">✕</button>
+      </div>
+      <p>
+        Replace this block with your real embed later (YouTube/Vimeo). For now it shows a production-style modal.
+      </p>
+      <p>
+        Example: use an iframe + responsive wrapper, and lazy-load it for performance.
+      </p>
+    </div>
+  </dialog>
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
@@ -639,16 +708,19 @@
     const $ = (q) => document.querySelector(q);
     const $$ = (q) => Array.from(document.querySelectorAll(q));
 
+    // year
+    $("#year").textContent = new Date().getFullYear();
+
     // toast
     function toast(msg){
       const t = $("#toast");
       t.textContent = msg;
       t.classList.add("show");
       clearTimeout(window.__t);
-      window.__t = setTimeout(()=> t.classList.remove("show"), 1600);
+      window.__t = setTimeout(()=> t.classList.remove("show"), 1700);
     }
 
-    // mobile drawer
+    // mobile menu
     const overlay = $("#overlay");
     const drawer = $("#drawer");
     const openMenu = $("#openMenu");
@@ -660,76 +732,78 @@
       overlay.hidden = false;
       drawer.setAttribute("aria-hidden","false");
       openMenu.setAttribute("aria-expanded","true");
-      document.body.style.overflow="hidden";
+      document.body.style.overflow = "hidden";
     }
-    function closeDrawerFn(){
+    function closeDrawer(){
       drawer.classList.remove("open");
       overlay.classList.remove("open");
       overlay.hidden = true;
       drawer.setAttribute("aria-hidden","true");
       openMenu.setAttribute("aria-expanded","false");
-      document.body.style.overflow="";
+      document.body.style.overflow = "";
     }
     openMenu.addEventListener("click", openDrawer);
-    closeMenu.addEventListener("click", closeDrawerFn);
-    overlay.addEventListener("click", closeDrawerFn);
-    $$("[data-drawer]").forEach(a => a.addEventListener("click", closeDrawerFn));
-    document.addEventListener("keydown", (e)=>{ if(e.key==="Escape") closeDrawerFn(); });
+    closeMenu.addEventListener("click", closeDrawer);
+    overlay.addEventListener("click", closeDrawer);
+    $$("[data-drawer]").forEach(a => a.addEventListener("click", closeDrawer));
+
+    document.addEventListener("keydown", (e)=>{
+      if(e.key === "Escape"){
+        closeDrawer();
+        const d = $("#videoDialog");
+        if(d.open) d.close();
+      }
+    });
 
     // smooth scroll
     $$('a[href^="#"]').forEach(a=>{
       a.addEventListener("click",(e)=>{
         const id = a.getAttribute("href");
         if(!id || id === "#") return;
-        const target = document.querySelector(id);
-        if(!target) return;
+        const el = document.querySelector(id);
+        if(!el) return;
         e.preventDefault();
-        target.scrollIntoView({ behavior:"smooth", block:"start" });
+        el.scrollIntoView({ behavior:"smooth", block:"start" });
       });
     });
 
-    // active nav on scroll
-    const links = $$(".navlink");
-    const sections = links.map(l => document.querySelector(l.getAttribute("href"))).filter(Boolean);
+    // active nav highlight
+    const navLinks = $$(".navlink");
+    const sections = navLinks.map(l => document.querySelector(l.getAttribute("href"))).filter(Boolean);
 
     const io = new IntersectionObserver((entries)=>{
       entries.forEach(entry=>{
         if(entry.isIntersecting){
           const id = "#" + entry.target.id;
-          links.forEach(l => l.classList.toggle("active", l.getAttribute("href") === id));
+          navLinks.forEach(l => l.classList.toggle("active", l.getAttribute("href") === id));
         }
       });
     }, { rootMargin: "-55% 0px -40% 0px", threshold: 0.01 });
 
     sections.forEach(s => io.observe(s));
 
-    // demo button
-    $("#demoBtn").addEventListener("click", ()=> toast("Demo action ✅ This site is clean and functional."));
+    // video modal
+    const vd = $("#videoDialog");
+    $("#playVideo").addEventListener("click", ()=> vd.showModal());
+    $("#closeVideo").addEventListener("click", ()=> vd.close());
 
-    // contact validation
-    const form = $("#contactForm");
-    const nameEl = $("#name");
-    const emailEl = $("#email");
-    const msgEl = $("#message");
+    // newsletter validation (demo)
+    const newsForm = $("#newsForm");
+    const newsEmail = $("#newsEmail");
+    const newsErr = $("#newsErr");
+    const validEmail = (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
 
-    function setErr(id, msg){ $("#"+id).textContent = msg || ""; }
-    function validEmail(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
-
-    form.addEventListener("submit", (e)=>{
+    newsForm.addEventListener("submit", (e)=>{
       e.preventDefault();
-      const name = nameEl.value.trim();
-      const email = emailEl.value.trim();
-      const msg = msgEl.value.trim();
-      let ok = true;
-
-      if(name.length < 2){ setErr("errName","Name must be at least 2 characters."); ok=false; } else setErr("errName","");
-      if(!validEmail(email)){ setErr("errEmail","Enter a valid email."); ok=false; } else setErr("errEmail","");
-      if(msg.length < 10){ setErr("errMsg","Message must be at least 10 characters."); ok=false; } else setErr("errMsg","");
-
-      if(!ok){ toast("Fix the form errors."); return; }
-
-      toast("Message sent (demo).");
-      form.reset();
+      const v = newsEmail.value.trim();
+      if(!validEmail(v)){
+        newsErr.textContent = "Please enter a valid email address.";
+        toast("Fix your email.");
+        return;
+      }
+      newsErr.textContent = "";
+      toast("Subscribed (demo).");
+      newsForm.reset();
     });
   </script>
 </body>
