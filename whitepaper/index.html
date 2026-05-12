@@ -1,394 +1,226 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BITC NETWORK Whitepaper - Advanced Technical Edition</title>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        * {
-            font-family: 'Nunito', sans-serif;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BitC Network Whitepaper</title>
+  <meta name="description" content="Official BitC Network whitepaper." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root{--red:#c74634;--redDark:#8f2f23;--dark:#312d2a;--ink:#1f1a17;--muted:#6f6761;--cream:#f7f3ef;--line:#ded6ce;--white:#fff;--max:1180px;--shadow:0 20px 50px rgba(49,45,42,.12)}
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:Inter,system-ui,sans-serif;background:var(--cream);color:var(--dark);line-height:1.7}
+    a{text-decoration:none;color:inherit}
+    .container{max-width:var(--max);margin:auto;padding:0 24px}
+    .top{background:#161513;color:#eee7df;font-size:.84rem}.top .container{min-height:38px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+    .nav{background:var(--dark);color:#fff;position:sticky;top:0;z-index:30;border-bottom:1px solid rgba(255,255,255,.08)}
+    .nav-inner{min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+    .logo{width:92px;height:32px;border:2px solid #fff;border-radius:999px;display:grid;place-items:center;font-weight:950;letter-spacing:-.06em}
+    .links{display:flex;gap:18px;flex-wrap:wrap;font-weight:800;color:#eee7df}.links a:hover{text-decoration:underline}
+    .hero{background:linear-gradient(90deg,rgba(247,243,239,.98) 0%,rgba(247,243,239,.9) 50%,rgba(247,243,239,.25) 100%),radial-gradient(circle at 80% 30%,rgba(199,70,52,.2),transparent 28%),linear-gradient(135deg,#f7f3ef,#ded6ce);border-bottom:1px solid var(--line)}
+    .hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:42px;align-items:center;min-height:620px;padding:72px 0}
+    .kicker{font-size:.78rem;text-transform:uppercase;letter-spacing:.12em;font-weight:950;color:var(--red);margin-bottom:16px}
+    h1{font-size:clamp(2.8rem,6vw,5.6rem);line-height:.96;letter-spacing:-.08em;color:var(--ink)}
+    .lead{margin-top:22px;max-width:720px;color:#4f4843;font-weight:650;font-size:1.12rem}
+    .hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
+    .btn{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:12px 18px;border-radius:4px;font-weight:900;border:1px solid transparent;transition:.18s ease}
+    .btn:hover{transform:translateY(-1px)}
+    .btn-red{background:var(--red);color:#fff}.btn-red:hover{background:var(--redDark)}
+    .btn-outline{border-color:var(--dark);color:var(--dark)}
+    .hero-card{background:#fff;border:1px solid var(--line);box-shadow:var(--shadow);padding:34px}
+    .hero-card h3{font-size:1.5rem;letter-spacing:-.05em;color:var(--ink);margin-bottom:18px}
+    .metric{padding:16px 0;border-bottom:1px solid var(--line)}.metric:last-child{border-bottom:0}.metric strong{display:block;font-size:2rem;letter-spacing:-.06em;color:var(--ink)}.metric span{color:var(--muted);font-weight:700}
+    .section{padding:72px 0;border-bottom:1px solid var(--line)}
+    .section.white{background:#fff}
+    .section-head{max-width:860px;margin-bottom:34px}
+    .section-head h2{font-size:clamp(2rem,4vw,3.5rem);line-height:1.03;letter-spacing:-.07em;color:var(--ink)}
+    .section-head p{margin-top:14px;color:var(--muted);font-weight:650}
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+    .card{background:#fff;border:1px solid var(--line);padding:28px;transition:.18s ease}.card:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+    .card h3{font-size:1.3rem;letter-spacing:-.04em;color:var(--ink);margin-bottom:12px}
+    .card p{color:#5a524d;font-weight:550}
+    .table-wrap{background:#fff;border:1px solid var(--line);overflow:auto}
+    table{width:100%;border-collapse:collapse}th,td{padding:18px;border-bottom:1px solid var(--line);text-align:left}th{background:#f5f0eb;color:var(--ink);font-size:.92rem}td{font-weight:600;color:#514944}.highlight{color:var(--red);font-weight:900}
+    .roadmap{display:grid;gap:22px}.phase{background:#fff;border:1px solid var(--line);padding:30px}.phase h3{font-size:1.4rem;letter-spacing:-.04em;color:var(--ink);margin-bottom:14px}.phase ul{padding-left:20px}.phase li{margin-bottom:8px;color:#5a524d;font-weight:550}
+    .cta{background:#1f1a17;color:#fff;padding:72px 0}.cta-grid{display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center}.cta h2{font-size:clamp(2rem,4vw,3.6rem);line-height:1.03;letter-spacing:-.07em}.cta p{margin-top:16px;color:#d8d0c8;font-weight:600;max-width:760px}.cta-actions{display:flex;gap:12px;flex-wrap:wrap}
+    footer{background:#312d2a;color:#eee7df;padding:40px 0}.footer-grid{display:grid;grid-template-columns:1fr auto;gap:24px;align-items:start}.footer-links{display:flex;gap:18px;flex-wrap:wrap;font-weight:800;justify-content:flex-end}.footer-links a:hover{text-decoration:underline}.copyright{margin-top:12px;color:#cfc6be;font-size:.9rem}
+    @media(max-width:980px){.hero-grid,.cta-grid,.footer-grid{grid-template-columns:1fr}.grid{grid-template-columns:1fr 1fr}.footer-links{justify-content:flex-start}}
+    @media(max-width:700px){.hero-grid{padding:54px 0;min-height:auto}.grid{grid-template-columns:1fr}.nav-inner,.top .container{align-items:flex-start;flex-direction:column;padding-top:14px;padding-bottom:14px}.hero-actions .btn,.cta-actions .btn{width:100%}.card,.phase,.hero-card{padding:24px}}
+  </style>
 </head>
-<body class="bg-gray-50 min-h-screen py-8 px-4">
-    <div class="max-w-4xl mx-auto bg-white rounded-2xl shadow-md overflow-hidden">
-        <!-- Header -->
-        <div class="bg-gradient-to-r from-purple-700 to-purple-800 p-6 text-white">
-            <div class="flex items-center justify-between">
-                <div class="flex items-center">
-                    <button onclick="goBack()" class="mr-4 p-2 rounded-full hover:bg-purple-600 transition-all duration-300">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                        </svg>
-                    </button>
-                    <div class="flex items-center">
-                        <div class="w-10 h-10 rounded-full overflow-hidden mr-3 bg-white flex items-center justify-center">
-                            <img src="https://bitcnetwork.com/assets/1.png" alt="BitC Logo" class="w-8 h-8 object-cover">
-                        </div>
-                        <div>
-                            <h1 class="text-2xl font-bold">BITC NETWORK Whitepaper</h1>
-                            <p class="text-purple-200 text-sm">Advanced Technical Architecture & Protocol Design</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="text-sm opacity-80">Technical Document • <span id="current-date"></span></div>
-            </div>
+<body>
+  <div class="top"><div class="container"><span>BitC Network</span><span>Enterprise mobile digital currency infrastructure</span></div></div>
+  <header class="nav"><div class="container nav-inner"><a class="logo" href="../">BitC</a><nav class="links"><a href="../">Home</a><a href="../privacy/">Privacy</a><a href="../terms/">Terms</a><a href="../security/">Security</a></nav></div></header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <div class="kicker">Official Whitepaper</div>
+          <h1>Building the next generation mobile crypto ecosystem.</h1>
+          <p class="lead">BitC Network combines mobile-first participation, scalable infrastructure, community growth, and enterprise-ready architecture to create a secure and accessible digital currency platform for the future.</p>
+          <div class="hero-actions">
+            <a class="btn btn-red" href="../">Explore platform</a>
+            <a class="btn btn-outline" href="../security/">Security center</a>
+          </div>
         </div>
-        
-        <!-- Content -->
-        <div class="p-8">
-            <!-- Executive Summary -->
-            <div class="mb-12">
-                <h2 class="text-xl font-bold text-gray-800 mb-4 relative pl-4">
-                    <div class="absolute left-0 top-2 w-1 h-6 bg-purple-600 rounded"></div>
-                    Executive Summary: The Next Evolution in Blockchain Architecture
-                </h2>
-                <p class="text-gray-600 mb-6 leading-relaxed">
-                    BITC Network introduces a paradigm-shifting blockchain architecture that fundamentally redefines the scalability, security, and sustainability trilemma through innovative cryptographic primitives and distributed systems engineering. Our protocol represents the culmination of decade-long blockchain research, implementing novel consensus mechanisms that achieve unprecedented transaction throughput while maintaining Bitcoin-grade security guarantees.
-                </p>
-                <div class="bg-blue-50 border-l-4 border-blue-500 p-6 rounded-lg mb-6">
-                    <p class="text-blue-800 font-semibold text-lg">
-                        🚀 Architectural Breakthrough: BITC's multi-layered consensus protocol achieves 50,000+ TPS with sub-second finality while consuming less than 0.01% of Bitcoin's energy footprint.
-                    </p>
-                </div>
-            </div>
+        <aside class="hero-card">
+          <h3>BitC at a glance</h3>
+          <div class="metric"><strong>Mobile-first</strong><span>Simple participation through smartphones</span></div>
+          <div class="metric"><strong>Low energy</strong><span>Focused on efficient and sustainable operations</span></div>
+          <div class="metric"><strong>Community driven</strong><span>Built around growth, trust, and adoption</span></div>
+          <div class="metric"><strong>Scalable</strong><span>Future-ready ecosystem architecture</span></div>
+        </aside>
+      </div>
+    </section>
 
-            <!-- Core Protocol Architecture -->
-            <div class="mb-12">
-                <h2 class="text-xl font-bold text-gray-800 mb-6 relative pl-4">
-                    <div class="absolute left-0 top-2 w-1 h-6 bg-purple-600 rounded"></div>
-                    Core Protocol Architecture & Cryptographic Innovations
-                </h2>
-                
-                <div class="grid md:grid-cols-2 gap-8 mb-8">
-                    <!-- Innovation 1 -->
-                    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-lg hover:border-purple-500 transition-all duration-300">
-                        <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
-                            <i class="fas fa-bolt text-purple-600 text-xl"></i>
-                        </div>
-                        <h3 class="text-lg font-bold text-gray-800 mb-3">Proof-of-Distributed-Time (PoDT)</h3>
-                        <p class="text-gray-600 text-sm leading-relaxed mb-4">
-                            A revolutionary consensus mechanism leveraging verifiable delay functions (VDFs) and threshold cryptography to achieve Byzantine fault tolerance without energy-intensive computations. Implements BLS signature aggregation for efficient committee-based validation.
-                        </p>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="bg-gradient-to-r from-purple-600 to-purple-700 text-white px-3 py-1 rounded-full text-xs font-bold">VDF-Based</span>
-                            <span class="bg-gradient-to-r from-purple-600 to-purple-700 text-white px-3 py-1 rounded-full text-xs font-bold">BLS Aggregation</span>
-                            <span class="bg-gradient-to-r from-purple-600 to-purple-700 text-white px-3 py-1 rounded-full text-xs font-bold">Zero Energy Waste</span>
-                        </div>
-                    </div>
-
-                    <!-- Innovation 2 -->
-                    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-lg hover:border-purple-500 transition-all duration-300">
-                        <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
-                            <i class="fas fa-layer-group text-green-600 text-xl"></i>
-                        </div>
-                        <h3 class="text-lg font-bold text-gray-800 mb-3">Multi-Layer Sharding Architecture</h3>
-                        <p class="text-gray-600 text-sm leading-relaxed mb-4">
-                            Implements state sharding with cross-shard atomic composability through Merkle-Patricia trie optimizations. Features dynamic shard reconfiguration based on network load with secure randomness beacon for shard assignment.
-                        </p>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="bg-gradient-to-r from-purple-600 to-purple-700 text-white px-3 py-1 rounded-full text-xs font-bold">State Sharding</span>
-                            <span class="bg-gradient-to-r from-purple-600 to-purple-700 text-white px-3 py-1 rounded-full text-xs font-bold">Atomic Cross-Shard</span>
-                            <span class="bg-gradient-to-r from-purple-600 to-purple-700 text-white px-3 py-1 rounded-full text-xs font-bold">Dynamic Reconfiguration</span>
-                        </div>
-                    </div>
-
-                    <!-- Innovation 3 -->
-                    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-lg hover:border-purple-500 transition-all duration-300">
-                        <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mb-4">
-                            <i class="fas fa-shield-alt text-red-600 text-xl"></i>
-                        </div>
-                        <h3 class="text-lg font-bold text-gray-800 mb-3">Post-Quantum Cryptography Suite</h3>
-                        <p class="text-gray-600 text-sm leading-relaxed mb-4">
-                            Implements lattice-based cryptographic primitives including CRYSTALS-Kyber for key exchange and CRYSTALS-Dilithium for digital signatures. Provides quantum resistance while maintaining computational efficiency.
-                        </p>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="bg-gradient-to-r from-purple-600 to-purple-700 text-white px-3 py-1 rounded-full text-xs font-bold">Lattice-Based</span>
-                            <span class="bg-gradient-to-r from-purple-600 to-purple-700 text-white px-3 py-1 rounded-full text-xs font-bold">Quantum Safe</span>
-                            <span class="bg-gradient-to-r from-purple-600 to-purple-700 text-white px-3 py-1 rounded-full text-xs font-bold">NIST Standard</span>
-                        </div>
-                    </div>
-
-                    <!-- Innovation 4 -->
-                    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-lg hover:border-purple-500 transition-all duration-300">
-                        <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center mb-4">
-                            <i class="fas fa-network-wired text-yellow-600 text-xl"></i>
-                        </div>
-                        <h3 class="text-lg font-bold text-gray-800 mb-3">Cross-Chain Interoperability Protocol</h3>
-                        <p class="text-gray-600 text-sm leading-relaxed mb-4">
-                            Utilizes threshold signature schemes (TSS) and light client verification for trust-minimized cross-chain communication. Supports atomic swaps and generalized message passing across heterogeneous blockchain ecosystems.
-                        </p>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="bg-gradient-to-r from-purple-600 to-purple-700 text-white px-3 py-1 rounded-full text-xs font-bold">TSS-Based</span>
-                            <span class="bg-gradient-to-r from-purple-600 to-purple-700 text-white px-3 py-1 rounded-full text-xs font-bold">Light Client</span>
-                            <span class="bg-gradient-to-r from-purple-600 to-purple-700 text-white px-3 py-1 rounded-full text-xs font-bold">Atomic Swaps</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Technical Comparison -->
-            <div class="mb-12">
-                <h2 class="text-xl font-bold text-gray-800 mb-6 relative pl-4">
-                    <div class="absolute left-0 top-2 w-1 h-6 bg-purple-600 rounded"></div>
-                    Protocol Performance Benchmarking: BITC vs Bitcoin
-                </h2>
-                
-                <div class="bg-white rounded-lg overflow-hidden shadow-lg mb-8">
-                    <table class="w-full">
-                        <thead>
-                            <tr class="bg-gray-50">
-                                <th class="p-4 text-left font-bold text-purple-700">Technical Metric</th>
-                                <th class="p-4 text-center font-bold text-purple-700">Bitcoin</th>
-                                <th class="p-4 text-center font-bold text-purple-700">BITC Network</th>
-                                <th class="p-4 text-center font-bold text-purple-700">Improvement Factor</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-gray-200">
-                            <tr class="hover:bg-gray-50">
-                                <td class="p-4 font-medium">Consensus Algorithm</td>
-                                <td class="p-4 text-center text-gray-600">Proof-of-Work (SHA-256)</td>
-                                <td class="p-4 text-center font-semibold text-purple-700">Proof-of-Distributed-Time</td>
-                                <td class="p-4 text-center font-bold text-green-600">Energy-Free Consensus</td>
-                            </tr>
-                            <tr class="hover:bg-gray-50">
-                                <td class="p-4 font-medium">Theoretical TPS Capacity</td>
-                                <td class="p-4 text-center text-gray-600">7 TPS</td>
-                                <td class="p-4 text-center font-semibold text-purple-700">50,000+ TPS</td>
-                                <td class="p-4 text-center font-bold text-green-600">7,142x</td>
-                            </tr>
-                            <tr class="hover:bg-gray-50">
-                                <td class="p-4 font-medium">Block Finality Time</td>
-                                <td class="p-4 text-center text-gray-600">60 minutes (6 confirmations)</td>
-                                <td class="p-4 text-center font-semibold text-purple-700">0.3 seconds</td>
-                                <td class="p-4 text-center font-bold text-green-600">12,000x faster</td>
-                            </tr>
-                            <tr class="hover:bg-gray-50">
-                                <td class="p-4 font-medium">Energy Consumption per TX</td>
-                                <td class="p-4 text-center text-gray-600">~1,100 kWh</td>
-                                <td class="p-4 text-center font-semibold text-purple-700">~0.001 kWh</td>
-                                <td class="p-4 text-center font-bold text-green-600">1,100,000x efficient</td>
-                            </tr>
-                            <tr class="hover:bg-gray-50">
-                                <td class="p-4 font-medium">Cryptographic Security</td>
-                                <td class="p-4 text-center text-gray-600">ECDSA (Quantum Vulnerable)</td>
-                                <td class="p-4 text-center font-semibold text-purple-700">Post-Quantum Lattice</td>
-                                <td class="p-4 text-center font-bold text-green-600">Quantum-Resistant</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- Advanced Network Architecture -->
-            <div class="mb-12">
-                <h2 class="text-xl font-bold text-gray-800 mb-6 relative pl-4">
-                    <div class="absolute left-0 top-2 w-1 h-6 bg-purple-600 rounded"></div>
-                    Advanced Multi-Layer Network Architecture
-                </h2>
-                
-                <div class="bg-gray-50 p-8 rounded-xl mb-8">
-                    <h3 class="text-lg font-bold text-gray-800 mb-4">Three-Tier Consensus Protocol Stack</h3>
-                    <p class="text-gray-600 mb-6 leading-relaxed">
-                        BITC implements a sophisticated three-layer consensus mechanism that combines the security guarantees of established protocols with unprecedented scalability through innovative cryptographic constructions and distributed systems optimizations.
-                    </p>
-                    <div class="grid md:grid-cols-3 gap-6">
-                        <div class="bg-white p-6 rounded-lg border border-purple-200">
-                            <h4 class="font-semibold text-purple-700 mb-3 text-center">Layer 1: Consensus Core</h4>
-                            <ul class="text-sm text-gray-600 space-y-2">
-                                <li>• Proof-of-Distributed-Time (PoDT)</li>
-                                <li>• BLS Signature Aggregation</li>
-                                <li>• Verifiable Delay Functions</li>
-                                <li>• 99.99% Byzantine Fault Tolerance</li>
-                            </ul>
-                        </div>
-                        <div class="bg-white p-6 rounded-lg border border-purple-200">
-                            <h4 class="font-semibold text-purple-700 mb-3 text-center">Layer 2: Execution Engine</h4>
-                            <ul class="text-sm text-gray-600 space-y-2">
-                                <li>• WebAssembly Smart Contracts</li>
-                                <li>• Parallel Transaction Processing</li>
-                                <li>• State Sharding with Cross-Shard Atomicity</li>
-                                <li>• Optimistic Rollup Compatibility</li>
-                            </ul>
-                        </div>
-                        <div class="bg-white p-6 rounded-lg border border-purple-200">
-                            <h4 class="font-semibold text-purple-700 mb-3 text-center">Layer 3: Governance & Interop</h4>
-                            <ul class="text-sm text-gray-600 space-y-2">
-                                <li>• Decentralized Autonomous Organization</li>
-                                <li>• Cross-Chain Message Passing</li>
-                                <li>• Threshold Signature Schemes</li>
-                                <li>• Dynamic Protocol Upgrades</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="bg-gradient-to-r from-purple-50 to-blue-50 p-8 rounded-xl border border-purple-200 mb-8">
-                    <h3 class="text-xl font-bold text-gray-800 mb-6 text-center">Performance & Scalability Metrics</h3>
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-                        <div class="bg-white p-4 rounded-lg shadow-sm">
-                            <div class="text-2xl font-bold text-purple-700">50K+</div>
-                            <div class="text-sm text-gray-600 mt-1">Transactions/Second</div>
-                            <div class="text-xs text-gray-500">Theoretical Maximum</div>
-                        </div>
-                        <div class="bg-white p-4 rounded-lg shadow-sm">
-                            <div class="text-2xl font-bold text-purple-700">0.3s</div>
-                            <div class="text-sm text-gray-600 mt-1">Block Finality</div>
-                            <div class="text-xs text-gray-500">Instant Confirmation</div>
-                        </div>
-                        <div class="bg-white p-4 rounded-lg shadow-sm">
-                            <div class="text-2xl font-bold text-purple-700">$0.0001</div>
-                            <div class="text-sm text-gray-600 mt-1">Avg. Transaction Cost</div>
-                            <div class="text-xs text-gray-500">Micro-fee Architecture</div>
-                        </div>
-                        <div class="bg-white p-4 rounded-lg shadow-sm">
-                            <div class="text-2xl font-bold text-purple-700">∞</div>
-                            <div class="text-sm text-gray-600 mt-1">Scalability Horizon</div>
-                            <div class="text-xs text-gray-500">Horizontal Scaling</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Economic Architecture -->
-            <div class="mb-12">
-                <h2 class="text-xl font-bold text-gray-800 mb-6 relative pl-4">
-                    <div class="absolute left-0 top-2 w-1 h-6 bg-purple-600 rounded"></div>
-                    Advanced Economic Architecture & Token Utility
-                </h2>
-                
-                <div class="space-y-6 mb-8">
-                    <div class="flex items-start bg-white p-6 rounded-xl border border-gray-200">
-                        <div class="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center mr-4 mt-1 flex-shrink-0">
-                            <i class="fas fa-cog text-purple-600"></i>
-                        </div>
-                        <div>
-                            <h4 class="font-semibold text-gray-800 mb-2 text-lg">Network Governance & Protocol Upgrades</h4>
-                            <p class="text-gray-600 leading-relaxed">
-                                BITC tokens enable sophisticated on-chain governance through quadratic voting mechanisms and delegated proof-of-stake voting. Token holders participate in protocol parameter adjustments, fee market dynamics, and ecosystem treasury allocations. The governance model incorporates futarchy for prediction market-based decision making on protocol changes.
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="flex items-start bg-white p-6 rounded-xl border border-gray-200">
-                        <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center mr-4 mt-1 flex-shrink-0">
-                            <i class="fas fa-rocket text-green-600"></i>
-                        </div>
-                        <div>
-                            <h4 class="font-semibold text-gray-800 mb-2 text-lg">Transaction Processing & Gas Economics</h4>
-                            <p class="text-gray-600 leading-relaxed">
-                                All network operations require BITC for gas fees, creating constant utility demand through EIP-1559-style fee burning mechanisms. The protocol implements multidimensional resource pricing for computation, storage, and bandwidth. Dynamic fee markets automatically adjust based on network congestion and resource utilization patterns.
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="flex items-start bg-white p-6 rounded-xl border border-gray-200">
-                        <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mr-4 mt-1 flex-shrink-0">
-                            <i class="fas fa-shield-alt text-blue-600"></i>
-                        </div>
-                        <div>
-                            <h4 class="font-semibold text-gray-800 mb-2 text-lg">Security Staking & Network Participation</h4>
-                            <p class="text-gray-600 leading-relaxed">
-                                Advanced staking mechanisms allow token holders to secure the network through validator participation while earning protocol rewards. The staking system implements slashing conditions for Byzantine behavior and incorporates delegated staking with reputation systems. Staking yields are algorithmically adjusted based on network participation rates and security requirements.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Value Proposition -->
-                <div class="bg-gradient-to-r from-purple-600 to-purple-700 p-8 rounded-xl text-white">
-                    <h3 class="text-xl font-bold mb-4">🚀 Economic Value Proposition Analysis</h3>
-                    <p class="mb-4 leading-relaxed">
-                        Given the unprecedented technical capabilities and utility functions embedded within the BITC protocol, sophisticated valuation models incorporating Metcalfe's Law, network effects, and utility-based demand forecasting suggest substantial value accretion potential. The protocol's ability to support global-scale decentralized applications with enterprise-grade performance characteristics positions it for significant adoption across multiple verticals including DeFi, NFTs, and enterprise blockchain solutions.
-                    </p>
-                    <div class="bg-purple-800 p-4 rounded-lg">
-                        <p class="text-sm font-semibold">
-                            📈 Technical Analysis: Based on comparable blockchain architectures with similar technical capabilities and adoption trajectories, sophisticated valuation frameworks suggest potential value ranges that could exceed $10 per token as network effects compound and utility demand accelerates across global markets.
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Development Roadmap -->
-            <div class="mb-12">
-                <h2 class="text-xl font-bold text-gray-800 mb-6 relative pl-4">
-                    <div class="absolute left-0 top-2 w-1 h-6 bg-purple-600 rounded"></div>
-                    Technical Development Roadmap & Protocol Evolution
-                </h2>
-                
-                <div class="space-y-8">
-                    <div class="border-l-4 border-purple-500 pl-6">
-                        <h4 class="font-bold text-gray-800 text-lg mb-3">Phase 1: Core Protocol Implementation</h4>
-                        <ul class="text-gray-600 space-y-2">
-                            <li>• Proof-of-Distributed-Time consensus algorithm deployment</li>
-                            <li>• BLS signature aggregation and VDF implementation</li>
-                            <li>• Basic state sharding with cross-shard communication</li>
-                            <li>• WebAssembly smart contract execution environment</li>
-                            <li>• Initial network security audit and penetration testing</li>
-                            <li>• Mobile-optimized light client implementation</li>
-                        </ul>
-                    </div>
-
-                    <div class="border-l-4 border-green-500 pl-6">
-                        <h4 class="font-bold text-gray-800 text-lg mb-3">Phase 2: Ecosystem Expansion & Scalability</h4>
-                        <ul class="text-gray-600 space-y-2">
-                            <li>• Advanced sharding with dynamic reconfiguration</li>
-                            <li>• Cross-chain interoperability protocol deployment</li>
-                            <li>• Post-quantum cryptography integration</li>
-                            <li>• Optimistic rollup and ZK-rollup compatibility layers</li>
-                            <li>• Advanced developer tooling and SDK releases</li>
-                            <li>• Enterprise-grade API suite and documentation</li>
-                        </ul>
-                    </div>
-
-                    <div class="border-l-4 border-blue-500 pl-6">
-                        <h4 class="font-bold text-gray-800 text-lg mb-3">Phase 3: Advanced Features & Global Scale</h4>
-                        <ul class="text-gray-600 space-y-2">
-                            <li>• Full decentralized governance implementation</li>
-                            <li>• Advanced privacy features with zero-knowledge proofs</li>
-                            <li>• Enterprise blockchain solutions and custom deployments</li>
-                            <li>• Global payment network integration</li>
-                            <li>• Advanced oracle networks and data availability layers</li>
-                            <li>• Protocol-level DeFi primitive implementations</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Technical Conclusion -->
-            <div class="bg-gradient-to-r from-purple-800 to-purple-900 p-8 rounded-xl text-white">
-                <h3 class="text-2xl font-bold mb-4">🚀 The Future of Decentralized Systems</h3>
-                <p class="mb-6 text-lg leading-relaxed">
-                    BITC Network represents a fundamental architectural advancement in blockchain technology, combining the security guarantees of established systems with unprecedented scalability, efficiency, and interoperability. Our protocol innovations position BITC as the foundational layer for the next generation of decentralized applications and global financial infrastructure.
-                </p>
-                <div class="grid md:grid-cols-2 gap-6">
-                    <div class="bg-purple-700 p-4 rounded-lg">
-                        <h4 class="font-bold mb-2">🔬 Research-Driven Development</h4>
-                        <p class="text-sm opacity-90">Built on peer-reviewed cryptographic research and rigorous academic foundations</p>
-                    </div>
-                    <div class="bg-purple-700 p-4 rounded-lg">
-                        <h4 class="font-bold mb-2">🌍 Global-Scale Architecture</h4>
-                        <p class="text-sm opacity-90">Designed to support billions of users and trillions in transaction volume</p>
-                    </div>
-                </div>
-            </div>
+    <section class="section white">
+      <div class="container">
+        <div class="section-head">
+          <div class="kicker">Vision</div>
+          <h2>A professional digital currency network designed for accessibility and scale</h2>
+          <p>BitC aims to lower barriers to entry for blockchain participation while creating a secure ecosystem for users, developers, and future partners.</p>
         </div>
+        <div class="grid">
+          <article class="card"><h3>Accessibility</h3><p>BitC focuses on mobile-first onboarding so more people can access and understand digital currency technology.</p></article>
+          <article class="card"><h3>Security</h3><p>Future infrastructure will prioritize secure authentication, official communication channels, and ecosystem trust.</p></article>
+          <article class="card"><h3>Scalability</h3><p>The BitC ecosystem is designed to support future applications, partnerships, and global community expansion.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <div class="kicker">Architecture</div>
+          <h2>BitC ecosystem infrastructure</h2>
+          <p>The platform combines mobile engagement, wallet services, developer tools, and ecosystem integrations.</p>
+        </div>
+        <div class="grid">
+          <article class="card"><h3>BitC Mobile Mining</h3><p>A lightweight participation experience designed for mobile users without expensive hardware requirements.</p></article>
+          <article class="card"><h3>Wallet & Identity</h3><p>Future wallet infrastructure for balances, identity verification, and secure ecosystem access.</p></article>
+          <article class="card"><h3>Developer Ecosystem</h3><p>APIs, documentation, and future integrations for apps, merchants, and ecosystem partners.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section white">
+      <div class="container">
+        <div class="section-head">
+          <div class="kicker">Comparison</div>
+          <h2>Platform positioning overview</h2>
+          <p>BitC focuses on simplicity, mobile participation, and ecosystem growth compared to traditional blockchain onboarding models.</p>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Feature</th>
+                <th>Traditional Mining</th>
+                <th>BitC Network</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Accessibility</td>
+                <td>Technical setup required</td>
+                <td class="highlight">Mobile-first onboarding</td>
+              </tr>
+              <tr>
+                <td>Energy usage</td>
+                <td>High hardware power consumption</td>
+                <td class="highlight">Efficiency-focused approach</td>
+              </tr>
+              <tr>
+                <td>Community growth</td>
+                <td>Complex onboarding</td>
+                <td class="highlight">Simple user participation</td>
+              </tr>
+              <tr>
+                <td>Future ecosystem</td>
+                <td>Limited consumer accessibility</td>
+                <td class="highlight">Apps, developers, and partners</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <div class="kicker">Roadmap</div>
+          <h2>BitC ecosystem development roadmap</h2>
+          <p>A phased growth strategy for platform maturity, user adoption, and ecosystem expansion.</p>
+        </div>
+        <div class="roadmap">
+          <div class="phase">
+            <h3>Phase 1 — Foundation</h3>
+            <ul>
+              <li>Launch official BitC website and ecosystem pages</li>
+              <li>Build mobile-first community onboarding</li>
+              <li>Develop branding, security communication, and documentation</li>
+              <li>Prepare mobile application structure</li>
+            </ul>
+          </div>
+          <div class="phase">
+            <h3>Phase 2 — Ecosystem Growth</h3>
+            <ul>
+              <li>Expand wallet and account features</li>
+              <li>Introduce developer documentation and APIs</li>
+              <li>Build partnerships and merchant ecosystem</li>
+              <li>Enhance security infrastructure and verification systems</li>
+            </ul>
+          </div>
+          <div class="phase">
+            <h3>Phase 3 — Platform Expansion</h3>
+            <ul>
+              <li>Scale global user adoption</li>
+              <li>Support future applications and integrations</li>
+              <li>Expand ecosystem utility and services</li>
+              <li>Strengthen enterprise and community partnerships</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta">
+      <div class="container cta-grid">
+        <div>
+          <div class="kicker" style="color:#f7c7bd">BitC ecosystem</div>
+          <h2>The future of accessible digital currency infrastructure.</h2>
+          <p>BitC Network is focused on building a trusted, scalable, and professional ecosystem for users, developers, and future partners.</p>
+        </div>
+        <div class="cta-actions">
+          <a class="btn btn-red" href="../">Back to homepage</a>
+          <a class="btn btn-outline" style="color:#fff;border-color:#fff" href="../privacy/">Privacy policy</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-grid">
+      <div>
+        <a class="logo" href="../">BitC</a>
+        <div class="copyright">© <span id="year"></span> BitC Network. All rights reserved.</div>
+      </div>
+      <div class="footer-links">
+        <a href="../">Home</a>
+        <a href="../privacy/">Privacy</a>
+        <a href="../terms/">Terms</a>
+        <a href="../security/">Security</a>
+      </div>
     </div>
+  </footer>
 
-    <script>
-        // Set current date
-        document.getElementById('current-date').textContent = new Date().toLocaleDateString('en-US', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-        });
-
-        // Go back function
-        function goBack() {
-            window.history.back();
-        }
-    </script>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
