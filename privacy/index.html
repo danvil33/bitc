@@ -1,172 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Privacy Policy - BitC Crypto Mining</title>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        * {
-            font-family: 'Nunito', sans-serif;
-        }
-        
-        .content-container {
-            max-width: 800px;
-        }
-        
-        .back-button:hover {
-            transform: translateX(-3px);
-        }
-        
-        .section-title {
-            position: relative;
-            padding-left: 1rem;
-        }
-        
-        .section-title::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0.5rem;
-            height: 1.5rem;
-            width: 4px;
-            background-color: #7c3aed;
-            border-radius: 2px;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy | BitC Network</title>
+  <meta name="description" content="Privacy Policy for BitC Network." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root{--red:#c74634;--redDark:#8f2f23;--dark:#312d2a;--ink:#1f1a17;--muted:#6f6761;--cream:#f7f3ef;--line:#ded6ce;--white:#fff;--max:1120px;--shadow:0 20px 50px rgba(49,45,42,.12)}*{box-sizing:border-box;margin:0;padding:0}body{font-family:Inter,system-ui,sans-serif;background:var(--cream);color:var(--dark);line-height:1.7}a{text-decoration:none;color:inherit}.container{max-width:var(--max);margin:auto;padding:0 24px}.top{background:#161513;color:#eee7df;font-size:.84rem}.top .container{min-height:38px;display:flex;align-items:center;justify-content:space-between;gap:18px}.nav{background:var(--dark);color:#fff}.nav-inner{min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:20px}.logo{width:92px;height:32px;border:2px solid #fff;border-radius:999px;display:grid;place-items:center;font-weight:950;letter-spacing:-.06em}.links{display:flex;gap:18px;flex-wrap:wrap;font-weight:800;color:#eee7df}.links a:hover{text-decoration:underline}.hero{background:#fff;border-bottom:1px solid var(--line);padding:72px 0}.kicker{font-size:.78rem;text-transform:uppercase;letter-spacing:.12em;font-weight:950;color:var(--red);margin-bottom:14px}h1{font-size:clamp(2.4rem,5vw,4.8rem);line-height:1;letter-spacing:-.075em;color:var(--ink)}.lead{margin-top:18px;max-width:780px;color:var(--muted);font-weight:650;font-size:1.08rem}.content{padding:56px 0}.grid{display:grid;grid-template-columns:.32fr .68fr;gap:24px}.toc,.card{background:#fff;border:1px solid var(--line);box-shadow:0 10px 24px rgba(49,45,42,.05)}.toc{padding:24px;height:max-content;position:sticky;top:92px}.toc a{display:block;padding:10px 0;color:var(--muted);font-weight:800;border-bottom:1px solid var(--line)}.toc a:hover{color:var(--red)}.card{padding:34px;margin-bottom:18px}h2{font-size:1.55rem;letter-spacing:-.04em;color:var(--ink);margin-bottom:10px}p,li{color:#4f4843;font-weight:550}ul{padding-left:22px;margin-top:10px}.btn{display:inline-flex;background:var(--red);color:#fff;padding:12px 18px;border-radius:4px;font-weight:900;margin-top:18px}.btn:hover{background:var(--redDark)}footer{background:var(--dark);color:#eee7df;padding:36px 0}.foot{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}.foot a{font-weight:800}@media(max-width:800px){.grid{grid-template-columns:1fr}.toc{position:static}.nav-inner,.top .container{align-items:flex-start;flex-direction:column;padding-top:16px;padding-bottom:16px}.card{padding:24px}}
+  </style>
 </head>
-<body class="bg-gray-50 min-h-screen py-8 px-4">
-    <div class="content-container mx-auto bg-white rounded-2xl shadow-md overflow-hidden">
-        <!-- Header -->
-        <div class="bg-gradient-to-r from-purple-700 to-purple-800 p-6 text-white">
-            <div class="flex items-center justify-between">
-                <div class="flex items-center">
-                    <button onclick="goBack()" class="back-button mr-4 p-2 rounded-full hover:bg-purple-600 transition-all duration-300">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                        </svg>
-                    </button>
-                    <div class="flex items-center">
-                        <div class="w-10 h-10 rounded-full overflow-hidden mr-3 bg-white flex items-center justify-center">
-                            <img src="https://bitcnetwork.com/assets/1.png" alt="BitC Logo" class="w-8 h-8 object-cover">
-                        </div>
-                        <h1 class="text-2xl font-bold">Privacy Policy</h1>
-                    </div>
-                </div>
-                <div class="text-sm opacity-80">Last Updated: <span id="current-date"></span></div>
-            </div>
-        </div>
-        
-        <!-- Content -->
-        <div class="p-8">
-            <div class="prose max-w-none">
-                <p class="text-gray-600 mb-6">
-                    BitC Crypto Mining ("we," "our," or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our mobile application.
-                </p>
-                
-                <div class="mb-8">
-                    <h2 class="section-title text-xl font-bold text-gray-800 mb-4">Information We Collect</h2>
-                    
-                    <h3 class="font-semibold text-gray-700 mb-2">Personal Information</h3>
-                    <ul class="list-disc pl-6 text-gray-600 mb-4 space-y-2">
-                        <li>Email address for account creation and communication</li>
-                        <li>Authentication data through Firebase Authentication</li>
-                        <li>User preferences and settings</li>
-                    </ul>
-                    
-                    <h3 class="font-semibold text-gray-700 mb-2">Automatically Collected Information</h3>
-                    <ul class="list-disc pl-6 text-gray-600 mb-4 space-y-2">
-                        <li>Device information (model, OS version)</li>
-                        <li>Usage data and app interactions</li>
-                        <li>Crash reports and performance data</li>
-                    </ul>
-                </div>
-
-                <div class="mb-8">
-                    <h2 class="section-title text-xl font-bold text-gray-800 mb-4">How We Use Your Information</h2>
-                    <ul class="list-disc pl-6 text-gray-600 space-y-2">
-                        <li>Provide and maintain our services</li>
-                        <li>Process your transactions and manage your account</li>
-                        <li>Send you technical notices and support messages</li>
-                        <li>Improve our app and develop new features</li>
-                        <li>Prevent fraud and ensure security</li>
-                        <li>Comply with legal obligations</li>
-                    </ul>
-                </div>
-
-                <div class="mb-8">
-                    <h2 class="section-title text-xl font-bold text-gray-800 mb-4">Data Sharing and Disclosure</h2>
-                    <p class="text-gray-600 mb-4">
-                        We do not sell, trade, or rent your personal information to third parties. We may share information with:
-                    </p>
-                    <ul class="list-disc pl-6 text-gray-600 space-y-2">
-                        <li><strong>Service Providers:</strong> Firebase (Google) for authentication and data storage</li>
-                        <li><strong>Legal Requirements:</strong> When required by law or to protect our rights</li>
-                        <li><strong>Business Transfers:</strong> In connection with a merger or acquisition</li>
-                    </ul>
-                </div>
-
-                <div class="mb-8">
-                    <h2 class="section-title text-xl font-bold text-gray-800 mb-4">Data Security</h2>
-                    <p class="text-gray-600 mb-4">
-                        We implement appropriate technical and organizational security measures to protect your personal information. However, no method of transmission over the Internet or electronic storage is 100% secure.
-                    </p>
-                </div>
-
-                <div class="mb-8">
-                    <h2 class="section-title text-xl font-bold text-gray-800 mb-4">Your Rights</h2>
-                    <p class="text-gray-600 mb-4">
-                        Depending on your location, you may have the right to:
-                    </p>
-                    <ul class="list-disc pl-6 text-gray-600 space-y-2">
-                        <li>Access and receive a copy of your personal data</li>
-                        <li>Rectify or update your personal data</li>
-                        <li>Delete your personal data</li>
-                        <li>Restrict or object to our processing of your personal data</li>
-                        <li>Data portability</li>
-                    </ul>
-                </div>
-
-                <div class="mb-8">
-                    <h2 class="section-title text-xl font-bold text-gray-800 mb-4">Children's Privacy</h2>
-                    <p class="text-gray-600 mb-4">
-                        Our service is not intended for users under the age of 13. We do not knowingly collect personal information from children under 13. If you become aware that a child has provided us with personal information, please contact us.
-                    </p>
-                </div>
-
-                <div class="mb-8">
-                    <h2 class="section-title text-xl font-bold text-gray-800 mb-4">Changes to This Privacy Policy</h2>
-                    <p class="text-gray-600 mb-4">
-                        We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the "Last Updated" date.
-                    </p>
-                </div>
-
-                <div class="mb-8">
-                    <h2 class="section-title text-xl font-bold text-gray-800 mb-4">Contact Us</h2>
-                    <p class="text-gray-600">
-                        If you have any questions about this Privacy Policy, please contact us at:
-                    </p>
-                    <p class="text-purple-700 font-semibold mt-2">
-                        Email: privacy@bitcnetwork.com
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        // Set current date
-        document.getElementById('current-date').textContent = new Date().toLocaleDateString('en-US', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-        });
-
-        // Go back function
-        function goBack() {
-            window.history.back();
-        }
-    </script>
+<body>
+  <div class="top"><div class="container"><span>BitC Network</span><span>Mobile digital currency infrastructure</span></div></div>
+  <header class="nav"><div class="container nav-inner"><a class="logo" href="../">BitC</a><nav class="links"><a href="../">Home</a><a href="../whitepaper/">Whitepaper</a><a href="../terms/">Terms</a><a href="../security/">Security</a></nav></div></header>
+  <main>
+    <section class="hero"><div class="container"><div class="kicker">Legal</div><h1>Privacy Policy</h1><p class="lead">This Privacy Policy explains how BitC Network may collect, use, protect, and manage information when users visit our website, use future applications, or interact with our ecosystem.</p></div></section>
+    <section class="content"><div class="container grid"><aside class="toc"><strong>On this page</strong><a href="#collect">Information we collect</a><a href="#use">How we use data</a><a href="#sharing">Sharing</a><a href="#security">Security</a><a href="#rights">User rights</a><a href="#contact">Contact</a></aside><div>
+      <div class="card" id="collect"><h2>Information we collect</h2><p>BitC Network may collect account details, email address, device information, app usage information, support messages, wallet-related activity, and technical data needed to operate and improve the platform.</p></div>
+      <div class="card" id="use"><h2>How we use information</h2><ul><li>To provide and maintain BitC services.</li><li>To secure accounts and prevent abuse or fraud.</li><li>To improve the website, app experience, and ecosystem features.</li><li>To communicate service updates, support messages, and security notices.</li></ul></div>
+      <div class="card" id="sharing"><h2>Data sharing</h2><p>We do not sell personal information. We may share limited information with trusted service providers such as hosting, analytics, authentication, security, and app distribution providers where needed to operate BitC Network.</p></div>
+      <div class="card" id="security"><h2>Security</h2><p>We aim to apply reasonable technical and organizational safeguards. No digital platform can guarantee 100% security, so users should protect their login credentials, avoid suspicious links, and use official BitC channels only.</p></div>
+      <div class="card" id="rights"><h2>User rights</h2><p>Depending on your location and applicable laws, you may request access, correction, deletion, or limitation of certain personal information.</p></div>
+      <div class="card" id="contact"><h2>Contact</h2><p>For privacy questions, contact BitC Network at <strong>danvilchain@gmail.com</strong>.</p><a class="btn" href="../">Back to home</a></div>
+    </div></div></section>
+  </main>
+  <footer><div class="container foot"><span>© <span id="year"></span> BitC Network. All rights reserved.</span><span><a href="../whitepaper/">Whitepaper</a> · <a href="../terms/">Terms</a> · <a href="../security/">Security</a></span></div></footer><script>document.getElementById('year').textContent=new Date().getFullYear()</script>
 </body>
 </html>
